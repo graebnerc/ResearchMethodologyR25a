@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Prof.&nbsp;Dr.&nbsp;Claudius Gräbner-Radkowitsch">
+
+<title>Data science using R - Importing and exporting data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../figures/icons/course_favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta property="og:title" content="Data science using R - Importing and exporting data">
+<meta property="og:description" content="">
+<meta property="og:image" content="dir_structure.png">
+<meta property="og:site-name" content="Data science using R">
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data science using R</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Importing and exporting data</li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Importing and exporting data</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Claudius Gräbner-Radkowitsch </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">09 03 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">🏠 Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">🏢 Current semester</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">🗓️ Material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sessions 05 &amp; 06</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 08</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 09</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 10</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 11</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sessions 12 &amp; 13</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 14</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sessions 15 &amp; 16</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sessions 17 &amp; 18</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session19.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 19</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/tutorials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">💻 Tutorials</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#importing-csv-data-usind-fread" id="toc-importing-csv-data-usind-fread" class="nav-link" data-scroll-target="#importing-csv-data-usind-fread">Importing csv data usind fread</a>
+  <ul class="collapse">
+  <li><a href="#specify-the-column-separator-using-sep-and-the-decimal-sign-using-dec" id="toc-specify-the-column-separator-using-sep-and-the-decimal-sign-using-dec" class="nav-link" data-scroll-target="#specify-the-column-separator-using-sep-and-the-decimal-sign-using-dec">Specify the column separator using <code>sep</code> and the decimal sign using <code>dec</code></a></li>
+  <li><a href="#set-the-object-type-of-the-columns-using-colclasses" id="toc-set-the-object-type-of-the-columns-using-colclasses" class="nav-link" data-scroll-target="#set-the-object-type-of-the-columns-using-colclasses">Set the object type of the columns using <code>colClasses</code></a></li>
+  <li><a href="#specify-how-many-rows-should-be-readskipped-using-nrows-and-skip" id="toc-specify-how-many-rows-should-be-readskipped-using-nrows-and-skip" class="nav-link" data-scroll-target="#specify-how-many-rows-should-be-readskipped-using-nrows-and-skip">Specify how many rows should be read/skipped using <code>nrows</code> and <code>skip</code></a></li>
+  <li><a href="#specify-columns-that-should-not-be-read-using-select-and-drop" id="toc-specify-columns-that-should-not-be-read-using-select-and-drop" class="nav-link" data-scroll-target="#specify-columns-that-should-not-be-read-using-select-and-drop">Specify columns that should (not) be read using <code>select</code> and <code>drop</code></a></li>
+  </ul></li>
+  <li><a href="#importing-data-from-other-file-formats" id="toc-importing-data-from-other-file-formats" class="nav-link" data-scroll-target="#importing-data-from-other-file-formats">Importing data from other file formats</a></li>
+  <li><a href="#exporting-data" id="toc-exporting-data" class="nav-link" data-scroll-target="#exporting-data">Exporting data</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><strong>Packages used in this tutorial:</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Functions that are used to import data take as an argument a path to a file containing data, parse this file, and return an R object (usually a kind of <code>data.frame</code>) that contains the data from the file.</p>
+<p>In general, there are different file formats for storing data, but the most widely used one is the <code>.csv</code>-format - an abbreviation for ‘comma separated values’, indicating that (usually) data points are separated from each other via commas. The big advantage of such files is that they are platform-independent and do not require any external software. Their downside is that you they are relatively large for a given amount of data, and that they are inferior to more modern file formats when it comes to reading and writing speed. But these disadvantages become relevant only for larger data sets, which is why <code>csv</code> files are a good default option to use, and this tutorial focuses on reading and writing <code>csv</code>-files (with a short overview over most common alternatives below).</p>
+<p>While writing (or ‘exporting’) data is usually straightforward, reading (or ‘importing’) data can be very frustrating and complicated. The reason is that there are many different ways of how exactly data is stored within a <code>csv</code>-file. But don’t worry: first, the package <a href="https://github.com/Rdatatable/data.table">data.table</a> provides for the amazing function <code>data.table::fread()</code> that allows you to account for basically every specifity of the <code>csv</code>-files you will encounter. Second, with only a handful of arguments passed to <code>data.table::fread()</code> you can already cover the vast majority of practically relevant cases.</p>
+<p>The main focus of this tutorial, thus, is to introduce you to the most important arguments of <code>data.table::fread()</code>. After this, we also make a few remarks on how to save data and how to import/export data using different file formats. Note that while the arguments of <code>data.table::fread()</code> that will be covered are the most important ones that allow you to deal with most practically relevant cases, the function allows for an even greater level of customization. You can find more information via <code>help(fread)</code>, but it will be much easier to understand the function manual after going through the base cases described below.</p>
+<p>A final remark: if you read about data import in, e.g., textbooks that usually rely on the <a href="https://www.tidyverse.org/">tidyverse</a> packages, you will not find any mentioning of <code>data.table::fread()</code>. Rather, the functions provided by the package <a href="https://readr.tidyverse.org/">readr</a> will be used. This is one of the very few exceptions where I recommend you to break the rule of writing code in a consistent dialect: while the <code>readr</code>-functions would be more consistent with our commitment to the tidyverse, the function <code>data.table::fread()</code> is just too much better than these alternatives to be ignored: not only is it <em>much, much</em> faster, it also allows for more customization. The only ‘drawback’ is that after reading in data it returns this data as a <code>data.table</code> (or a <code>data.frame</code>, see below). But this is only a small cost compared to the many benefits. We just should not forget to transform the object returned by <code>data.table::fread()</code> into a <code>tibble</code>.</p>
+</section>
+<section id="importing-csv-data-usind-fread" class="level1">
+<h1>Importing csv data usind fread</h1>
+<p>In the following we assume that our R project is set up correctly, as described in the corresponding <a href="../../../tutorial/setting-up-an-r-project/">tutorial</a>, and that the data set we would like to import is called <code>exp_data.csv</code> and stored in the subdirectory <code>data/tidy/exp_data.csv</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="dir_structure.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In the following we assume we work in the file <code>importing.R</code>, the first lines of which should contain</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"R/importing.R"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If the data file is not too large it is a good idea to inspect the raw file using the R-Studio file preview (for larger files it is usually better to open the file using a text editor, such as Emacs or TextEdit):</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ViewFile.png" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This way you get almost all relevant information about how the file looks like and what kind of arguments you must use when calling <code>data.table::fread()</code>. In the present example case, the file looks like this:</p>
+<pre><code>iso2c,year,exports
+AT,2012,53.97
+AT,2013,53.44
+AT,2014,53.38</code></pre>
+<p>This is a very standard <code>csv</code>-file: we see that there are three columns, all of them separated with a comma. Moreover, the third row contains decimal numbers where the decimal sign is a dot. This is the standard case, and it aligns well with all the default values for the optional arguments of <code>data.table::fread()</code>. Thus, we only need to specify the single mandatory argument of this function. It is called <code>file</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and should be the relative path to the file. In our case:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(<span class="at">file =</span> file_path)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_data)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>exp_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  iso2c  year exports
+  &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt;
+1 AT     2012    54.0
+2 AT     2013    53.4
+3 AT     2014    53.4</code></pre>
+</div>
+</div>
+<p>As we can see the default options of <code>data.table::fread()</code> did an excellent job and we now have an R object that we could use immediately for further analysis (e.g., to build visualizations as described in one of the previous tutorials). In many cases, however, we need to use some of the optional arguments of <code>data.table::fread()</code> to get the desired result. In the following, we will go through the most commonly used arguments. These are:</p>
+<ul>
+<li><code>sep</code>: symbol that separates columns</li>
+<li><code>dec</code>: symbol used as decimal sign</li>
+<li><code>colClasses</code>: set the object type of the columns</li>
+<li><code>select</code> and <code>drop</code>: specify columns that should (not) be read</li>
+<li><code>nrows</code> and <code>skip</code>: specify how many rows should be read /skipped from the top of the file</li>
+<li><code>header</code>: specify whether there is a header with variable names</li>
+</ul>
+<section id="specify-the-column-separator-using-sep-and-the-decimal-sign-using-dec" class="level2">
+<h2 class="anchored" data-anchor-id="specify-the-column-separator-using-sep-and-the-decimal-sign-using-dec">Specify the column separator using <code>sep</code> and the decimal sign using <code>dec</code></h2>
+<p>While the example file above represents the widespread standard case in which columns are separated by a comma and the dot is used as the decimal sign, many files use other symbols. In Germany, for instance, it is very common to use <code>;</code> as a separator for columns, and <code>,</code> as a decimal sign instead. Thus, the ‘German version’ of our example from above would look like this:</p>
+<pre><code>iso2c;year;Exporte
+AT;2012;53,97
+AT;2013;53,44
+AT;2014;53,38</code></pre>
+<p>Sometimes, <code>data.table::fread()</code> detects such cases automatically and adjusts the values for the optional arguments implicitly. But it is always better to explicit and to specify decimal signs and column separators explicitly! This also increases the reading speed of <code>data.table::fread()</code>. To set them explicitly, we use the arguments <code>sep</code> and <code>dec</code> as follows:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> file_path,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sep =</span> <span class="st">";"</span>, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dec =</span> <span class="st">","</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After completing the function call we should always inspect the imported object to make sure everything went well. We might have a look at the first lines:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_data)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(exp_data, <span class="at">n =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  iso2c  year exports
+  &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt;
+1 AT     2012    54.0
+2 AT     2013    53.4</code></pre>
+</div>
+</div>
+<p>Or use <code>dplyr::glimpse()</code> or <code>str()</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(exp_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [3 × 3] (S3: tbl_df/tbl/data.frame)
+ $ iso2c  : chr [1:3] "AT" "AT" "AT"
+ $ year   : int [1:3] 2012 2013 2014
+ $ exports: num [1:3] 54 53.4 53.4
+ - attr(*, ".internal.selfref")=&lt;externalptr&gt; </code></pre>
+</div>
+</div>
+</section>
+<section id="set-the-object-type-of-the-columns-using-colclasses" class="level2">
+<h2 class="anchored" data-anchor-id="set-the-object-type-of-the-columns-using-colclasses">Set the object type of the columns using <code>colClasses</code></h2>
+<p>Usually, the automatic type recognition of <code>data.table::fread()</code> works quite well. This means that R chooses the right data type for each column automatically. Sometimes, however, this detection fails and you need to specify the column types manually. But even if the automatic recognition works, there are some good reasons for playing save and specify the column types yourself:</p>
+<ol type="1">
+<li>You will notice more easily if there is a problem with a column, e.g.&nbsp;if a word occurs in a column that consists exclusively of numbers. occurs. If you did not specify this column manually as <code>double</code>, <code>data.table::fread()</code> would simply interpret it silently as a <code>character</code> and you would later wonder later why you cannot calculate an average for the column;</li>
+<li>Your code will be more transparent and easier to read if one immediately knows what kind of data you are importing</li>
+<li>The import process will be <em>much</em> faster if you provide the column types yourself and the function does not need to guess the types itself.</li>
+</ol>
+<p>One situation where specifying column types yourself is extremely important is when a column contains numerical codes that might contain a leading zero, e.g.&nbsp;when the data contain <a href="">HS product codes</a>, such as here:</p>
+<pre><code>commoditycode,complexity
+0101,0.06
+0102,-0.49
+0103,0.51
+0104,-1.12
+0105,-0.17</code></pre>
+<p>Assuming the file is called <code>exp_data_hs.csv</code> and also is stored in <code>data/tidy/</code>, we might try to import it using the default argument values:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data_hs.csv"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>exp_prod_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(<span class="at">file =</span> file_path)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>exp_prod_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_prod_data)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>exp_prod_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  commoditycode complexity
+          &lt;int&gt;      &lt;dbl&gt;
+1           101       0.06
+2           102      -0.49
+3           103       0.51
+4           104      -1.12
+5           105      -0.17</code></pre>
+</div>
+</div>
+<p>As you can see, <code>data.table::fread()</code> interpreted the column <code>commoditycode</code> as <code>double</code>. But since numbers do not have leading zeros, these are removed <em>silently</em>, meaning that <code>R</code> does not issue a warning message. This is dangerous and might come with serious misinterpretations later on. To avoid this, you must choose the column types yourself via the <code>colClasses</code> argument, by simply specifying a vector with the data types:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data_hs.csv"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>exp_prod_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> daten_pfad, <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="st">"character"</span>, <span class="st">"double"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_prod_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  commoditycode complexity
+  &lt;chr&gt;              &lt;dbl&gt;
+1 0101                0.06
+2 0102               -0.49
+3 0103                0.51
+4 0104               -1.12
+5 0105               -0.17</code></pre>
+</div>
+</div>
+<p>As you can see, encoding the column <code>commoditycode</code> as <code>character</code> preserves the leading zeros and the correct product codes.</p>
+<p>For data sets with many columns it is often tedious to specify column types one by one. Here it might be useful to use the function <code>rep()</code>: it saves space if, for instance, 6 subsequent columns are all of type <code>double</code>. In this case you may just write <code>rep("double" , 6)</code>.</p>
+</section>
+<section id="specify-how-many-rows-should-be-readskipped-using-nrows-and-skip" class="level2">
+<h2 class="anchored" data-anchor-id="specify-how-many-rows-should-be-readskipped-using-nrows-and-skip">Specify how many rows should be read/skipped using <code>nrows</code> and <code>skip</code></h2>
+<p>Keep in mind that you can increase the reading speed of <code>data.table::fread()</code> <em>considerably</em> by manually specifying the columns types. At the same time, opening very large data files in R Studio or even a text editor can slow down your computer considerably.</p>
+<p>Thus, it is advisable to read in the first 3-5 rows, inspect them, and then read in the whole data set with the right specification for <code>colClasses</code>.</p>
+<p>You can load only the first <span class="math inline">\(n\)</span> rows by using the argument <code>nrows</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.csv"</span>), </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrows =</span> <span class="dv">1</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>exp_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  iso2c  year exports
+  &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt;
+1 AT     2012    54.0</code></pre>
+</div>
+</div>
+<p>In other instances, you might also want to <em>skip</em> the first <span class="math inline">\(n\)</span> rows. This is often the case if your file contains some general introductory header, which is placed before the actual data set. Such data with a header might look like this:</p>
+<pre><code>This is awesome data from 2012-2014
+It was compiled be Claudius
+He also added this useless header
+iso2c,year,Exporte
+AT,2012,53.97
+AT,2013,53.44
+AT,2014,53.38
+</code></pre>
+<p>In this case, you definitely want to ignore the first three rows when importing the data set. Otherwise you will get hodgepodge:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data_header.csv"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 6
+  V1    It    was   compiled be      Claudius
+  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   
+1 He    also  added this     useless header  </code></pre>
+</div>
+</div>
+<p>To ignore the first three rows just set <code>skip</code> to <code>3</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data_header.csv"</span>), </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">3</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>exp_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  iso2c  year Exporte
+  &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt;
+1 AT     2012    54.0
+2 AT     2013    53.4
+3 AT     2014    53.4</code></pre>
+</div>
+</div>
+<p>Again, the automatic detection of <code>fread()</code> often works quite well when it comes to the identification of useless headers, but better be prepared to use <code>skip</code> whenever necessary.</p>
+</section>
+<section id="specify-columns-that-should-not-be-read-using-select-and-drop" class="level2">
+<h2 class="anchored" data-anchor-id="specify-columns-that-should-not-be-read-using-select-and-drop">Specify columns that should (not) be read using <code>select</code> and <code>drop</code></h2>
+<p>Sometimes you only want to read in a certain selection of columns. This can also save a lot of time when working with large data sets. In the following example we only want to import the columns <code>year</code> and <code>exports</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.csv"</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrows =</span> <span class="dv">1</span>, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">select =</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"Exporte"</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_data)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>exp_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+   year exports
+  &lt;int&gt;   &lt;dbl&gt;
+1  2012    54.0
+2  2013    53.4</code></pre>
+</div>
+</div>
+<p>If you want to manually specify column types, you can do so without using <code>colClasses</code> by passing a named vector to <code>select</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.csv"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrows =</span> <span class="dv">1</span>, </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">select =</span> <span class="fu">c</span>(<span class="st">"year"</span><span class="ot">=</span><span class="st">"double"</span>, <span class="st">"exports"</span><span class="ot">=</span><span class="st">"double"</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_data)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>exp_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+   year exports
+  &lt;dbl&gt;   &lt;dbl&gt;
+1  2012    54.0
+2  2013    53.4</code></pre>
+</div>
+</div>
+<p>Alternatively, we can also specify columns to be ignored via <code>drop</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.csv"</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrows =</span> <span class="dv">1</span>, </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">drop =</span> <span class="st">"iso2c"</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_data)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>exp_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+   year exports
+  &lt;int&gt;   &lt;dbl&gt;
+1  2012    54.0
+2  2013    53.4</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="importing-data-from-other-file-formats" class="level1">
+<h1>Importing data from other file formats</h1>
+<p>Even though <code>csv</code>-files are the most widely used data, there are of course many other formats you will encounter. Here I would like to give examples of three other formats (<code>.rds</code>, <code>.rdata</code> and <code>.dta</code>).</p>
+<p>First, <code>R</code> has two ‘in-house’ formats that while being extremely well suited for storing larger data, can only be opened via <code>R</code>. These files have the ending <code>.rds</code>/<code>.Rds</code>, <code>.RData</code>, or <code>.Rda</code> (where <code>.Rda</code> is just an abbreviation for <code>.RData</code>).</p>
+<p>Generally, <code>.Rds</code> store individual R-objects, such as single atomic vectors, <code>list</code>s, or <code>data.frame</code>s. Such files can be read with the function <code>readRDS()</code>, which takes a single argument - the name of the <code>.Rds</code>-file - and returns the object stored in the file:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>data_set <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.Rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>By contrast, <code>.RData</code>-files can contain more than one objects. Moreover, the corresponding import function <code>load()</code> does not return an object to which you can assign a name. Instead, the objects retain the name with which they were originally saved and are available immediately after calling <code>load()</code>: In the following example, import two objects called <code>test_dat</code> and <code>test_vec</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/test_daten.RData"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>test_dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  a b
+1 1 3
+2 2 4</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>test_vec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Test vector"</code></pre>
+</div>
+</div>
+<p>The use of <code>.RData</code> is particularly useful whenever you want to store several objects and if some of these objects are not data sets, for which other formats would be readily available.</p>
+<p>A format often used in economics is the native format of the commercial software <a href="https://de.wikipedia.org/wiki/Stata">STATA</a>. These file end with <code>.dta</code>. To read files in this format you may use the function <code>read_dta()</code> from the package <a href="https://github.com/tidyverse/haven">haven</a>, which accepts the filename via the argument <code>file</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>dta_file <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.dta"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>dta_data <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="at">file =</span> dta_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The package <a href="https://github.com/tidyverse/haven">haven</a> actually provides a number of other functions that allow you to read (and write) in a number of data formats used by commercial software packages such as SAS or SPSS.</p>
+</section>
+<section id="exporting-data" class="level1">
+<h1>Exporting data</h1>
+<p>Compared to reading in data, saving it is much easier, because the data is already in a reasonable format. So the only real question is: in which file format should you save your data?</p>
+<p>In the vast majority of cases, this question can comfortably be answered with <code>csv.</code> This format is easy to read and fully platform compatible. It also does not have the worst properties in terms of reading and writing speed, especially if you compress the data later on.</p>
+<p>The fastest and, in my opinion, by far the best function for writing <code>csv</code>.files is the function <code>fwrite()</code> from the package <code>data.table</code> - think of it as the sister to <code>data.table::fread()</code>.</p>
+<p>To illustrate how to use it, suppose we have a data set <code>test_data</code> that we want to store in the directory subfolder <code>data/tidy</code> as <code>test_data.csv</code>. This is easily done with <code>data.table::fwrite()</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/test_data.csv"</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>data.table<span class="sc">::</span><span class="fu">fwrite</span>(<span class="at">x =</span> test_data, <span class="at">file =</span> file_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In addition to the object to be written as the first argument (<code>x</code>), you also need to specify the argument <code>file</code>, which determines the name and path of the file to be written. <code>data.table::fwrite()</code> accepts some more optional arguments, but in most cases you will not need them. If you are interested, just have a look at the help function!</p>
+<p>The R-specific formats <code>.Rdata</code> and <code>.Rds</code> have speed and compression advantages over the <code>csv</code> format, and remain fully platform-compatible. Their biggest drawback, however, is that they can only be used by other R-users. Thus, before using them you should make sure that all potential users of your data also use <code>R</code>. In this case you can save a single object in an <code>.Rds</code>-file by using the function <code>saveRDS()</code> with the arguments <code>object</code> and <code>file</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> test_data,  </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/test_data.Rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In addition, you may use the optional argument <code>compress</code> to select the compression type: <code>gz</code> is the fastest, <code>bz</code> the strongest, and <code>xz</code> represents the middle ground.</p>
+<p>If you want to save several objects at once you can do this using the format <code>.RData</code>. The corresponding function is <code>save()</code>. Although you can simply pass all the objects you want to save as the first arguments to the function, it is more transparent to do this via the <code>list</code> argument. The following code stores the two objects <code>test_data</code> and <code>data</code> in the file <code>"data/tidy/datacollection.Rdata"</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">list=</span><span class="fu">c</span>(<span class="st">"test_data"</span>, <span class="st">"daten"</span>), </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">file=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/datensammlung.RData"</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Like <code>saveRDS()</code>, <code>save()</code> allows you to select the compression algorithm via the <code>compress</code> argument. Moreover, you may control the compression level via the optional argument <code>compression_level</code>. Possible values range from <code>1</code> (fast, but little compression) to <code>9</code> (slow, but strong compression).</p>
+<p>The final format considered is the <a href="https://de.wikipedia.org/wiki/Stata">STATA</a>-specific format <code>.dta</code>. To store data in this format you may use the function <code>write_dta()</code> from the package <a href="https://github.com/tidyverse/haven">haven</a>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>haven<span class="sc">::</span><span class="fu">write_dta</span>(</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> test_data, </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">path =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/test_data.dta"</span>)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For <code>SAS</code> and <code>SPSS</code> formats similar functions are also provided by the <a href="https://github.com/tidyverse/haven">haven</a> package.</p>
+<blockquote class="blockquote">
+<p><strong>Note:</strong> Especially with large data sets, the read and write speed of functions is very important. The question of the best file format becomes much more relevant in these cases, if compared with the cases of small data sets, where the question of format mainly revolves around the issue of ‘compatibility’. Some nice articles comparing different functions and formats with regard to their speed can be found, e.g., <a href="https://csgillespie.github.io/efficientR/efficient-inputoutput.html">here</a> or<br>
+<a href="https://data.nozav.org/tutorial/2019-r-data-frame-benchmark/">here</a>.</p>
+</blockquote>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>You can also specify alternative arguments, such as <code>cmd</code> when you want to parse the input file using a command line command. But we will not cover such more advanced cases here.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2024, Claudius Gräbner-Radkowitsch</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

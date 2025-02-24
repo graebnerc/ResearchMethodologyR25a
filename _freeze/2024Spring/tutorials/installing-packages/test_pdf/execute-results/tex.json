@@ -1,0 +1,16 @@
+{
+  "hash": "847121c9287aee4e5ede3d607fbb7bc8",
+  "result": {
+    "markdown": "---\ntitle: \"A test document\"\nformat: pdf\n---\n\n\n\n\n# File used to test your Quarto installation\n\nPlease compile this document into PDF to test whether you have installed\nQuarto and LaTeX correctly. \n\nIf no PDF file is created, please make a screenshot of the error message and\npost it into the forum. \nIf a file `test.log` has been created, please also post\nthis file alongside the screenshot.\n",
+    "supporting": [
+      "test_pdf_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": null,
+    "postProcess": false
+  }
+}

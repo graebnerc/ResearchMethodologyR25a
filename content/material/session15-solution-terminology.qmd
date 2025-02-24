@@ -1,0 +1,107 @@
+---
+title: "Estimating average height of EUF students"
+subtitle: "Solving the exercise on terminology"
+date: "2024-06-15"
+date-modified: last-modified
+execute: 
+  warning: false
+  message: false
+  echo: false
+format: 
+    html: 
+        highlight-style: github
+        number-sections: true
+    pdf: 
+        toc: false
+        number-sections: true
+---
+
+```{r}
+library(purrr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(kableExtra)
+library(DataScienceExercises)
+library(icaeDesign)
+student_pop <- DataScienceExercises::EUFstudents
+true_vals <- student_pop %>%
+  group_by(Gender) %>%
+  summarise(
+    Mean=mean(Height), SD=sd(Height)
+  )
+```
+
+# Task
+
+> Consider the example from the [previous task]() on estimating the average height of EUF students. Use the right vocabulary from sampling theory to describe it.
+
+# Possible solution 
+
+The *population* is the set of all students enrolled at the EUF ($N=$ `r nrow(student_pop)`). We are interested in the *population parameter* 'average height'.
+
+The *sample* is set of randomly drawn students from the population. We consider two cases, one with the *sample size* $n=10$ and one with $n=20$. We can assume the sample is a viable random sample, i.e. that it is unbiased and representative of the population.
+
+The *point estimate* is the sample mean of the height, which is used to estimate the population parameter of interest (i.e. the average height of EUF students). This is viable since, given our assumptions, statements about the sample can be generalized to the population.
+
+The sampling distribution visualizes the sampling variation, i.e. the variation of the point estimate obtained from different random samples. While in reality the sampling distribution remains unknown due to the fact that only one sample can be drawn, in the present case we used an artificial population and a Monte Carlo Simulation to characterize the sampling distribution as follows:
+
+```{r}
+#| echo: false
+#| include: true
+set.seed(123)
+reps <- 1000
+samp_size10 <- map_dbl(
+  .x = seq_len(reps), 
+  .f = ~mean(sample(x = student_pop[["Height"]], 
+                    size = 10, 
+                    replace = FALSE))
+)
+samp_size50 <- map_dbl(
+  .x = seq_len(reps), 
+  .f = ~mean(sample(x = student_pop[["Height"]], 
+                    size = 50, 
+                    replace = FALSE)))
+full_samples <- rbind(
+  tibble("samplesize"="Sample size: 10", "mean"=samp_size10), 
+  tibble("samplesize"="Sample size: 50", "mean"=samp_size50)
+)
+sampling_plot <- ggplot(data = full_samples, aes(x=mean)) +
+  geom_histogram(alpha=0.5, color="#00395B", fill="#00395B", binwidth = 0.5) +
+  scale_y_continuous(expand = expansion(add = c(0, 10))) +
+  scale_x_continuous(limits = c(158, 178), expand = expansion()) +
+  geom_vline(xintercept = filter(true_vals, Gender=="total") %>% pull(Mean)) + 
+  facet_wrap(~samplesize, nrow = 2) +
+  labs(
+    x = "Sample means", 
+    y = "Count", 
+    title = "The sampling distributions") +
+  theme_icae()
+sampling_plot
+```
+
+The *standard error* corresponds to the standard deviation of the sampling distributions and, due to the MCS framework, can be computed directly:
+
+```{r}
+sample_props <- full_samples %>%
+  group_by(samplesize) %>%
+  summarise(`Mean`=mean(mean),
+            `Variation`=sd(mean)) %>%
+  rename(` `=samplesize) %>% 
+  kable(digits = 3)
+sample_props
+```
+
+# Summary table
+
+| Concept                  | Pendant in example                                                                                                                                  |
+|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| Population               | Set of all students enrolled at the EUF                                                                                                             |
+| Sample                   | Set of randomly drawn students from the population                                                                                                  |
+| Sample size              | Here `10` or `50`                                                                                                                                   |
+| Point estimate           | Mean height of all students in the sample                                                                                                           |
+| Sampling distribution    | The distribution of all the samples drawn from the population                                                                                       |
+| Standard error           | The standard deviation of the sampling distribution                                                                                                 |
+| Properties of the sample | We assume the sample to be a viable random sample, i.e. that it is unbiased and representative of the population, so its results are generalizable. |
+| Census                   | This would mean to measure the height of every student in the population directly.                                                                  |
+| Inference                | The strategy of understanding a population parameter by studying a sample and generalize to the population.                                         |

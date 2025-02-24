@@ -1,0 +1,65 @@
+---
+title: "🗓️ Session 7: Visualization"
+date: "2024-04-25"
+date-modified: last-modified
+---
+
+One area for which R is particulary well-known for is the area of 
+*visualization*. This is particularly because of the package 
+[ggplot2](https://ggplot2.tidyverse.org/). 
+This session introduces `ggplot2` and the general approach to generate 
+visualization in R. The good thing is that if you follow the approach described
+here, you can basically create every visualization type you can think of.
+
+
+## 👨‍🏫 Lecture Slides 
+
+Either click on the slide area below or click 
+[here](/2024Spring/material/slides/T7-Visualization.pdf) to download the slides.
+
+
+```{=html}
+<div class="embed-container">
+  <iframe 
+  src="/2024Spring/material/slides/T7-Visualization.pdf" 
+  style="border: 0.5px" 
+  width="80%"
+  height="80%"
+  ></iframe>
+</div>
+```
+
+::: {.callout-tip collapse="true"}
+## The R script of this session
+<script src="https://gist.github.com/graebnerc/a3c11735652a0e4927ec71d4efadce09.js"></script>
+:::
+
+## 🎥 Lecture videos 
+
+Currently, no videos are available for this session. Check out the 
+[tutorial](/2024Spring/tutorials/visualization/index.qmd) instead.
+
+## 📚 Mandatory Reading
+
+- The tutorial [visualization](/2024Spring/tutorials/visualization/index.qmd)
+
+## Further Reading
+
+- @hadleygraphics, who introduces the theory underlying `ggplot2`
+- [ggplot2 cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf)
+- Browse the website [from Data to Viz](https://www.data-to-viz.com/) and try to re-create some of the figures yourself
+
+## ✍️ Coursework
+
+- Do the exercises `Visualization1` from the `DataScienceExercises` package
+
+::: {.callout-tip collapse="true"}
+## Quick code for starting the exercises
+```{r}
+#| eval: false
+learnr::run_tutorial(
+  name = "Visualization1", 
+  package = "DataScienceExercises", 
+  shiny_args=list("launch.browser"=TRUE))
+```
+:::

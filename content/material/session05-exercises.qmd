@@ -1,0 +1,96 @@
+---
+title: "Exercises for Recap Session 1"
+date: "2024-04-18"
+date-modified: last-modified
+format: 
+    html: 
+        highlight-style: github
+    pdf: 
+        toc: false
+---
+
+# Exercise 1: Basic object types I
+
+1. Create a vector containing the numbers `2`, `5`, `2.4` and `11`.
+
+2. Replace the second element with `5.9`.
+
+3. Add the elements `3` and `1` to the beginning, and the elements 
+`"8.0"` and `"9.2"` to the end of the vector.
+
+4. Create a vector with the numbers from -8 to 9 (step size: 0.5)
+
+5. Compute the square root of each element of the first vector 
+using vectorisation.
+
+6. Create a character vector containing then strings `"Number_1"` to 
+`"Number_5"`. Use suitable helper functions to create this vector quickly.
+
+# Exercise 2: Basic object types II
+
+Consider the following vector:
+
+```{r}
+ex_2_vec <- c(1, "2", FALSE)
+```
+
+1. What is the type of this vector? Why?
+
+2. What happens if you coerce this vector into type integer? Why?
+
+3. What does `sum(is.na(x))` tell you about a vector `x`? What is happening here?
+
+4. Is it a good idea to use `as.integer()` on double characters to round them to 
+the next integer? Why (not)? What other ways are there to do the rounding?
+
+# Exercise 3: Define a function
+
+Create functions that take a vector as input and returns:
+
+1. The last value.
+
+2. Every element except the last value and any missing values.
+
+3. Only even numbers.
+    
+> Hint: Use the operation `x %% y` to get the remainder from diving `x` by `y`, 
+the so called 'modulo y'. For even numbers, the modulo 2 is zero.
+
+Apply your function to the following example vector:
+
+```{r}
+ex_3_vec <- c(1, -8, 99, 3, NA, 3, -0.5)
+```
+
+# Exercise 4: Lists
+
+1. Create a list that contains three elements called `'a'`, `'b'` and `'c'`.
+The first element should correspond to a double vector with the elements
+`1.5`, `-2.9` and `99`.
+The second element should correspond to a character vector with the elments
+`'Hello'`, `'3'`, and `'EUF'`.
+The third element should contain three times the entry `FALSE`.
+
+2. Transform this list into a `data.frame` and a `tibble`. Then apply `str()` to
+get information about the respective structure. How do the results differ?
+
+
+# Exercise 5: Data frames and the study semester distribution at EUF
+
+The package `DataScienceExercises` contains a data set called `EUFstudentsemesters`,
+which contains information about the distribution of study semesters of 
+enrolled students at the EUF in 2021. You can shortcut the data set as follows:
+
+```{r}
+euf_semesters <- DataScienceExercises::EUFstudentsemesters
+```
+
+1. What happens if you extract the column with study semesters as a vector
+and transform it into a `double`? 
+
+2. What is the average study semester of those students being in their 8th or 
+earlier semester?
+
+3. How many students are in their 9th or higher study semester?
+
+4. What does `typeof(euf_semesters)` return and why?

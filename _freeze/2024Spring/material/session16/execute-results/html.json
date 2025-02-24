@@ -1,0 +1,14 @@
+{
+  "hash": "61bc2cef3ed4e7917f46a9e9d12f0599",
+  "result": {
+    "markdown": "---\ntitle: \"🗓️ Session 16: Linear regresssion\"\ndate: \"2024-06-14\"\ndate-modified: last-modified\n---\n\n\nTBA\n\n## 👨‍🏫 Lecture Slides \n\nEither click on the slide area below or click \n[here](/2024Spring/material/slides/T16-SimpleLinearRegression.pdf) to download the slides.\n\n\n```{=html}\n<div class=\"embed-container\">\n  <iframe \n  src=\"/2024Spring/material/slides/T16-SimpleLinearRegression.pdf\" \n  style=\"border: 0.5px\" \n  width=\"80%\"\n  height=\"80%\"\n  ></iframe>\n</div>\n```\n\n\n<!---\n::: {.callout-tip collapse=\"true\"}\n## Lecture code\n\n<script src=\"https://gist.github.com/graebnerc/5567989fe275f6eefbe6ea2dafe1a750.js\"></script>\n\n:::\n\n\n## 🎥 Lecture videos \n\nSo far, there are no learning videos available for this lecture. \n\n## 📚 Mandatory Reading\n\n- [Tutorial on sampling](/2024Spring/tutorials/mcs/index.qmd)\n- [Chapter 7](https://moderndive.com/7-sampling.html) in @moderndive.\n\n## ✍️ Coursework\n\n- Do the exercises `Sampling` from the `DataScienceExercises` package\n\n::: {.callout-tip collapse=\"true\"}\n## Quick code for starting the exercises\n\n::: {.cell}\n\n```{.r .cell-code}\nlearnr::run_tutorial(\n  name = \"Sampling\", \n  package = \"DataScienceExercises\", \n  shiny_args=list(\"launch.browser\"=TRUE))\n```\n:::\n\n:::\n--->",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

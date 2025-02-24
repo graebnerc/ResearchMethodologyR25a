@@ -1,0 +1,82 @@
+---
+title: Exercises on multiple linear regression # Also check out line 43
+author: Claudius Gräbner-Radkowitsch
+date: '2024-06-07'
+documentclass: scrartcl
+format: 
+  html:
+    theme: readable
+    highlight: tango
+    toc: true
+    toc_depth: 2
+    number_sections: true
+  pdf:
+    papersize: a4
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    include-in-header: 
+      text: |
+        \usepackage{lmodern} 
+        \usepackage{graphicx}
+        \usepackage{hyperref}
+        \usepackage{url}                
+        \usepackage{xcolor}
+        \usepackage{booktabs}
+        \usepackage{listings}
+        \lstloadlanguages{R}
+        
+        \definecolor{eufblue}{RGB}{0,57,91}
+        \definecolor{eufgrey}{RGB}{111,111,111}
+        \definecolor{euflightblue}{RGB}{105,170,205}
+        
+        \hypersetup{
+        pdfauthor={Claudius Graebner-Radkowitsch}
+        colorlinks=true,
+        linkcolor=euflightblue,
+        urlcolor=euflightblue
+        }
+        \usepackage[includehead,includefoot,top=2cm, bottom=1.5cm]{geometry}
+        \usepackage[headsepline, footsepline]{scrlayer-scrpage}
+        \pagestyle{scrheadings}
+        \clearpairofpagestyles
+        \ihead{Exercises: Multiple linear regression}
+        %\chead{Kopfzeile Mitte}
+        \ohead{\pagemark} %
+        \ifoot{}
+        \cfoot{\href{https://euf-datascience-spring24.netlify.app/}{\normalfont\color{eufblue}{Data Science Using R - Spring Semester 2024}}} % Fußzeile Mitte
+        \ofoot{} 
+        \setkomafont{disposition}{\color{eufblue}\bfseries}
+---
+
+
+# Exercises on multiple linear regression
+
+## Studying coffee data
+
+Read in the data set [coffee_data.csv](coffee_data.csv). 
+
+It contains the following variables:
+
+* `CoffeePrice`: The world market price for coffee from Brazil in EUR per kilo 
+* `CoffeeDemand`: The demand for coffee from Brazil in tons
+* `CoffeeSeller`: The kind of coffee company: `Standard` or `FairTrade`
+
+In the following, treat `CoffeeDemand` as the dependent variable, 
+and `CoffeePrice` and `CoffeeSeller` as the independent variables.
+
+Estimate a parallel slopes model, and an interaction model.
+Which of the models would you prefer? 
+
+You should justify your choice using two main arguments.
+
+## Exploring feasible model specifications
+
+Read in the data set [ice_data.csv](ice_data.csv).
+What kind of relationships could you reasonably study in a linear regression
+framework (without further data transformation).
+
+## Solutions
+
+The solutions to both exercises can be found 
+[here](https://gist.github.com/graebnerc/e63dd4d15f314bc565eac8e617c9bef6).

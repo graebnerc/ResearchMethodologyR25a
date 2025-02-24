@@ -1,0 +1,16 @@
+{
+  "hash": "19f33e1b84cddd0e6767818e7488770d",
+  "result": {
+    "markdown": "---\ntitle: \"🗓️ Session 7: Visualization\"\ndate: \"2024-04-25\"\ndate-modified: last-modified\n---\n\n\nOne area for which R is particulary well-known for is the area of \n*visualization*. This is particularly because of the package \n[ggplot2](https://ggplot2.tidyverse.org/). \nThis session introduces `ggplot2` and the general approach to generate \nvisualization in R. The good thing is that if you follow the approach described\nhere, you can basically create every visualization type you can think of.\n\n\n## 👨‍🏫 Lecture Slides \n\nEither click on the slide area below or click \n[here](/2024Spring/material/slides/T7-Visualization.pdf) to download the slides.\n\n\n\n```{=html}\n<div class=\"embed-container\">\n  <iframe \n  src=\"/2024Spring/material/slides/T7-Visualization.pdf\" \n  style=\"border: 0.5px\" \n  width=\"80%\"\n  height=\"80%\"\n  ></iframe>\n</div>\n```\n\n\n::: {.callout-tip collapse=\"true\"}\n## The R script of this session\n<script src=\"https://gist.github.com/graebnerc/a3c11735652a0e4927ec71d4efadce09.js\"></script>\n:::\n\n## 🎥 Lecture videos \n\nCurrently, no videos are available for this session. Check out the \n[tutorial](/2024Spring/tutorials/visualization/index.qmd) instead.\n\n## 📚 Mandatory Reading\n\n- The tutorial [visualization](/2024Spring/tutorials/visualization/index.qmd)\n\n## Further Reading\n\n- @hadleygraphics, who introduces the theory underlying `ggplot2`\n- [ggplot2 cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf)\n- Browse the website [from Data to Viz](https://www.data-to-viz.com/) and try to re-create some of the figures yourself\n\n## ✍️ Coursework\n\n- Do the exercises `Visualization1` from the `DataScienceExercises` package\n\n::: {.callout-tip collapse=\"true\"}\n## Quick code for starting the exercises\n\n::: {.cell}\n\n```{.r .cell-code}\nlearnr::run_tutorial(\n  name = \"Visualization1\", \n  package = \"DataScienceExercises\", \n  shiny_args=list(\"launch.browser\"=TRUE))\n```\n:::\n\n:::\n",
+    "supporting": [
+      "session07_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

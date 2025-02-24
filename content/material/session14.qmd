@@ -1,0 +1,41 @@
+---
+title: "🗓️ Session 14: An introduction to data analysis"
+date: "2024-06-06"
+date-modified: last-modified
+---
+
+In this theoretical lecture, we will discuss key concepts in data analysis 
+The aim is to give you an overview of the different types of data analysis and 
+which techniques can be used in which context. 
+In addition, the basic vocabulary is clarified so that you don't get lost in 
+the jungle of buzzwords that exists in the context of 'data science'.
+
+
+## 👨‍🏫 Lecture Slides 
+
+Either click on the slide area below or click 
+[here](/2024Spring/material/slides/T14-DataAnalysis.pdf) to download the slides.
+
+
+```{=html}
+<div class="embed-container">
+  <iframe 
+  src="/2024Spring/material/slides/T14-DataAnalysis.pdf" 
+  style="border: 0.5px" 
+  width="80%"
+  height="80%"
+  ></iframe>
+</div>
+```
+
+## 🎥 Lecture videos 
+
+So far, there are no learning videos available for this lecture. 
+
+## 📚 Mandatory Reading
+
+- [Introduction and Section 2.1.](https://www.statlearning.com/) in @jamesIntroductionStatisticalLearning2021.
+
+## ✍️ Coursework
+
+- Answer the recap questions from the last slide

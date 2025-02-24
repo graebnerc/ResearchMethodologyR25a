@@ -1,0 +1,55 @@
+---
+title: "🗓️ Sessions 5 and 6: Recap and practice"
+date: "2024-04-18"
+date-modified: last-modified
+---
+
+This session is about recap and practice. We will do exercises on topics that
+you suggest, and recap concepts you found particularly hard to grasp. To this
+end, make sure you communicate your preferences on topics via Moodle until 
+one week before this session.
+
+## 👨‍🏫 Lecture Slides 
+
+There were no slides used during this session.
+
+::: {.callout-tip collapse="true"}
+## Script for the function example we were using
+This is basically a step-by-step solution to the first function exercise of the
+`Basics` exercise collection in the package `DataScienceExercises`.
+<script src="https://gist.github.com/graebnerc/908de56b52a28fda6fe5acb14393942d.js"></script>
+:::
+
+
+## 🎥 Lecture videos 
+
+There will be no videos for recap sessions.
+
+## 📚 Suggested Reading
+
+- Read again the tutorial on [functions](/2024Spring/tutorials/obj-types-i-functions/index.qmd) 
+- I added more mini exercises for defining functions to the package `DataScienceExercises`
+as part of the new exercise package `Functions`
+
+::: {.callout-tip collapse="true"}
+## Quick code for starting the exercises on functions
+```{r}
+#| eval: false
+learnr::run_tutorial(
+  name = "Functions", 
+  package = "DataScienceExercises", 
+  shiny_args=list("launch.browser"=TRUE))
+```
+:::
+
+## ✍️ Coursework
+
+*During the first 60 minutes of the session you will work on this sheet in groups*
+*of three people. Please use only one computer but develop the solutions together.*
+*In the remaining 30 minutes we will go through your solutions and discuss problems.*
+*I will post my own solutions online after the session, but urge to first try*
+*to come up with solutions on your own.*
+
+- [Exercise sheet for this session](session05-exercises.qmd)
+- [R file template for your solutions](https://gist.github.com/graebnerc/3725a703f7fcbc6d429993810d7a81fd)
+- [Possible solutions to the exercises](session05-solutions.qmd)

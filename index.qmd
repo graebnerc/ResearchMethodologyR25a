@@ -1,0 +1,46 @@
+---
+title: "Theoretical and Empirical Research Methodology"
+subtitle: "An Introduction to R"
+---
+
+# 📑 The course in brief
+
+**Focus:** 
+This course is part of the module *Theoretical and Empirical Research Methodology*.
+It complements the theoretical lectures by introducing you to the statistical 
+programming language R and acquire practical knowledge about how to implement 
+essential research tools and all theoretical concepts discussed during the 
+main lecture in R. 
+
+**How:** 
+The course comprises a mixture of (i) lectures, in which I introduce concepts
+in the classroom, (ii) automated hands-on exercises for you to do at home on
+your own and (iii) instructional videos for topics that are best learned and
+practiced by yourself. Of course, you are always invited to post your questions
+to the course forum and more intricate problems can be solved in class.
+
+**Prerequisites:**
+The course does not require you to have any prior knowledge in R or any other 
+programming language. Depending on your prior knowledge or affinity to 
+programming, the course will be quite demanding, but equip you with 
+computational skills that are most valuable both within academia and the 
+business world. 
+
+# 🎯 Learning Objectives
+
+-	Use R together with the integrated development environment R Studio
+-	Understand the use of R packages to perform specific data analytic tasks
+-	Write reproducible data analysis reports using Quarto
+-	Transform raw data into tidy data, which is suitable for further analysis
+-	Choose and justify the correct visualization approach, and create appealing visualizations using the R package `ggplot2`
+-	Implement and interpret linear regression models with numerical and categorial variables
+- Analyze experimental data in R
+
+
+
+-----------------
+
+
+<a href=https://euf-datascience-spring23.netlify.app>
+    <button class="button-61">The main course on moodle</button>
+</a>

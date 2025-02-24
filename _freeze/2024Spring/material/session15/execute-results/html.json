@@ -1,0 +1,14 @@
+{
+  "hash": "257d970279d646a1bf0cf539d771ce03",
+  "result": {
+    "markdown": "---\ntitle: \"🗓️ Sessions 15 and 16: Sampling\"\ndate: \"2024-06-07\"\ndate-modified: last-modified\n---\n\n\nA central concept in data science - and in applied statistics more generally - \nis that of *sampling*. This refers to the strategy of using (small) samples to \nlearn about a (large) population. For example, if you wanted to understand the \neffect of TV advertising on the consumer behaviour of young men in Germany, \nyou could study the whole population of young men in Germany. \nBut since this is usually not feasible, you would rather take a sample of young \nmen, study their behaviour and then generalise to the whole population. \nIn this session we will discuss when and how this is possible. \nIn this context, we will also learn about the concept of \n*Monte Carlo simulations* and two central concepts of probability theory \nunderlying applied statistics: the central limit theorem and the law of large \nnumbers, both of which underlie much of modern sampling theory.\n\n## 👨‍🏫 Lecture Slides \n\nEither click on the slide area below or click \n[here](/2024Spring/material/slides/T15-Sampling.pdf) to download the slides.\n\n\n```{=html}\n<div class=\"embed-container\">\n  <iframe \n  src=\"/2024Spring/material/slides/T15-Sampling.pdf\" \n  style=\"border: 0.5px\" \n  width=\"80%\"\n  height=\"80%\"\n  ></iframe>\n</div>\n```\n\n\n\n::: {.callout-tip collapse=\"true\"}\n## Lecture code\n\n<script src=\"https://gist.github.com/graebnerc/5567989fe275f6eefbe6ea2dafe1a750.js\"></script>\n\n:::\n\n- [Extensive solution](session15-solution-eufstudents.qmd) for the exercise on the average height of EUF students\n- [Solution](session15-solution-terminology.qmd) for the exercise on terminology\n- Explanation of the [Central Limit Theorem](session15-solution-clt.qmd) and the corresponding exercise\n\n\n## 🎥 Lecture videos \n\nSo far, there are no learning videos available for this lecture. \n\n## 📚 Mandatory Reading\n\n- [Tutorial on sampling](/2024Spring/tutorials/mcs/index.qmd)\n- [Chapter 7](https://moderndive.com/7-sampling.html) in @moderndive.\n\n## ✍️ Coursework\n\n- Do the exercises `Sampling` from the `DataScienceExercises` package\n\n::: {.callout-tip collapse=\"true\"}\n## Quick code for starting the exercises\n\n::: {.cell}\n\n```{.r .cell-code}\nlearnr::run_tutorial(\n  name = \"Sampling\", \n  package = \"DataScienceExercises\", \n  shiny_args=list(\"launch.browser\"=TRUE))\n```\n:::\n\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

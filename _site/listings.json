@@ -1,0 +1,27 @@
+[
+  {
+    "listing": "/2024Spring/exercises.html",
+    "items": [
+      "/2024Spring/exercises/obj-types-exercises/index.html",
+      "/2024Spring/exercises/quarto-exercises/index.html",
+      "/2024Spring/exercises/multiple-regression/index.html"
+    ]
+  },
+  {
+    "listing": "/2024Spring/tutorials.html",
+    "items": [
+      "/2024Spring/tutorials/installation/index.html",
+      "/2024Spring/tutorials/installing-packages/index.html",
+      "/2024Spring/tutorials/using-exercises/index.html",
+      "/2024Spring/tutorials/first-steps/index.html",
+      "/2024Spring/tutorials/obj-types-i-functions/index.html",
+      "/2024Spring/tutorials/obj-types-ii-vectors/index.html",
+      "/2024Spring/tutorials/obj-types-iii-adv/index.html",
+      "/2024Spring/tutorials/visualization/index.html",
+      "/2024Spring/tutorials/importing-exporting-data/index.html",
+      "/2024Spring/tutorials/setting-up-an-r-project/index.html",
+      "/2024Spring/tutorials/data-wrangling/index.html",
+      "/2024Spring/tutorials/mcs/index.html"
+    ]
+  }
+]

@@ -1,0 +1,50 @@
+---
+title: "Material overview"
+---
+
+## 📚 General references
+
+The following textbooks offer a good general reference to the course
+content, and I think its a good idea to read into these books in a 
+general way. Moreover, I often point to chapters in the respective 
+session pages.
+
+- Wickham, H., Çetinkaya-Rundel, M., & Grolemund, G. (2023). *R for data science: Import, tidy, transform, visualize, and model data* (2nd edition). O'Reilly. [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/)
+
+- Ismay, C., & Kim, A. Y.-S. (2020). *Statistical inference via data science: A ModernDive, into R and the tidyverse*. CRC Press, Taylor and Francis Group. [https://moderndive.com/index.html](https://moderndive.com/index.html)
+
+For more advanced details on the fundamentals of programming in R, I 
+recommend the following:
+
+- Wickham, H. (2019). *Advanced R* (Second edition). CRC Press/Taylor & Francis Group. [https://adv-r.hadley.nz/](https://adv-r.hadley.nz/)
+
+For the model-related parts of the lecture I recommend the following book as a further reading reference:
+
+- James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). An introduction to statistical learning: With applications in R (Second edition). Springer.  [https://www.statlearning.com/](https://www.statlearning.com/) 
+
+## 🔖 Session-specific material
+
+::: {.callout-note collapse="true"}
+## How to use the exercise codes?
+For information on how to use the exercise code, read 
+[this tutorial](/2024Spring/tutorials/using-exercises/).
+:::
+
+
+|   Session    | Topic                                                   |                      Slides                       |       Exercise code        |
+|:-------------:|:--------------|:-------------:|:-------------:|
+|   [1](#s1)   | [General introduction](/2024Spring/material/session01.qmd) |       [Slides](/2024Spring/material/slides/T1-Introduction.pdf)        |                            |
+|   [2](#s2)   | [Basics of R and R-Studio]((/2024Spring/material/session02.qmd))                                |     [Slides](/2024Spring/material/slides/T2-Basics-Functions.pdf)      |          `Basics`, `Functions`          |
+|   [3](#s3)   | [Basic objects](/2024Spring/material/session03.qmd)                                           |          [Slides](/2024Spring/material/slides/T3-Objects.pdf)          |       `ObjectTypes1`       |
+|   [4](#s4)   | [Advanced objects](/2024Spring/material/session04.qmd)                                        |        [Slides](/2024Spring/material/slides/T4-AdvObjects.pdf)         |       `ObjectTypes2`       |
+|      5       | [Recap & practice](/2024Spring/material/session05.qmd)                                        |                                                   |                            |
+|   [6](#s6)   | [Visualization](/2024Spring/material/session05.qmd)                                            |       [Slides](/2024Spring/material/slides/T6-Visualization.pdf)       |      `Visualization1`      |
+|   [7](#s7)   | Project management and data import                      |       [Slides](/2024Spring/material/slides/T7-ProjectSetup.pdf)        |       `ProjectOrga`        |
+| [8 & 9](#s8) | Data wrangling                                          |      [Slides](/2024Spring/material/slides/T8T9-DataWrangling.pdf)      | `Wrangling1`, `Wrangling2` |
+|  [10](#s10)  | Exploratory data analysis (recap)                       | [Slides](/2024Spring/material/slides/T10-ExplorativeDataAnalysis.pdf)  |                            |
+|  [11](#s11)  | Quarto/R Markdown                                       |          [Slides](/2024Spring/material/slides/T11-Quarto.pdf)          |          `Quarto`          |
+|  [12](#s12)  | Recap & practice                                        |                        NA                         |                            |
+|  [13](#s13)  | Introduction to data analysis                           |       [Slides](/2024Spring/material/slides/T13-DataAnalysis.pdf)       |                            |
+|  [14](#s14)  | Sampling                                                |         [Slides](/2024Spring/material/slides/T14-Sampling.pdf)         |         `Sampling`         |
+|  [15](#s15)  | Simple linear Regression                                |  [Slides](/2024Spring/material/slides/T15-SimpleLinearRegression.pdf)  |    `LinearRegression1`     |
+|  [16](#s15)  | Multiple linear Regression                              | [Slides](/2024Spring/material/slides/T16-MultipleLinearRegression.pdf) |    `LinearRegression2`     |

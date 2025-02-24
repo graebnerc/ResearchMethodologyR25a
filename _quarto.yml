@@ -1,0 +1,96 @@
+project:
+  type: "website"
+  title: "Data science using R"
+  output-dir: _site
+  render:
+    - "index.qmd"
+    - "content/*.qmd"
+    - "content/material/*.qmd"
+    - "content/material/session*/*.qmd"
+    - "content/tutorials/*.qmd"
+    - "content/tutorials/*/*.qmd"
+    - "content/exercises/*.qmd"
+    - "content/exercises/*/*.qmd"
+
+website:
+  title: "Research Methodology and R" # Title of website shown on top left
+  page-navigation: true
+  reader-mode: true
+  open-graph: true
+  favicon: "figures/icons/course_favicon.png"
+  search:
+    location: navbar
+    type: textbox
+  sidebar:
+    style: docked
+    contents:
+      - href: index.qmd
+        text: "🏠 Home"
+      - href: content/index.qmd
+        text: "🏢 Getting Started"
+      - section: "🗓️ Material"
+        contents:
+         - href: content/material/index.qmd
+           text: Overview
+         - href: content/material/session01.qmd
+           text: Session 01
+         - href: content/material/session02.qmd
+           text: Session 02
+         - href: content/material/session03.qmd
+           text: Session 03
+         - href: content/material/session04.qmd
+           text: Session 04
+         - href: content/material/session05.qmd
+           text: Sessions 05 & 06
+         - href: content/material/session07.qmd
+           text: Session 07
+         - href: content/material/session08.qmd
+           text: Session 08
+         - href: content/material/session09.qmd
+           text: Session 09
+         - href: content/material/session10.qmd
+           text: Session 10
+         - href: content/material/session11.qmd
+           text: Session 11
+         - href: content/material/session12.qmd
+           text: Sessions 12 & 13
+         - href: content/material/session14.qmd
+           text: Session 14
+         - href: content/material/session15.qmd
+           text: Sessions 15 & 16
+         - href: content/material/session17.qmd
+           text: Sessions 17 & 18
+         - href: content/material/session19.qmd
+           text: Session 19
+      - href: content/tutorials.qmd
+        text: "💻 Tutorials"
+
+  navbar:
+    background: primary
+  page-footer:
+    background: light
+    left: "Copyright 2025, Claudius Gräbner-Radkowitsch" 
+
+bibliography: references/references.bib
+csl: references/jepp.csl
+
+format:
+  html:
+    author: Prof. Dr. [Claudius Gräbner-Radkowitsch](#)
+    author-meta: Prof. Dr. Claudius Gräbner-Radkowitsch
+    date-format: "DD MM YYYY"
+
+    email-obfuscation: javascript
+    link-external-newwindow: true
+    link-external-icon: false
+
+    theme:
+      light: 
+        - journal
+        - css/custom.scss # Change the default colour
+    toc: true
+
+execute:
+  freeze: auto
+#margin-header: |
+# ![](/figures/logos/MY_INSTITUTION.png)

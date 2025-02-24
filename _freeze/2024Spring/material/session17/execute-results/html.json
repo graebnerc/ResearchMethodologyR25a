@@ -1,0 +1,16 @@
+{
+  "hash": "0327f53e3ed7887efcdf3f614997ced1",
+  "result": {
+    "markdown": "---\ntitle: \"🗓️ Sessions 17 & 18: Linear regresssion\"\ndate: \"2024-06-14\"\ndate-modified: last-modified\n---\n\n\nSimple linear regression is one of the most commonly used methods in inferential statistics or supervised machine learning. It can be used to study the relationship between two numerical variables and make predictions about the values of one of them based on the analysis of a sample. In this session we will discuss when to use linear regression models and where the limitations of this method lie.\n\n## 👨‍🏫 Lecture Slides \n\nEither click on the slide area below or click \n[here](/2024Spring/material/slides/T17T18-SimpleLinearRegression.pdf) to download the slides.\n\n\n```{=html}\n<div class=\"embed-container\">\n  <iframe \n  src=\"/2024Spring/material/slides/T17T18-SimpleLinearRegression.pdf\" \n  style=\"border: 0.5px\" \n  width=\"80%\"\n  height=\"80%\"\n  ></iframe>\n</div>\n```\n\n\n::: {.callout-tip collapse=\"true\"}\n## Lecture code\n\n<script src=\"https://gist.github.com/graebnerc/ec8973c09a75da199a8cc3f564e1da96.js\"></script>\n:::\n\n## 🎥 Lecture videos \n\nSo far, there are no learning videos available for this lecture. \n\n## 📚 Mandatory Reading\n\n- [Chapter 5](https://moderndive.com/5-regression.html) in @moderndive.\n\n### 🏆 Further readings\n\n- [Chapter 3](https://www.statlearning.com/) in @jamesIntroductionStatisticalLearning2021\n\n## ✍️ Coursework\n\n- Do the exercises `LinearRegression1` from the `DataScienceExercises` package\n\n::: {.callout-tip collapse=\"true\"}\n## Quick code for starting the exercises\n\n::: {.cell}\n\n```{.r .cell-code}\nlearnr::run_tutorial(\n  name = \"LinearRegression1\", \n  package = \"DataScienceExercises\", \n  shiny_args=list(\"launch.browser\"=TRUE))\n```\n:::\n\n:::\n",
+    "supporting": [
+      "session17_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

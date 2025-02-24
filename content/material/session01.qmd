@@ -1,0 +1,66 @@
+---
+title: "🗓️ Session 01 - Introduction, overview and installation"
+date: "2024-03-14"
+date-modified: last-modified
+---
+
+In this first week, we will cover what you can expect to learn from this course 
+and the course logistics: all you need to know about the structure of the 
+lectures, exercises, and assessments, what will be expected of you, what you
+will learn and what has helped previous participants in excelling in this 
+course. Finally, we are installing all the programs and packages we need in
+this course.
+
+## 👨‍🏫 Lecture Slides 
+
+Either click on the slide area below or click 
+[here](/2024Spring/material/slides/T1-Introduction.pdf) to download the slides.
+
+
+```{=html}
+<div class="embed-container">
+  <iframe 
+  width="370" height="208"
+  src="/2024Spring/material/slides/T1-Introduction.pdf" 
+  style="border: 0.5px" 
+  ></iframe>
+</div>
+```
+
+## 🎥 Accompanying lecture videos 
+
+All the videos are available via this [playlist](https://www.youtube.com/playlist?list=PLZDawQMrG1RImURlbldAF773MDRqeARNu).
+
+::: {.callout-note collapse="true"}
+## Expand to access the videos directly
+
+```{=html}
+<div class="embed-container">
+<iframe width="370" height="208" src="https://www.youtube.com/embed/szeZPKiK7LM?si=-UW5AP58W3I1-Ig6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+```
+
+```{=html}
+<div class="embed-container">
+<iframe width="370" height="208" src="https://www.youtube.com/embed/3sJoV_7DGDw?si=GaOWRYmo1K6obIph" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+```
+
+```{=html}
+<div class="embed-container">
+<iframe width="370" height="208" src="https://www.youtube.com/embed/AKGUGQt2dvo?si=kXRPe6lXWNNq4gB9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+```
+:::
+
+## 📚 Mandatory Reading
+
+Read the following tutorials:
+
+- [Installation of the necessary software](/2024Spring/tutorials/installation/index.qmd)
+- [Installing R packages](/2024Spring/tutorials/installing-packages/index.qmd)
+- [Using the exercise package](/2024Spring/tutorials/using-exercises/index.qmd)
+
+## ✍️ Coursework
+
+- Make sure you installed `R`, `R-Studio`, `Git` and all the required R packages
+- If you have questions or problems, please post them in the Moodle forum

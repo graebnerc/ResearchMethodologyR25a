@@ -1,0 +1,14 @@
+{
+  "hash": "d6ff243e7d6c5d24dc273ebb462f3517",
+  "result": {
+    "markdown": "---\ntitle: \"🗓️ Sessions 5 and 6: Recap and practice\"\ndate: \"2024-04-18\"\ndate-modified: last-modified\n---\n\n\nThis session is about recap and practice. We will do exercises on topics that\nyou suggest, and recap concepts you found particularly hard to grasp. To this\nend, make sure you communicate your preferences on topics via Moodle until \none week before this session.\n\n## 👨‍🏫 Lecture Slides \n\nThere were no slides used during this session.\n\n::: {.callout-tip collapse=\"true\"}\n## Script for the function example we were using\nThis is basically a step-by-step solution to the first function exercise of the\n`Basics` exercise collection in the package `DataScienceExercises`.\n<script src=\"https://gist.github.com/graebnerc/908de56b52a28fda6fe5acb14393942d.js\"></script>\n:::\n\n\n## 🎥 Lecture videos \n\nThere will be no videos for recap sessions.\n\n## 📚 Suggested Reading\n\n- Read again the tutorial on [functions](/2024Spring/tutorials/obj-types-i-functions/index.qmd) \n- I added more mini exercises for defining functions to the package `DataScienceExercises`\nas part of the new exercise package `Functions`\n\n::: {.callout-tip collapse=\"true\"}\n## Quick code for starting the exercises on functions\n\n::: {.cell}\n\n```{.r .cell-code}\nlearnr::run_tutorial(\n  name = \"Functions\", \n  package = \"DataScienceExercises\", \n  shiny_args=list(\"launch.browser\"=TRUE))\n```\n:::\n\n:::\n\n## ✍️ Coursework\n\n*During the first 60 minutes of the session you will work on this sheet in groups*\n*of three people. Please use only one computer but develop the solutions together.*\n*In the remaining 30 minutes we will go through your solutions and discuss problems.*\n*I will post my own solutions online after the session, but urge to first try*\n*to come up with solutions on your own.*\n\n- [Exercise sheet for this session](session05-exercises.qmd)\n- [R file template for your solutions](https://gist.github.com/graebnerc/3725a703f7fcbc6d429993810d7a81fd)\n- [Possible solutions to the exercises](session05-solutions.qmd)\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Prof.&nbsp;Dr.&nbsp;Claudius Gräbner-Radkowitsch">
+
+<title>Data science using R - Data preparation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../figures/icons/course_favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<meta property="og:title" content="Data science using R - Data preparation">
+<meta property="og:description" content="">
+<meta property="og:site-name" content="Data science using R">
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Data science using R</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Data preparation</li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Data preparation</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Claudius Gräbner-Radkowitsch </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">26 04 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">🏠 Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">🏢 Current semester</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">🗓️ Material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 01</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 02</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 03</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 04</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sessions 05 &amp; 06</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 07</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session08.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 08</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session09.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 09</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 10</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 11</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sessions 12 &amp; 13</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 14</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sessions 15 &amp; 16</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session17.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sessions 17 &amp; 18</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/material/session19.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Session 19</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2024Spring/tutorials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">💻 Tutorials</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#packages-and-data-used" id="toc-packages-and-data-used" class="nav-link active" data-scroll-target="#packages-and-data-used">Packages and data used</a></li>
+  <li><a href="#general-remarks" id="toc-general-remarks" class="nav-link" data-scroll-target="#general-remarks">General remarks</a></li>
+  <li><a href="#reshaping-data-with-the-tidyr-package" id="toc-reshaping-data-with-the-tidyr-package" class="nav-link" data-scroll-target="#reshaping-data-with-the-tidyr-package">Reshaping data with the tidyr package</a>
+  <ul class="collapse">
+  <li><a href="#wide-and-long-format-definition" id="toc-wide-and-long-format-definition" class="nav-link" data-scroll-target="#wide-and-long-format-definition">Wide and long format: definition</a></li>
+  <li><a href="#transforming-long-data-into-wide-data" id="toc-transforming-long-data-into-wide-data" class="nav-link" data-scroll-target="#transforming-long-data-into-wide-data">Transforming long data into wide data</a></li>
+  <li><a href="#transforming-wide-data-into-long-data" id="toc-transforming-wide-data-into-long-data" class="nav-link" data-scroll-target="#transforming-wide-data-into-long-data">Transforming wide data into long data</a></li>
+  </ul></li>
+  <li><a href="#chaining-wrangling-tasks-using-pipes" id="toc-chaining-wrangling-tasks-using-pipes" class="nav-link" data-scroll-target="#chaining-wrangling-tasks-using-pipes">Chaining wrangling tasks using pipes</a></li>
+  <li><a href="#manipulating-data-with-the-dplyr-package" id="toc-manipulating-data-with-the-dplyr-package" class="nav-link" data-scroll-target="#manipulating-data-with-the-dplyr-package">Manipulating data with the dplyr package</a>
+  <ul class="collapse">
+  <li><a href="#creating-or-manipulating-variables" id="toc-creating-or-manipulating-variables" class="nav-link" data-scroll-target="#creating-or-manipulating-variables">Creating or manipulating variables</a></li>
+  <li><a href="#filtering-rows" id="toc-filtering-rows" class="nav-link" data-scroll-target="#filtering-rows">Filtering rows</a></li>
+  <li><a href="#selecting-columns" id="toc-selecting-columns" class="nav-link" data-scroll-target="#selecting-columns">Selecting columns</a></li>
+  <li><a href="#merging-data-sets" id="toc-merging-data-sets" class="nav-link" data-scroll-target="#merging-data-sets">Merging data sets</a></li>
+  <li><a href="#grouping-and-summarising-data" id="toc-grouping-and-summarising-data" class="nav-link" data-scroll-target="#grouping-and-summarising-data">Grouping and summarising data</a></li>
+  </ul></li>
+  <li><a href="#a-final-example" id="toc-a-final-example" class="nav-link" data-scroll-target="#a-final-example">A final example</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="packages-and-data-used" class="level1">
+<h1>Packages and data used</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The data sets used in these notes are available from the <a href="data-examples.zip">course homepage</a>:</p>
+<ul>
+<li><code>wrangling_data_raw.csv</code> (<code>data_raw</code>)</li>
+<li><code>wrangling_data_raw_long.csv</code> (<code>data_raw_long</code>)</li>
+<li><code>wrangling_data_final_expl.csv</code> (<code>data_final_expl</code>)</li>
+<li><code>wrangling_gini_join.csv</code> (<code>gini_join</code>)</li>
+<li><code>wrangling_gdp_join.csv</code> (<code>gdp_join</code>)</li>
+</ul>
+<p>The brackets show the names of the data sets used below.</p>
+</section>
+<section id="general-remarks" class="level1">
+<h1>General remarks</h1>
+<ul>
+<li>If you imported the data from a file, make sure that the import went as expected</li>
+<li>Start with a data set that is of the type <code>tibble</code> (use <code>tibble::as_tibble()</code> if necessary)</li>
+<li>Before starting to wrangle, make a note to yourself of how the final data set should look like;
+<ul>
+<li>Then think about the different steps you need to take to reach this goal;</li>
+<li>Each step should only address one single wrangling challenge</li>
+</ul></li>
+<li>It is often useful to save the wrangling code in one script in which you import raw data in the beginning and save tidy data in the end; this allows you to keep data wrangling, visualization, and modelling in separate files</li>
+</ul>
+</section>
+<section id="reshaping-data-with-the-tidyr-package" class="level1">
+<h1>Reshaping data with the tidyr package</h1>
+<p>At the end of each data wrangling activity, you should have created <a href="https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html">tidy data</a>. The R package that contains functions meant to assist you in this process is called <a href="https://tidyr.tidyverse.org/">tidyr</a>. While it contains functions for various purposes, the by far most common (and, to be honest, to most demanding) task is to reshape data from long to wide format and vice versa. This will be the focus of this section. Tutorials on the other <code>tidyr</code>-functions can be found on the official package documentation, but these functions are more specific and not as important in daily practice as those for reshaping data.</p>
+<section id="wide-and-long-format-definition" class="level2">
+<h2 class="anchored" data-anchor-id="wide-and-long-format-definition">Wide and long format: definition</h2>
+<p>There is no strict definition for wide and long data. Rather, the two should be understood as <em>relative</em> descriptions of data, meaning that it is more straightforward to speak of a data set that is long<em>er</em> relative to another one, rather than <em>a long</em> data set per se.</p>
+<p>Here is an example for a rather long data set:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year variable    value
+    &lt;char&gt; &lt;int&gt;   &lt;char&gt;    &lt;num&gt;
+1: Germany  2017    unemp     3.75
+2: Germany  2017      gdp 53071.46
+3: Germany  2018    unemp     3.38
+4: Germany  2018      gdp 53431.39
+5:  Greece  2017    unemp    21.49
+6:  Greece  2017      gdp 28604.86
+7:  Greece  2018    unemp    19.29
+8:  Greece  2018      gdp 29141.17</code></pre>
+</div>
+</div>
+<p>Here, we have one column identifying the variable, the value of which is stored in a separate column. This means that the data is relatively ‘long’ in the sense of having many rows. At the same time, it is relatively ‘narrow’ in the sense of not having too many columns since the variable identifier is kept in a single column.</p>
+<p>Contrast this with an example for a rather wide data set, where each variable has its own column:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year unemp      gdp
+    &lt;char&gt; &lt;int&gt; &lt;num&gt;    &lt;num&gt;
+1: Germany  2017  3.75 53071.46
+2: Germany  2018  3.38 53431.39
+3:  Greece  2017 21.49 28604.86
+4:  Greece  2018 19.29 29141.17</code></pre>
+</div>
+</div>
+<p>While the number of columns remains the same, the data set has relatively more columns as compared to the rows. At the same time, it tends to be shorter in the sense of having fewer rows.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>While the long format is often easier to read and preferable when communicating data to humans, making data tidy often involves the task of making data ‘longer’.</p>
+</section>
+<section id="transforming-long-data-into-wide-data" class="level2">
+<h2 class="anchored" data-anchor-id="transforming-long-data-into-wide-data">Transforming long data into wide data</h2>
+<p>To make data wider we use the function <code>tidyr::pivor_wider()</code>.</p>
+<p>Assume that we start with our long data set introduced above and that this data set is bound to the name <code>data_raw_long</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(data_raw_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 8
+Columns: 4
+$ country  &lt;chr&gt; "Germany", "Germany", "Germany", "Germany", "Greece", "Greece…
+$ year     &lt;int&gt; 2017, 2017, 2018, 2018, 2017, 2017, 2018, 2018
+$ variable &lt;chr&gt; "unemp", "gdp", "unemp", "gdp", "unemp", "gdp", "unemp", "gdp"
+$ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 29141…</code></pre>
+</div>
+</div>
+<p>We will now use <code>tidyr::pivor_wider()</code> to make this data set wider. The most important arguments of this function are as follows:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<ul>
+<li><code>data</code> is the first argument and refers to the name of the data set to be considered</li>
+<li><code>names_from</code> denotes the column that includes the names of the new columns</li>
+<li><code>values_from</code> denotes the column that includes the values to be allocated in the newly created cells</li>
+</ul>
+<p>In the present case, the call would look like the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data_raw_wide <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data_raw_long, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_from =</span> <span class="st">"variable"</span>, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_from =</span> <span class="st">"value"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>data_raw_wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  country  year unemp    gdp
+  &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1 Germany  2017  3.75 53071.
+2 Germany  2018  3.38 53431.
+3 Greece   2017 21.5  28605.
+4 Greece   2018 19.3  29141.</code></pre>
+</div>
+</div>
+</section>
+<section id="transforming-wide-data-into-long-data" class="level2">
+<h2 class="anchored" data-anchor-id="transforming-wide-data-into-long-data">Transforming wide data into long data</h2>
+<p>Assume we want to take the data set <code>data_raw_wide</code> and re-create the original long version. To achieve this we can use <code>tidyr::pivot_longer()</code>. Again, lets have a look at the most important arguments:<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<ul>
+<li><code>data</code> is the first argument and refers to the name of the data set to be considered</li>
+<li><code>cols</code> denotes the columns that should be transformed into the longer format</li>
+<li><code>names_to</code> denotes the column that includes the names of the new columns</li>
+<li><code>values_to</code> denotes the column that includes the values to be allocated in the newly created cells</li>
+</ul>
+<p>The arguments <code>names_to</code> and <code>values_to</code> are not strictly necessary since they have useful default values, but its usually nicer to be explicit.</p>
+<p>When specifying the argument <code>cols</code> you have several possibilities. The simplest variant is to pass a character vector with the column names. But note that you can save a lot of writing by using so called <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html">selection helpers</a>, a very useful tool we will learn about later.</p>
+<p>In our case this amounts to:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data_raw_long <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data_raw_wide, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"unemp"</span>, <span class="st">"gdp"</span>), </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">"indicator"</span>, </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_to =</span> <span class="st">"values"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>data_raw_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 4
+  country  year indicator   values
+  &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;        &lt;dbl&gt;
+1 Germany  2017 unemp         3.75
+2 Germany  2017 gdp       53071.  
+3 Germany  2018 unemp         3.38
+4 Germany  2018 gdp       53431.  
+5 Greece   2017 unemp        21.5 
+6 Greece   2017 gdp       28605.  
+7 Greece   2018 unemp        19.3 
+8 Greece   2018 gdp       29141.  </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="chaining-wrangling-tasks-using-pipes" class="level1">
+<h1>Chaining wrangling tasks using pipes</h1>
+<p>Pipes are provided via the package <code>magrittr</code>, which is loaded automatically if you attach packages such as <code>tidyr</code> or <code>dplyr</code>. Pipes are short keywords that facilitate the development of very readable and transparent data wrangling code.</p>
+<p>While there are many <a href="https://magrittr.tidyverse.org/reference/index.html">different pipes</a>, the one we will use extensively is <code>%&gt;%</code>. It is always used at the end of a line, and it basically ‘throws’ the result of this line into the next line of code. In this line, you can refer to the intermediate result via <code>.</code>, or it is used implicitly as the first argument to the function you use.</p>
+<p>In other words, <code>x %&gt;% f(y)</code> (or <code>x %&gt;% f(., y)</code>) is equivalent to <code>f(x, y)</code>.</p>
+<p>But lets look at an example! Assume we start with the following data set:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pipe_data_raw <span class="ot">&lt;-</span> data_raw <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, year, gdp, unemp)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>pipe_data_raw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year      gdp unemp
+    &lt;char&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;
+1: Germany  2017 53071.46  3.75
+2: Germany  2018 53431.39  3.38
+3:  Greece  2017 28604.86 21.49
+4:  Greece  2018 29141.17 19.29</code></pre>
+</div>
+</div>
+<p>And what we want is this:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  country name    `2017`   `2018`
+  &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 Germany gdp   53071.   53431.  
+2 Germany unemp     3.75     3.38
+3 Greece  gdp   28605.   29141.  
+4 Greece  unemp    21.5     19.3 </code></pre>
+</div>
+</div>
+<p>We can do this by first making the data longer, and then wider. We could do this explicitly:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pipe_data_1 <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pipe_data_raw, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"gdp"</span>, <span class="st">"unemp"</span>)))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>pipe_data_2 <span class="ot">&lt;-</span> <span class="fu">pivot_wider</span>(</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pipe_data_1,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_from =</span> <span class="st">"year"</span>, </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_from =</span> <span class="st">"value"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>But we can also write this code more concisely using the pipe:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pipe_data_final <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pipe_data_raw, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"gdp"</span>, <span class="st">"unemp"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> .,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_from =</span> <span class="st">"year"</span>, </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_from =</span> <span class="st">"value"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Or, since the pipe carries the intermediate result implicitly as the first argument to the function on the next line we can space the <code>data = .</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pipe_data_final <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pipe_data_raw, </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"gdp"</span>, <span class="st">"unemp"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_from =</span> <span class="st">"year"</span>, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_from =</span> <span class="st">"value"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>%&gt;%</code>-pipe allows you to write very readable code, so make sure you use it often. But for code development it might be nevertheless helpful to write the intermediate steps explicitly.</p>
+</section>
+<section id="manipulating-data-with-the-dplyr-package" class="level1">
+<h1>Manipulating data with the dplyr package</h1>
+<p>The package <code>tidyr</code> is for turning messy data sets into tidy data sets. Another important part of data preparation is to manipulate an existing data set. To do this, the package <a href="https://dplyr.tidyverse.org/">dplyr</a> contains many useful functions. You will regularly use functions from both the <code>tidyr</code> and <code>dplyr</code> package within your script for data preparation: often, you start with a messy data set, make it tidy using functions from <code>tidyr</code> and then use functions from <code>dplyr</code> to manipulate variables until your data set contains all the information you want. Thus, in the following we cover the most frequently used <code>dplyr</code>-functions. A complete documentation of the whole package can be found on the official <a href="https://dplyr.tidyverse.org/">dplyr webpage</a>.</p>
+<section id="creating-or-manipulating-variables" class="level2">
+<h2 class="anchored" data-anchor-id="creating-or-manipulating-variables">Creating or manipulating variables</h2>
+<p>The function <code>dplyr::mutate()</code> is used both for manipulating existing columns as well as creating new columns. In the first case the name of the column that the result of <code>dplyr::mutate()</code> is written into already exists, in the second case we just use a new name.</p>
+<p>Consider the following data set with the unemployment rate as an example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data_unemp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+   year Germany Greece
+  &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1  2017    3.75   21.5
+2  2018    3.38   19.3</code></pre>
+</div>
+</div>
+<p>Assume we want to express the percentage values via decimal numbers and, to this end, divide the values in the columns <code>Germany</code> and <code>Greece</code> by 100. We can use <code>dplyr::mutate()</code> to achieve this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>data_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Germany =</span> Germany<span class="sc">/</span><span class="dv">100</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Greece =</span> Greece<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+   year Germany Greece
+  &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1  2017  0.0375  0.215
+2  2018  0.0338  0.193</code></pre>
+</div>
+</div>
+<p>But we could use basically the same code to create a new column. Assume, for instance, we want a new column containing the difference between the unemployment rates:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data_unemp <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Difference =</span> Greece <span class="sc">-</span> Germany</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+   year Germany Greece Difference
+  &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+1  2017    3.75   21.5       17.7
+2  2018    3.38   19.3       15.9</code></pre>
+</div>
+</div>
+<p>The only difference here was that the left-hand-side name of the column to be manipulated did not exist before!</p>
+</section>
+<section id="filtering-rows" class="level2">
+<h2 class="anchored" data-anchor-id="filtering-rows">Filtering rows</h2>
+<p>The function <code>dplyr::filter()</code> can be used to filter rows according to certain conditions. The conditions must evaluate for each cell entry to either <code>TRUE</code> or <code>FALSE</code>, and only those rows for which they evaluate to <code>TRUE</code> remain in the data set. Often, the conditions are specified via logical operators, which were already covered in the tutorial on <a href="../../../tutorial/object-types-vec/">vector types</a>.</p>
+<p>As always, the first argument to <code>dplyr::filter()</code> is <code>data</code>, i.e.&nbsp;the data set on which you want to operate. Then follow an arbitrary number of logical conditions on the different columns of the data set on question.</p>
+<p>Assume we want to take the previously defined data set <code>data_raw_long</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>data_raw_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 4
+  country  year indicator   values
+  &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;        &lt;dbl&gt;
+1 Germany  2017 unemp         3.75
+2 Germany  2017 gdp       53071.  
+3 Germany  2018 unemp         3.38
+4 Germany  2018 gdp       53431.  
+5 Greece   2017 unemp        21.5 
+6 Greece   2017 gdp       28605.  
+7 Greece   2018 unemp        19.3 
+8 Greece   2018 gdp       29141.  </code></pre>
+</div>
+</div>
+<p>and only want to keep data on GDP:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>data_raw_long <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator<span class="sc">==</span><span class="st">"gdp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  country  year indicator values
+  &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
+1 Germany  2017 gdp       53071.
+2 Germany  2018 gdp       53431.
+3 Greece   2017 gdp       28605.
+4 Greece   2018 gdp       29141.</code></pre>
+</div>
+</div>
+<p>You may also combine more than one condition in one call to <code>dplyr::filter()</code>. If you also want to filter by values and only keep those rows where the value is below 50.000:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>data_raw_long <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    indicator<span class="sc">==</span><span class="st">"gdp"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    values <span class="sc">&lt;</span> <span class="dv">50000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  country  year indicator values
+  &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
+1 Greece   2017 gdp       28605.
+2 Greece   2018 gdp       29141.</code></pre>
+</div>
+</div>
+</section>
+<section id="selecting-columns" class="level2">
+<h2 class="anchored" data-anchor-id="selecting-columns">Selecting columns</h2>
+<p>When you only want to keep certain <em>columns</em> we speak of selecting (rather than filtering) columns. This is done - surprise - via the function ´dplyr::select()`.</p>
+<p>There are different ways for selecting columns. In any case, the first argument is, again, <code>data</code>, i.e.&nbsp;the data set considered. In the present case, we will refer to <code>data_raw</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>data_raw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year unemp      gdp
+    &lt;char&gt; &lt;int&gt; &lt;num&gt;    &lt;num&gt;
+1: Germany  2017  3.75 53071.46
+2: Germany  2018  3.38 53431.39
+3:  Greece  2017 21.49 28604.86
+4:  Greece  2018 19.29 29141.17</code></pre>
+</div>
+</div>
+<p>Then we can now select columns using one of the following two options. First, you may refer to columns via their <em>name</em>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(country, year, unemp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year unemp
+    &lt;char&gt; &lt;int&gt; &lt;num&gt;
+1: Germany  2017  3.75
+2: Germany  2018  3.38
+3:  Greece  2017 21.49
+4:  Greece  2018 19.29</code></pre>
+</div>
+</div>
+<p>But this is often error-prone. Thus, it is usually better to refer to the columns via <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html">selection helpers</a>, which is also the most flexible version. While we will learn about more selection helpers later, here we will mainly use <code>dplyr::all_of()</code>, which accepts a character vector of column names:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>, <span class="st">"gdp"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year      gdp
+    &lt;char&gt; &lt;int&gt;    &lt;num&gt;
+1: Germany  2017 53071.46
+2: Germany  2018 53431.39
+3:  Greece  2017 28604.86
+4:  Greece  2018 29141.17</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Caution:</strong> Do not forget the <code>c()</code>! Otherwise:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">all_of</span>(<span class="st">"country"</span>, <span class="st">"year"</span>, <span class="st">"gdp"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `dplyr::select()`:
+ℹ In argument: `dplyr::all_of("country", "year", "gdp")`.
+Caused by error in `dplyr::all_of()`:
+! unused arguments ("year", "gdp")</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>It is also possible to define the column vector first:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cols2keep <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>, <span class="st">"gdp"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">all_of</span>(cols2keep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year      gdp
+    &lt;char&gt; &lt;int&gt;    &lt;num&gt;
+1: Germany  2017 53071.46
+2: Germany  2018 53431.39
+3:  Greece  2017 28604.86
+4:  Greece  2018 29141.17</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Selection helpers allow you to specify the columns to be selected more generally. For instance, <code>dplyr::ends_with()</code> allows you to select all colums that end with a certain pattern:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">ends_with</span>(<span class="st">"p"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   unemp      gdp
+   &lt;num&gt;    &lt;num&gt;
+1:  3.75 53071.46
+2:  3.38 53431.39
+3: 21.49 28604.86
+4: 19.29 29141.17</code></pre>
+</div>
+</div>
+<p>In any case, you can also specify the columns you want to <em>drop</em>. To this end, just add a <code>-</code> in front of the selection command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>unemp, <span class="sc">-</span>gdp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year
+    &lt;char&gt; &lt;int&gt;
+1: Germany  2017
+2: Germany  2018
+3:  Greece  2017
+4:  Greece  2018</code></pre>
+</div>
+</div>
+</section>
+<section id="merging-data-sets" class="level2">
+<h2 class="anchored" data-anchor-id="merging-data-sets">Merging data sets</h2>
+<p>Often you need to obtain data from different sources. To merge all your data in one single data set, you need to use one of the <code>*_join()</code> functions of the <code>dplyr</code>-package. These functions all merge two data sets, but the way they do it is different. Below we illustrate the most common joins (so called <a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">mutating joins</a>).<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>As a guiding example we use the following two data sets:</p>
+<p>First, data on income inequality from the <a href="https://fsolt.org/swiid/">SWIID data base</a>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>gini_join</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year  gini
+    &lt;char&gt; &lt;int&gt; &lt;num&gt;
+1:  Greece  2015  33.1
+2:  Greece  2017  32.2</code></pre>
+</div>
+</div>
+<p>Second, data on GDP per capita from the <a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD">World Bank</a>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>gdp_join</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year      gdp
+    &lt;char&gt; &lt;int&gt;    &lt;num&gt;
+1: Germany  2017 53071.46
+2: Germany  2018 53431.39
+3:  Greece  2017 28604.86
+4:  Greece  2018 29141.17</code></pre>
+</div>
+</div>
+<p>We will consider the behavior of the following four functions:</p>
+<ul>
+<li><code>dplyr::left_join()</code></li>
+<li><code>dplyr::right_join()</code></li>
+<li><code>dplyr::full_join()</code></li>
+<li><code>dplyr::inner_join()</code></li>
+</ul>
+<p>All of them accept the following arguments:</p>
+<ul>
+<li><code>x</code> and <code>y</code>: the two data sets to be merged</li>
+<li><code>by</code>: a vector or a named vector indicating on which columns the data sets should be merged</li>
+</ul>
+<p>Its easier to understand their behavior if you contrast them directly with each other. First, <code>dplyr::left_join()</code> joins the data sets on those columns mentioned in <code>by</code>, but only keeps those rows for which <code>x</code> contains an observation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">left_join</span>(<span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year      gdp  gini
+    &lt;char&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;
+1: Germany  2017 53071.46    NA
+2: Germany  2018 53431.39    NA
+3:  Greece  2017 28604.86  32.2
+4:  Greece  2018 29141.17    NA</code></pre>
+</div>
+</div>
+<p>This might introduce <code>NA</code>s into the columns of <code>y</code>, but not of <code>x</code>. It is the other way around for <code>dplyr::right_join()</code>: it only keeps those rows for which <code>y</code> contains an observation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">right_join</span>(<span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year      gdp  gini
+    &lt;char&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;
+1:  Greece  2017 28604.86  32.2
+2:  Greece  2015       NA  33.1</code></pre>
+</div>
+</div>
+<p><code>dplyr::inner_join()</code> is the most restrictive option, keeping only those rows for which both <code>x</code> and <code>y</code> contain an observation (i.e.&nbsp;it never introduces <code>NA</code>s):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">inner_join</span>(<span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year      gdp  gini
+    &lt;char&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;
+1:  Greece  2017 28604.86  32.2</code></pre>
+</div>
+</div>
+<p>Finally, <code>dplyr::full_join()</code> contains all rows that occur at least in <code>x</code> <em>or</em> <code>y</code>, i.e.&nbsp;it might introduce <code>NA</code>s in both the columns of <code>x</code> and <code>y</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">full_join</span>(<span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year      gdp  gini
+    &lt;char&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;
+1: Germany  2017 53071.46    NA
+2: Germany  2018 53431.39    NA
+3:  Greece  2017 28604.86  32.2
+4:  Greece  2018 29141.17    NA
+5:  Greece  2015       NA  33.1</code></pre>
+</div>
+</div>
+<p>Two final remarks: first, the types of the columns on which you merge the data sets must be equal, otherwise R throws an error:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>gini_join <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(gini_join, <span class="at">year=</span><span class="fu">as.character</span>(year))</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">left_join</span>(<span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `dplyr::left_join()`:
+! Can't join `x$year` with `y$year` due to incompatible types.
+ℹ `x$year` is a &lt;integer&gt;.
+ℹ `y$year` is a &lt;character&gt;.</code></pre>
+</div>
+</div>
+<p>Just enforce the correct data type before merging:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>gini_join <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">as.integer</span>(year)) <span class="sc">%&gt;%</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(<span class="at">x =</span> gdp_join, <span class="at">y =</span> ., <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year      gdp  gini
+    &lt;char&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;
+1: Germany  2017 53071.46    NA
+2: Germany  2018 53431.39    NA
+3:  Greece  2017 28604.86  32.2
+4:  Greece  2018 29141.17    NA</code></pre>
+</div>
+</div>
+<p>Second, you can also merge on columns with different names by passing named vectors to <code>by</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>gini_join <span class="ot">&lt;-</span> gini_join <span class="sc">%&gt;%</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year=</span><span class="fu">as.double</span>(year)) <span class="sc">%&gt;%</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>year)</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>gini_join</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  gini  Year
+    &lt;char&gt; &lt;num&gt; &lt;num&gt;
+1:  Greece  33.1  2015
+2:  Greece  32.2  2017</code></pre>
+</div>
+</div>
+<p>Then this does not work any more:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, </span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `dplyr::left_join()`:
+! Join columns in `y` must be present in the data.
+✖ Problem with `year`.</code></pre>
+</div>
+</div>
+<p>But the named vector fixes it:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, </span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span><span class="ot">=</span><span class="st">"Year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year      gdp  gini
+    &lt;char&gt; &lt;num&gt;    &lt;num&gt; &lt;num&gt;
+1: Germany  2017 53071.46    NA
+2: Germany  2018 53431.39    NA
+3:  Greece  2017 28604.86  32.2
+4:  Greece  2018 29141.17    NA</code></pre>
+</div>
+</div>
+</section>
+<section id="grouping-and-summarising-data" class="level2">
+<h2 class="anchored" data-anchor-id="grouping-and-summarising-data">Grouping and summarising data</h2>
+<p>The final challenge we consider involves the application of two functions (at least in most cases): <code>dplyr::group_by()</code> and <code>dplyr::summarize()</code>.</p>
+<p><code>dplyr::group_by()</code> is usually used within pipes and groups a data set according to an arbitrary number of variables, each of which must refer to one (and only one) column. It produces a grouped data set:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>data_raw_grouped <span class="ot">&lt;-</span> data_raw <span class="sc">%&gt;%</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(country)</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>data_raw_grouped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+# Groups:   country [2]
+  country  year unemp    gdp
+  &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1 Germany  2017  3.75 53071.
+2 Germany  2018  3.38 53431.
+3 Greece   2017 21.5  28605.
+4 Greece   2018 19.3  29141.</code></pre>
+</div>
+</div>
+<p>As you can see, the data set is now grouped by the variable <code>country</code>. We can specify the grouping variables the same way we selected columns in the context of <code>dplyr::select()</code> (see above).</p>
+<p>Grouped data sets are usually not interesting in itself. You can ungroup them via <code>dplyr::ungroup()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>data_raw_grouped <span class="sc">%&gt;%</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  country  year unemp    gdp
+  &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1 Germany  2017  3.75 53071.
+2 Germany  2018  3.38 53431.
+3 Greece   2017 21.5  28605.
+4 Greece   2018 19.3  29141.</code></pre>
+</div>
+</div>
+<p>They are most useful if used in conjunction with <code>dplyr::summarise()</code>, which summarizes variables. While it can be used without <code>dplyr::group_by()</code>, it is most useful if it is applied to grouped data sets: then it computes summary statistics for each group.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_gdp=</span><span class="fu">mean</span>(gdp)</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   avg_gdp
+1 41062.22</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>data_raw_grouped <span class="sc">%&gt;%</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_gdp=</span><span class="fu">mean</span>(gdp)</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  country avg_gdp
+  &lt;chr&gt;     &lt;dbl&gt;
+1 Germany  53251.
+2 Greece   28873.</code></pre>
+</div>
+</div>
+<p>You can also summarized more than one column:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>data_raw_grouped <span class="sc">%&gt;%</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_gdp=</span><span class="fu">mean</span>(gdp),</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_unemp=</span><span class="fu">median</span>(unemp)</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  country avg_gdp median_unemp
+  &lt;chr&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+1 Germany  53251.         3.57
+2 Greece   28873.        20.4 </code></pre>
+</div>
+</div>
+<p>Note that <code>dplyr::summarise()</code> drops all columns that it is not asked to compute summary statistics for, except potential grouping variables. There are also some advanced features of the functions, which are explained in the official <a href="https://dplyr.tidyverse.org/reference/summarise.html">documentation</a>.</p>
+</section>
+</section>
+<section id="a-final-example" class="level1">
+<h1>A final example</h1>
+<p>Thanks to the pipes it is easy to chain the many different wrangling steps into one function call. But in practice it is very important that you (1) inspect your raw data very clearly, (2) write down the desired end product, and then (3) think about the single steps required to reach the desired outcome. Each step should address one (and only one) wrangling challenge.</p>
+<p>To illustrate this, assume we start start with this raw data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_final_expl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Classes 'data.table' and 'data.frame':  88 obs. of  5 variables:
+ $ country: chr  "Austria" "Austria" "Austria" "Austria" ...
+ $ iso3c  : chr  "AUT" "AUT" "AUT" "AUT" ...
+ $ year   : int  2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 ...
+ $ unemp  : num  4.69 4.01 4.85 4.78 5.83 ...
+ $ gdp    : num  46470 46879 47419 47633 48633 ...
+ - attr(*, ".internal.selfref")=&lt;externalptr&gt; </code></pre>
+</div>
+</div>
+<p>What we want to do is to compute the difference in the country averages of the variables for the time periods 2005-2007 and 2010-2013. This would look like this:<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>To achieve this, we need to chain a number of wrangling challenges introduced above:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>data_final_expl <span class="sc">%&gt;%</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">period =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">test =</span> year <span class="sc">%in%</span> <span class="dv">2005</span><span class="sc">:</span><span class="dv">2007</span>, </span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">yes =</span> <span class="st">"Early"</span>, </span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">no =</span>  <span class="fu">ifelse</span>(</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">test =</span> year <span class="sc">%in%</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2013</span>, </span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">yes =</span> <span class="st">"Late"</span>, </span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">no =</span> <span class="cn">NA</span>))</span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(period)) <span class="sc">%&gt;%</span></span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country, period) <span class="sc">%&gt;%</span></span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_unemp =</span> <span class="fu">mean</span>(unemp),</span>
+<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_gdp =</span> <span class="fu">mean</span>(gdp), </span>
+<span id="cb76-16"><a href="#cb76-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb76-17"><a href="#cb76-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb76-18"><a href="#cb76-18" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb76-19"><a href="#cb76-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> dplyr<span class="sc">::</span><span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"avg_unemp"</span>, <span class="st">"avg_gdp"</span>)), </span>
+<span id="cb76-20"><a href="#cb76-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"indicator"</span>, </span>
+<span id="cb76-21"><a href="#cb76-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"values"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb76-22"><a href="#cb76-22" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb76-23"><a href="#cb76-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"period"</span>, </span>
+<span id="cb76-24"><a href="#cb76-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="st">"values"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb76-25"><a href="#cb76-25" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb76-26"><a href="#cb76-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">Difference =</span> Late <span class="sc">-</span> Early</span>
+<span id="cb76-27"><a href="#cb76-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb76-28"><a href="#cb76-28" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Early, <span class="sc">-</span>Late) <span class="sc">%&gt;%</span></span>
+<span id="cb76-29"><a href="#cb76-29" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb76-30"><a href="#cb76-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"indicator"</span>, </span>
+<span id="cb76-31"><a href="#cb76-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="st">"Difference"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  country avg_unemp avg_gdp
+  &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+1 Austria    -0.346   1899.
+2 Germany    -4.18    3570.
+3 Greece     11.5    -6234.
+4 Italy       3.02   -3014.</code></pre>
+</div>
+</div>
+<p>If you have trouble understanding the many steps, redo the computations yourself and always check what happens in the single steps. It is not a good idea to write such a long chain in one working step, but rather to make sure that you always understand what happens in any single step, and then expand the chain one by one.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>If we had a data set with three instead of two variables, the wide data set would have the same number of rows, but more columns, i.e.&nbsp;it would be wider in an absolute sense as well.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p> The function allows for much more finetuning. You might read more about its argument in the help page of the function or the <a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">online documentation</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p> See the <a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">online documentation</a> for a more complete description.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p> The other join types are <a href="https://dplyr.tidyverse.org/reference/filter-joins.html">filtering joins</a> and <a href="https://dplyr.tidyverse.org/reference/nest_join.html">nest joins</a>. You find more information in the web, and more details on the underlying theory in <a href="https://r4ds.had.co.nz/relational-data.html">chapter 13 of R4DS</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>We have not yet covered the function <code>ifelse()</code>. It contains a logical test as a first argument, and then two further arguments: one return value for the case in which the test returns <code>TRUE</code>, and one for which the test returns <code>FALSE</code>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+          // target, if specified
+          link.setAttribute("target", "_blank");
+      }
+    }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2024, Claudius Gräbner-Radkowitsch</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>
