@@ -1,0 +1,107 @@
+---
+title: "🗓️ Session 7: A very short introduction to Quarto"
+date: "2024-05-02"
+date-modified: last-modified
+---
+
+Quarto is a modern multi-language version of *R Markdown*. As with its
+predessessor, the idea is to provide people with the opportunity to write 
+text and code into the very same document. This makes the creation of nice
+looking and reproducible reports or paper very easy. Moreoever, with Quarto
+it is very easy to create very nice papers, reports, websites or interactive
+apps. This website, for example, is fully written in Quarto. In this lecture,
+you learn everything you need to get started with writing your first Quarto 
+documents. In fact, its really straighforward once you get the basic idea.
+
+
+## 👨‍🏫 Lecture Slides 
+
+Either click on the slide area below or click 
+[here](/content/material/slides/E7-Quarto.pdf) to download the slides.
+
+
+```{=html}
+<div class="embed-container">
+  <iframe 
+  src="/content/material/slides/E7-Quarto.pdf" 
+  style="border: 0.5px" 
+  width="80%"
+  height="80%"
+  ></iframe>
+</div>
+```
+
+- [DesasterMarkdown.pdf](DesasterMarkdown.pdf)
+- [NicerMarkdown.pdf](NicerMarkdown.pdf)
+
+::: {.callout-tip collapse="true"}
+## Code for the markdown desaster and a possible solution
+
+<script src="https://gist.github.com/graebnerc/44b82add84b1d5cb89d28574ae89ed02.js"></script>
+
+:::
+
+
+## 🎥 Lecture videos 
+
+So far, there are no learning videos available for this lecture. 
+
+## 📚 Mandatory Reading
+
+- [The CommonMark markdown tutorial](https://commonmark.org/help/tutorial/)
+- [Quarto tutorial I: the basics](https://quarto.org/docs/get-started/hello/rstudio.html)
+- [Quarto tutorial II: computations](https://quarto.org/docs/get-started/computations/rstudio.html)
+- [Quarto tutorial III: authoring quarto documents](https://quarto.org/docs/get-started/authoring/rstudio.html)
+
+## Further Reading
+
+- [Blog introducing Quarto](https://www.apreshill.com/blog/2022-04-we-dont-talk-about-quarto/)
+- [Quarto and R Markdown](https://yihui.org/en/2022/04/quarto-r-markdown/)
+- [The comprehensive Quarto documentation](https://quarto.org/docs/guide/)
+- [Markdown basics](https://quarto.org/docs/authoring/markdown-basics.html)
+- [The R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
+
+## ✍️ Coursework
+
+- Do the exercises `Quarto` from the `DataScienceExercises` package
+
+::: {.callout-tip collapse="true"}
+## Quick code for starting the exercises
+```{r}
+#| eval: false
+learnr::run_tutorial(
+  name = "Quarto", 
+  package = "DataScienceExercises", 
+  shiny_args=list("launch.browser"=TRUE))
+```
+:::
+
+- Do the following practical exercise:
+
+::: {.callout-note collapse="true"}
+## Exercise description
+
+Create a new Quarto document where you set the title, date, and the author explicitly. Write a sample text that comprises…
+
+- ...at least one level 1 heading
+- ...at least two level 2 headings
+- ...a YAML part that specifies that R code remains hidden by default
+- ...one R chunk where both the output and the code is printed in the final document
+- ...one R chunk that produces a simply ggplot object and where the code producing the plot is hidden
+
+Then do the following:
+
+1. Knit the document to html with a floating table of contents and a special theme.
+2. Make the document available via Netlify Drop and add the possibility to download the underlying Rmd file. 
+> Note: For Netlify Drop to work, the html file must be called `index.html```!
+
+3. Knit the document to PDF and make sure that it includes a table of contents.
+
+:::
+
+::: {.callout-tip collapse="true"}
+## Possible solution
+
+<script src="https://gist.github.com/graebnerc/f42962b9ecbf9d7a7e6dc5593be691bd.js"></script>
+
+:::

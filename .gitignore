@@ -2,6 +2,7 @@
 /.quarto/
 #/_site/
 content/material/slides/old
+content/material/session07-QuartoExamples
 
 .Rproj.user
 .Rhistory
