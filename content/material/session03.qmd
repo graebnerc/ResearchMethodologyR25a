@@ -1,0 +1,65 @@
+---
+title: "🗓️ Session 3: Project management"
+date: "2024-03-28"
+date-modified: last-modified
+---
+
+This is one of the most underestimated topics. In this session you learn how
+to adequately set up your working environment on your computer. This means
+where you should save which files, which directory structure you should use,
+and how to point the computer to other files on your computer. While this sounds
+boring at first, taking seriously the insights from this session will save you
+tons of hours of frustration in the future!
+
+
+## 👨‍🏫 Lecture Slides 
+
+Either click on the slide area below or click 
+[here](/content/material/slides/E3-ProjectSetup.pdf) to download the slides.
+
+
+```{=html}
+<div class="embed-container">
+  <iframe 
+  src="/content/material/slides/E3-ProjectSetup.pdf" 
+  style="border: 0.5px" 
+  width="80%"
+  height="80%"
+  ></iframe>
+</div>
+```
+
+## 🎥 Lecture videos 
+
+Currently, no videos are available for this session. Check out the tutorial
+on 
+[project setup](/content/tutorials/setting-up-an-r-project/index.qmd) 
+instead.
+
+## 📚 Mandatory Reading
+
+- The tutorial [Setting up an R project](/content/tutorials/setting-up-an-r-project/index.qmd)
+
+## Further Reading
+
+While we do not cover this in this course, I highly recommend learning the 
+version control system [Git](https://git-scm.com/). 
+Personally, I can recommend the following:
+
+- [Very concise introduction](https://rogerdudler.github.io/git-guide/) to Git
+- Introduction to GitHub: [GitHub skills](https://skills.github.com/) and the [official docs](https://docs.github.com/en)
+
+## ✍️ Coursework
+
+- Do the exercises `ProjectOrga` from the `DataScienceExercises` package that refer to setting up an R project
+
+::: {.callout-tip collapse="true"}
+## Quick code for starting the exercises
+```{r}
+#| eval: false
+learnr::run_tutorial(
+  name = "ProjectOrga", 
+  package = "DataScienceExercises", 
+  shiny_args=list("launch.browser"=TRUE))
+```
+:::
