@@ -50,18 +50,6 @@ website:
            text: Session 09
          - href: content/material/session10.qmd
            text: Session 10
-         - href: content/material/session11.qmd
-           text: Session 11
-         - href: content/material/session12.qmd
-           text: Sessions 12 & 13
-         - href: content/material/session14.qmd
-           text: Session 14
-         - href: content/material/session15.qmd
-           text: Sessions 15 & 16
-         - href: content/material/session17.qmd
-           text: Sessions 17 & 18
-         - href: content/material/session19.qmd
-           text: Session 19
       - href: content/tutorials.qmd
         text: "💻 Tutorials"
 
