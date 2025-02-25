@@ -1,6 +1,6 @@
 ---
 title: "🗓️ Session 3: Project management"
-date: "2024-03-28"
+date: "2025-03-28"
 date-modified: last-modified
 ---
 

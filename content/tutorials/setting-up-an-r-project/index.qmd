@@ -1,7 +1,7 @@
 ---
 title: Setting up an R project # Also check out line 43
 author: Claudius Gräbner-Radkowitsch
-date: '2024-04-25'
+date: '2025-03-28'
 documentclass: scrartcl
 format: 
   html:
@@ -102,7 +102,8 @@ In my case the working directory looks like this:
 ```
 
 Now assume we produced a plot in our current session and want to save it using 
-the function `ggplot2::ggsave()`. As we already learned, this function takes, 
+the function `ggplot2::ggsave()`. You learn (or have learned) in the session
+on [visualization](content/material/session06.qmd) that this function takes, 
 among others, an argument `filename` that specifies the name of the file that is 
 meant to contain the plot.
 Now if I were to tell R to save the plot under the name `test.pdf` like this:
