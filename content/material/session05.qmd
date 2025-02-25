@@ -1,6 +1,6 @@
 ---
-title: "🗓️ Sessions 5 and 6: Recap and practice"
-date: "2024-04-18"
+title: "🗓️ Session 5: Recap and practice"
+date: "2025-04-11"
 date-modified: last-modified
 ---
 
@@ -11,15 +11,7 @@ one week before this session.
 
 ## 👨‍🏫 Lecture Slides 
 
-There were no slides used during this session.
-
-::: {.callout-tip collapse="true"}
-## Script for the function example we were using
-This is basically a step-by-step solution to the first function exercise of the
-`Basics` exercise collection in the package `DataScienceExercises`.
-<script src="https://gist.github.com/graebnerc/908de56b52a28fda6fe5acb14393942d.js"></script>
-:::
-
+TBA
 
 ## 🎥 Lecture videos 
 
@@ -27,20 +19,7 @@ There will be no videos for recap sessions.
 
 ## 📚 Suggested Reading
 
-- Read again the tutorial on [functions](/2024Spring/tutorials/obj-types-i-functions/index.qmd) 
-- I added more mini exercises for defining functions to the package `DataScienceExercises`
-as part of the new exercise package `Functions`
-
-::: {.callout-tip collapse="true"}
-## Quick code for starting the exercises on functions
-```{r}
-#| eval: false
-learnr::run_tutorial(
-  name = "Functions", 
-  package = "DataScienceExercises", 
-  shiny_args=list("launch.browser"=TRUE))
-```
-:::
+TBA
 
 ## ✍️ Coursework
 
@@ -52,4 +31,7 @@ learnr::run_tutorial(
 
 - [Exercise sheet for this session](session05-exercises.qmd)
 - [R file template for your solutions](https://gist.github.com/graebnerc/3725a703f7fcbc6d429993810d7a81fd)
+
+<!---
 - [Possible solutions to the exercises](session05-solutions.qmd)
+--->
