@@ -27,24 +27,23 @@ For the model-related parts of the lecture I recommend the following book as a f
 ::: {.callout-note collapse="true"}
 ## How to use the exercise codes?
 For information on how to use the exercise code, read 
-[this tutorial](/2024Spring/tutorials/using-exercises/).
+[this tutorial](/content/tutorials/using-exercises/).
 :::
 
 
-|   Session    | Topic                                                   |                      Slides                       |       Exercise code        |
-|:-------------:|:--------------|:-------------:|:-------------:|
-|   [1](#s1)   | [General introduction](/2024Spring/material/session01.qmd) |       [Slides](/2024Spring/material/slides/T1-Introduction.pdf)        |                            |
-|   [2](#s2)   | [Basics of R and R-Studio]((/2024Spring/material/session02.qmd))                                |     [Slides](/2024Spring/material/slides/T2-Basics-Functions.pdf)      |          `Basics`, `Functions`          |
-|   [3](#s3)   | [Basic objects](/2024Spring/material/session03.qmd)                                           |          [Slides](/2024Spring/material/slides/T3-Objects.pdf)          |       `ObjectTypes1`       |
-|   [4](#s4)   | [Advanced objects](/2024Spring/material/session04.qmd)                                        |        [Slides](/2024Spring/material/slides/T4-AdvObjects.pdf)         |       `ObjectTypes2`       |
-|      5       | [Recap & practice](/2024Spring/material/session05.qmd)                                        |                                                   |                            |
-|   [6](#s6)   | [Visualization](/2024Spring/material/session05.qmd)                                            |       [Slides](/2024Spring/material/slides/T6-Visualization.pdf)       |      `Visualization1`      |
-|   [7](#s7)   | Project management and data import                      |       [Slides](/2024Spring/material/slides/T7-ProjectSetup.pdf)        |       `ProjectOrga`        |
-| [8 & 9](#s8) | Data wrangling                                          |      [Slides](/2024Spring/material/slides/T8T9-DataWrangling.pdf)      | `Wrangling1`, `Wrangling2` |
-|  [10](#s10)  | Exploratory data analysis (recap)                       | [Slides](/2024Spring/material/slides/T10-ExplorativeDataAnalysis.pdf)  |                            |
-|  [11](#s11)  | Quarto/R Markdown                                       |          [Slides](/2024Spring/material/slides/T11-Quarto.pdf)          |          `Quarto`          |
-|  [12](#s12)  | Recap & practice                                        |                        NA                         |                            |
-|  [13](#s13)  | Introduction to data analysis                           |       [Slides](/2024Spring/material/slides/T13-DataAnalysis.pdf)       |                            |
-|  [14](#s14)  | Sampling                                                |         [Slides](/2024Spring/material/slides/T14-Sampling.pdf)         |         `Sampling`         |
-|  [15](#s15)  | Simple linear Regression                                |  [Slides](/2024Spring/material/slides/T15-SimpleLinearRegression.pdf)  |    `LinearRegression1`     |
-|  [16](#s15)  | Multiple linear Regression                              | [Slides](/2024Spring/material/slides/T16-MultipleLinearRegression.pdf) |    `LinearRegression2`     |
+|   Session    | Topic                                                         |       Exercise code                      |
+|:------------:|:--------------------------------------------------------------|:----------------------------------------:|
+|   [1](#s1)   | [General introduction](/content/material/session01.qmd)       |                                          |
+|   [2](#s2)   | [Basics of R and R-Studio]((/content/material/session02.qmd)) | `Basics`, `Functions`                    |
+|   [3](#s3)   | [Project management](/content/material/session03.qmd)         | `ProjectOrga`                            |
+|   [4](#s4)   | [Object types](/content/material/session04.qmd)               | `ObjectTypes1`, `ObjectTypes2`           |
+|   [5](#s5)   | [Recap & practice](/content/material/session05.qmd)           |                                          |
+|   [6](#s6)   | [Visualization](/content/material/session06.qmd)              |      `Visualization1`                    |
+|   [7](#s7)   | [Quarto](/content/material/session07.qmd)                     | `Quarto`                                 |
+|   [8](#s8)   | [AI for coding](/content/material/session08.qmd)              |                                          |
+|   [9](#s9)   | [Importing data](/content/material/session09.qmd)             | `Wrangling1`, `Wrangling2`               |
+|  [10](#s10)  | [Preparing data](/content/material/session10.qmd)             | `Wrangling1`, `Wrangling2`               |
+|  [11](#s11)  | TBD                                                           |                                          |
+|  [12](#s12)  | Linear models                                                 | `LinearRegression1`, `LinearRegression2` |
+|  [13](#s13)  | Analyzing experimental data                                   |                                          |
+|  [14](#s14)  | Recap & practice                                              |                                          |
