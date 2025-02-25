@@ -1,26 +1,26 @@
 ---
-title: "🗓️ Session 4: Advanced object types in R"
-date: "2024-04-11"
+title: "🗓️ Session 4: Basic object types in R"
+date: "2025-04-04"
 date-modified: last-modified
 ---
 
-In this video-based lecture you learn about the most important advanced
-object types in R. The two object types covered in this lecture, factors and
-data frames, are advanced in the sense that they can be thought of extensions
-of some of the basic object types you encountered before: factors and special
-kinds of integers, and data frames are special kinds of lists. This lecture
-concludes the first part of the lecture about the basics of R.
+This session is video-based since it introduces some very important fundamentals, 
+which might be a bit boring to listen to in a lecture. In the videos, you 
+learn about the most important and most fundamental object types in R, such as
+decimal numbers or words. While this might look a bit boring at first, understanding
+these basic types is fundamental for all the more advanced (and exiting) stuff
+in the future!
 
 ## 👨‍🏫 Lecture Slides 
 
 Either click on the slide area below or click 
-[here](/2024Spring/material/slides/T4-AdvObjects.pdf) to download the slides.
+[here](/content/material/slides/E4-Objects.pdf) to download the slides.
 
 
 ```{=html}
 <div class="embed-container">
   <iframe 
-  src="/2024Spring/material/slides/T4-AdvObjects.pdf" 
+  src="/content/material/slides/E4-Objects.pdf" 
   style="border: 0.5px" 
   width="80%"
   height="80%"
@@ -29,42 +29,46 @@ Either click on the slide area below or click
 ```
 
 ::: {.callout-tip collapse="true"}
-## The R script of this session
-<script src="https://gist.github.com/graebnerc/daef5dee107ee89ca9cd618fa0dde96d.js"></script>
+## Solutions to the intermediate exercises
+<script src="https://gist.github.com/graebnerc/de4c233f8901905a5d4c15a586547801.js"></script>
 :::
 
 ## 🎥 Lecture videos 
 
-All the videos are available via this [playlist](https://www.youtube.com/playlist?list=PLZDawQMrG1RK0Ia3Y3AFqf_FP59GJnIP7).
+All the videos are available via this [playlist](https://www.youtube.com/playlist?list=PLZDawQMrG1RJ1oZwuZtiG0fOWSOgyZhYC).
 
 ::: {.callout-note collapse="true"}
 ## Expand to access the videos directly
 
 ```{=html}
 <div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/y-2i8MmT7y8?si=zqoHXyn0R43wDgtD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="370" height="208" src="https://www.youtube.com/embed/2pTzLhBfjRI?si=CM9MBNOOuvAQ0xGa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
 ```
 
 ```{=html}
 <div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/0-oFA2V6b-Q?si=McN3QrmKbZ_IjWwK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
+<iframe width="370" height="208" src="https://www.youtube.com/embed/8A5x-uENcrQ?si=wAaxGUzltTk5rpDu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ```
 
 ```{=html}
 <div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/yYR3C77UQC0?si=KPMM21mc-w6k862A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="370" height="208" src="https://www.youtube.com/embed/ETZgjjWbUEM?si=awPGu3J-q5Rosq8v" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ```
 
 ```{=html}
 <div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/GrEdx3T4Ylk?si=eiDv6FSQSoipMPE7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="370" height="208" src="https://www.youtube.com/embed/2sTn2nBypEE?si=pJzRnVSf0kAUqcWT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ```
 
 ```{=html}
 <div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/TnFbHp7MFRk?si=qcff5TBtPmX3hJlU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="370" height="208" src="https://www.youtube.com/embed/pcwTeS3H39w?si=4xSvvkZOqDiY7XpZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+```
+
+```{=html}
+<div class="embed-container">
+<iframe width="370" height="208" src="https://www.youtube.com/embed/qpeRL-Pm0C4?si=SKBEYVM0fIcMaHsN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ```
 :::
 
@@ -72,25 +76,27 @@ All the videos are available via this [playlist](https://www.youtube.com/playlis
 
 Read the following tutorials:
 
-- [Fundamental object types in R III: Factors and data frames](/2024Spring/tutorials/obj-types-iii-adv/index.qmd)
+- [Fundamental object types in R I: Functions](/content/tutorials/obj-types-i-functions/index.qmd)
+- [Fundamental object types in R II: Vectors](/content/tutorials/obj-types-ii-vectors/index.qmd)
 
 ### 🏆 Further readings
 
 *I suggest you read these references after you learned about data frames in*
 *session 4 and data wrangling techniques in sessions 8 and 9.*
-
-- [Chapter 16](https://r4ds.hadley.nz/factors) in @r4ds. 
+- Sections 1-3 in [Chapter 12](https://r4ds.hadley.nz/logicals) of @r4ds.
+- [Chapter 13](https://r4ds.hadley.nz/numbers) in @r4ds.
+- [Chapter 14](https://r4ds.hadley.nz/strings) in @r4ds.
 
 ## ✍️ Coursework
 
-- Do the `ObjectTypes2` exercises of the package `DataScienceExercises` 
+- Do the `ObjectTypes1` exercises of the package `DataScienceExercises`
 
 ::: {.callout-tip collapse="true"}
 ## Quick code for starting the exercises
 ```{r}
 #| eval: false
 learnr::run_tutorial(
-  name = "ObjectTypes2", 
+  name = "ObjectTypes1", 
   package = "DataScienceExercises", 
   shiny_args=list("launch.browser"=TRUE))
 ```
