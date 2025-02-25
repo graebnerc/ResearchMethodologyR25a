@@ -1,27 +1,26 @@
 [
   {
-    "listing": "/2024Spring/exercises.html",
+    "listing": "/content/exercises.html",
     "items": [
-      "/2024Spring/exercises/obj-types-exercises/index.html",
-      "/2024Spring/exercises/quarto-exercises/index.html",
-      "/2024Spring/exercises/multiple-regression/index.html"
+      "/content/exercises/obj-types-exercises/index.html",
+      "/content/exercises/quarto-exercises/index.html",
+      "/content/exercises/multiple-regression/index.html"
     ]
   },
   {
-    "listing": "/2024Spring/tutorials.html",
+    "listing": "/content/tutorials.html",
     "items": [
-      "/2024Spring/tutorials/installation/index.html",
-      "/2024Spring/tutorials/installing-packages/index.html",
-      "/2024Spring/tutorials/using-exercises/index.html",
-      "/2024Spring/tutorials/first-steps/index.html",
-      "/2024Spring/tutorials/obj-types-i-functions/index.html",
-      "/2024Spring/tutorials/obj-types-ii-vectors/index.html",
-      "/2024Spring/tutorials/obj-types-iii-adv/index.html",
-      "/2024Spring/tutorials/visualization/index.html",
-      "/2024Spring/tutorials/importing-exporting-data/index.html",
-      "/2024Spring/tutorials/setting-up-an-r-project/index.html",
-      "/2024Spring/tutorials/data-wrangling/index.html",
-      "/2024Spring/tutorials/mcs/index.html"
+      "/content/tutorials/installation/index.html",
+      "/content/tutorials/installing-packages/index.html",
+      "/content/tutorials/using-exercises/index.html",
+      "/content/tutorials/first-steps/index.html",
+      "/content/tutorials/setting-up-an-r-project/index.html",
+      "/content/tutorials/obj-types-i-functions/index.html",
+      "/content/tutorials/obj-types-ii-vectors/index.html",
+      "/content/tutorials/obj-types-iii-adv/index.html",
+      "/content/tutorials/visualization/index.html",
+      "/content/tutorials/importing-exporting-data/index.html",
+      "/content/tutorials/data-wrangling/index.html"
     ]
   }
 ]

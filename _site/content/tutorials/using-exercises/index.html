@@ -8,7 +8,7 @@
 
 <meta name="author" content="Prof.&nbsp;Dr.&nbsp;Claudius Gräbner-Radkowitsch">
 
-<title>Theoretical and Empirical Research Methodology - The R Lectures - Theoretical and Empirical Research Methodology</title>
+<title>Theoretical and Empirical Research Methodology - The R Lectures - Using the exercise package</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,60 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./content/index.html" rel="next">
-<link href="./figures/icons/course_favicon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../figures/icons/course_favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -63,8 +96,8 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<meta property="og:title" content="Theoretical and Empirical Research Methodology - The R Lectures - Theoretical and Empirical Research Methodology">
-<meta property="og:description" content="An Introduction to R">
+<meta property="og:title" content="Theoretical and Empirical Research Methodology - The R Lectures - Using the exercise package">
+<meta property="og:description" content="">
 <meta property="og:site-name" content="Theoretical and Empirical Research Methodology - The R Lectures">
 </head>
 
@@ -75,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Theoretical and Empirical Research Methodology - The R Lectures</span>
     </a>
   </div>
@@ -94,27 +127,55 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">🏠 Home</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Using the exercise package</li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Using the exercise package</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Claudius Gräbner-Radkowitsch </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">24 02 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">🏠 Home</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">🏢 Getting Started</span></a>
   </div>
 </li>
@@ -129,67 +190,67 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 01</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session02.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 02</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session03.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 03</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session04.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 04</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session05.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session05.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Sessions 05</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session06.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session06.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 06</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session07.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 07</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session08.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session08.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 08</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session09.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session09.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 09</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session10.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session10.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 10</span></a>
   </div>
 </li>
@@ -197,7 +258,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/tutorials.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/tutorials.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">💻 Tutorials</span></a>
   </div>
 </li>
@@ -207,64 +268,55 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#the-course-in-brief" id="toc-the-course-in-brief" class="nav-link active" data-scroll-target="#the-course-in-brief">📑 The course in brief</a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">🎯 Learning Objectives</a></li>
-  </ul>
-</nav>
-    </div>
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Theoretical and Empirical Research Methodology</h1>
-<p class="subtitle lead">An Introduction to R</p>
+
+
+
+<p>When learning a programming language, applying the new concepts regularly is absolutely essential. Without regular practice it is hard to impossible to remember everything you need to actually enjoy working with <code>R</code>.</p>
+<p>Therefore, I prepared a small set of exercises for each session that I recommend you to do after the session. This will help you to remember what you have learned and to find out what you did not understand well. I then urge you to post your problems on Moodle, to ask your colleagues and to help each other out. This will be a great boost to your learning progress: explaining something to others is not only great in a normative sense, it also helps you to get a deeper understanding of the concepts yourself.</p>
+<p>In this short post I quickly explain how you can use the exercises that I have prepared for you. For those of you interested in the underlying mechanics: all exercises were prepared using the package <a href="https://rstudio.github.io/learnr/">learnr</a> together with the <a href="https://github.com/rstudio/gradethis">gradethis</a> package, and are distributed in the package <code>DataScienceExercises</code>.</p>
+<p>To use the exercises you must have installed the packages <code>learnr</code>, <code>gradethis</code> and <code>DataScienceExercises</code>. If you followed the instructions in the tutorial on <a href="../../../tutorial/installing-packages/">installing R packages</a> this should be the case. If for some reasons you need to install them, you can do this via:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pack_names <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rstudio/learnr"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rstudio/gradethis"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"graebnerc/DataScienceExercises"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">repo =</span> pack_names, <span class="at">upgrade =</span> <span class="st">"always"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Note that this requires a previous installation of the package <code>remotes</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Since I update the exercises according to your feedback, and add new exercises over the semester, I strongly recommend you to update the package <code>DataScienceExercises</code> each time before you start practicing. To do so you need an internet connection. If you just want to <em>do</em> the exercises without updating the package, an internet connection is <em>not</em> required: the exercises themselves also work offline.</p>
+<p>To update the package, simply type the following into the console and press <code>Enter</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repo =</span> <span class="st">"graebnerc/DataScienceExercises"</span>, <span class="at">upgrade =</span> <span class="st">"always"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This should update your package version to the most recent release.</p>
+<p>If you want to start an exercise you first need to figure out the name of the exercise sheet. This is provided in the <a href="../../../material/">Material section</a> of the course webpage. Then you call execute the following code via the console in R Studio, replacing ‘EX_NAME’ with the name of the exercise sheet:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>learnr<span class="sc">::</span><span class="fu">run_tutorial</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"EX_NAME"</span>, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">package =</span> <span class="st">"DataScienceExercises"</span>, </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">shiny_args=</span><span class="fu">list</span>(<span class="st">"launch.browser"</span><span class="ot">=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The first exercise sheet, for instance, is called <code>Basics</code>. Thus, to call it execute the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>learnr<span class="sc">::</span><span class="fu">run_tutorial</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"Basics"</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">package =</span> <span class="st">"DataScienceExercises"</span>, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">shiny_args=</span><span class="fu">list</span>(<span class="st">"launch.browser"</span><span class="ot">=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Lastly, if you encounter a bug or a mistake, or have an idea for a good exercise, please let me know via the <a href="https://github.com/graebnerc/DataScienceExercises/issues">issue tracker</a> of the <code>DataScienceExercises</code> package or via Moodle. Thank you!</p>
 
 
-
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Prof.&nbsp;Dr.&nbsp;<a href="#">Claudius Gräbner-Radkowitsch</a> </p>
-          </div>
-  </div>
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<section id="the-course-in-brief" class="level1">
-<h1>📑 The course in brief</h1>
-<p><strong>Focus:</strong> This course is part of the module <em>Theoretical and Empirical Research Methodology</em>. It complements the theoretical lectures by introducing you to the statistical programming language R and acquire practical knowledge about how to implement essential research tools and all theoretical concepts discussed during the main lecture in R.</p>
-<p><strong>How:</strong> The course comprises a mixture of (i) lectures, in which I introduce concepts in the classroom, (ii) automated hands-on exercises for you to do at home on your own and (iii) instructional videos for topics that are best learned and practiced by yourself. Of course, you are always invited to post your questions to the course forum and more intricate problems can be solved in class.</p>
-<p><strong>Prerequisites:</strong> The course does not require you to have any prior knowledge in R or any other programming language. Depending on your prior knowledge or affinity to programming, the course will be quite demanding, but equip you with computational skills that are most valuable both within academia and the business world.</p>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>🎯 Learning Objectives</h1>
-<ul>
-<li>Use R together with the integrated development environment R Studio</li>
-<li>Understand the use of R packages to perform specific data analytic tasks</li>
-<li>Write reproducible data analysis reports using Quarto</li>
-<li>Transform raw data into tidy data, which is suitable for further analysis</li>
-<li>Choose and justify the correct visualization approach, and create appealing visualizations using the R package <code>ggplot2</code></li>
-<li>Implement and interpret linear regression models with numerical and categorial variables</li>
-<li>Analyze experimental data in R</li>
-</ul>
-<hr>
-<p><a href="https://euf-datascience-spring23.netlify.app"> <button class="button-61">The main course on moodle</button> </a></p>
-
-
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -514,15 +566,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
 });
 </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./content/index.html" class="pagination-link">
-        <span class="nav-page-text">🏢 Getting Started</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

@@ -8,7 +8,7 @@
 
 <meta name="author" content="Prof.&nbsp;Dr.&nbsp;Claudius Gräbner-Radkowitsch">
 
-<title>Theoretical and Empirical Research Methodology - The R Lectures - Theoretical and Empirical Research Methodology</title>
+<title>Theoretical and Empirical Research Methodology - The R Lectures - Exercises on multiple linear regression</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,24 +24,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./content/index.html" rel="next">
-<link href="./figures/icons/course_favicon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../figures/icons/course_favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -63,8 +62,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<meta property="og:title" content="Theoretical and Empirical Research Methodology - The R Lectures - Theoretical and Empirical Research Methodology">
-<meta property="og:description" content="An Introduction to R">
+<meta property="og:title" content="Theoretical and Empirical Research Methodology - The R Lectures - Exercises on multiple linear regression">
 <meta property="og:site-name" content="Theoretical and Empirical Research Methodology - The R Lectures">
 </head>
 
@@ -75,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Theoretical and Empirical Research Methodology - The R Lectures</span>
     </a>
   </div>
@@ -94,27 +92,55 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">🏠 Home</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Exercises on multiple linear regression</li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Exercises on multiple linear regression</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Claudius Gräbner-Radkowitsch </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">07 06 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">🏠 Home</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">🏢 Getting Started</span></a>
   </div>
 </li>
@@ -129,67 +155,67 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 01</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session02.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 02</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session03.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 03</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session04.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 04</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session05.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session05.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Sessions 05</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session06.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session06.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 06</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session07.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 07</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session08.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session08.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 08</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session09.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session09.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 09</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session10.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/material/session10.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 10</span></a>
   </div>
 </li>
@@ -197,7 +223,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/tutorials.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/tutorials.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">💻 Tutorials</span></a>
   </div>
 </li>
@@ -211,59 +237,46 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-course-in-brief" id="toc-the-course-in-brief" class="nav-link active" data-scroll-target="#the-course-in-brief">📑 The course in brief</a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">🎯 Learning Objectives</a></li>
+  <li><a href="#exercises-on-multiple-linear-regression" id="toc-exercises-on-multiple-linear-regression" class="nav-link active" data-scroll-target="#exercises-on-multiple-linear-regression">Exercises on multiple linear regression</a>
+  <ul class="collapse">
+  <li><a href="#studying-coffee-data" id="toc-studying-coffee-data" class="nav-link" data-scroll-target="#studying-coffee-data">Studying coffee data</a></li>
+  <li><a href="#exploring-feasible-model-specifications" id="toc-exploring-feasible-model-specifications" class="nav-link" data-scroll-target="#exploring-feasible-model-specifications">Exploring feasible model specifications</a></li>
+  <li><a href="#solutions" id="toc-solutions" class="nav-link" data-scroll-target="#solutions">Solutions</a></li>
+  </ul></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Theoretical and Empirical Research Methodology</h1>
-<p class="subtitle lead">An Introduction to R</p>
-</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Prof.&nbsp;Dr.&nbsp;<a href="#">Claudius Gräbner-Radkowitsch</a> </p>
-          </div>
-  </div>
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<section id="the-course-in-brief" class="level1">
-<h1>📑 The course in brief</h1>
-<p><strong>Focus:</strong> This course is part of the module <em>Theoretical and Empirical Research Methodology</em>. It complements the theoretical lectures by introducing you to the statistical programming language R and acquire practical knowledge about how to implement essential research tools and all theoretical concepts discussed during the main lecture in R.</p>
-<p><strong>How:</strong> The course comprises a mixture of (i) lectures, in which I introduce concepts in the classroom, (ii) automated hands-on exercises for you to do at home on your own and (iii) instructional videos for topics that are best learned and practiced by yourself. Of course, you are always invited to post your questions to the course forum and more intricate problems can be solved in class.</p>
-<p><strong>Prerequisites:</strong> The course does not require you to have any prior knowledge in R or any other programming language. Depending on your prior knowledge or affinity to programming, the course will be quite demanding, but equip you with computational skills that are most valuable both within academia and the business world.</p>
-</section>
-<section id="learning-objectives" class="level1">
-<h1>🎯 Learning Objectives</h1>
+<section id="exercises-on-multiple-linear-regression" class="level1">
+<h1>Exercises on multiple linear regression</h1>
+<section id="studying-coffee-data" class="level2">
+<h2 class="anchored" data-anchor-id="studying-coffee-data">Studying coffee data</h2>
+<p>Read in the data set <a href="coffee_data.csv">coffee_data.csv</a>.</p>
+<p>It contains the following variables:</p>
 <ul>
-<li>Use R together with the integrated development environment R Studio</li>
-<li>Understand the use of R packages to perform specific data analytic tasks</li>
-<li>Write reproducible data analysis reports using Quarto</li>
-<li>Transform raw data into tidy data, which is suitable for further analysis</li>
-<li>Choose and justify the correct visualization approach, and create appealing visualizations using the R package <code>ggplot2</code></li>
-<li>Implement and interpret linear regression models with numerical and categorial variables</li>
-<li>Analyze experimental data in R</li>
+<li><code>CoffeePrice</code>: The world market price for coffee from Brazil in EUR per kilo</li>
+<li><code>CoffeeDemand</code>: The demand for coffee from Brazil in tons</li>
+<li><code>CoffeeSeller</code>: The kind of coffee company: <code>Standard</code> or <code>FairTrade</code></li>
 </ul>
-<hr>
-<p><a href="https://euf-datascience-spring23.netlify.app"> <button class="button-61">The main course on moodle</button> </a></p>
+<p>In the following, treat <code>CoffeeDemand</code> as the dependent variable, and <code>CoffeePrice</code> and <code>CoffeeSeller</code> as the independent variables.</p>
+<p>Estimate a parallel slopes model, and an interaction model. Which of the models would you prefer?</p>
+<p>You should justify your choice using two main arguments.</p>
+</section>
+<section id="exploring-feasible-model-specifications" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-feasible-model-specifications">Exploring feasible model specifications</h2>
+<p>Read in the data set <a href="ice_data.csv">ice_data.csv</a>. What kind of relationships could you reasonably study in a linear regression framework (without further data transformation).</p>
+</section>
+<section id="solutions" class="level2">
+<h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
+<p>The solutions to both exercises can be found <a href="https://gist.github.com/graebnerc/e63dd4d15f314bc565eac8e617c9bef6">here</a>.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -514,15 +527,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
 });
 </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./content/index.html" class="pagination-link">
-        <span class="nav-page-text">🏢 Getting Started</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

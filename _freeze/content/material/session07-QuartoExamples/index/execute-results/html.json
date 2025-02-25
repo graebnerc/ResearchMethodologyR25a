@@ -1,0 +1,14 @@
+{
+  "hash": "7d26c84d78307b2b8f9c2d26b24366be",
+  "result": {
+    "markdown": "---\ntitle: \"A possible solution\"\nauthor: \"Claudius\"\ndate: \"2025-05-02\"\nexecute: \n  echo: false\nformat: \n  html: \n    toc: true\n    toc-depth: 2\n    toc-location: body\n    number-sections: true\n    theme: darkly\n  pdf:\n    toc: true\n    toc-depth: 2\n    toc-location: body\n    number-sections: true\n---\n\n\n# Introduction\n\nIn the (invisible) YAML header we set the default value for the chunk option \n`echo` to `FALSE`, meaning that code is hidden by default.\n\nAlso check out the header, in which we explicitly set `title`, `date`, and \n`author` - the result of this can be seen in the rendered document. To comply \nwith the respective tasks we added the specifications \n`toc: true` and `toc-location: body` to `html` to add the \ntable of contents at the beginning, and `theme: darkly` to use this theme.\nAs you could expect, `number-sections: true` ensures section headings are\nnumbered.\nTo the `pdf` call we add the TOC related comments and `number-sections: true´.\n\n\n## A second level heading\n\nAgain some text. Here is the first chunk. \nThe code is shown in the rendered document because we set the chunk option\n`echo: true`, and so is the output produced by the code because the chunk \noption `include` is set the `TRUE` by default:\n\n\n::: {.cell}\n\n```{.r .cell-code}\nvector_random_numbers <- rnorm(\n  n = 12, mean = 5, sd = 2)\nvector_random_numbers\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n [1] 5.50312172 3.37577988 7.75910416 2.41485572 4.51872462 4.13981073\n [7] 2.88111088 7.47439413 0.07717589 4.76735577 5.66862718 3.97090849\n```\n:::\n:::\n\n\n## A visualization\n\nHere we produce the desired ggplot (the code for which remains hidden because\nwe did not deviate from the default value of `echo`, which we set to `FALSE`\nin the setup chunk.)\n\n# Using Netlify Drop\n\nThe document was published using [Netlify Drop](https://app.netlify.com/drop), \nas explained in the slides.\nThis is the reason the file is called `index.qmd`: Netlify Drop only works if\na `html`-file called `index.html` is included in the uploaded directory.\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

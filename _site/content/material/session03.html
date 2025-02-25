@@ -8,7 +8,7 @@
 
 <meta name="author" content="Prof.&nbsp;Dr.&nbsp;Claudius Gräbner-Radkowitsch">
 
-<title>Theoretical and Empirical Research Methodology - The R Lectures - Theoretical and Empirical Research Methodology</title>
+<title>Theoretical and Empirical Research Methodology - The R Lectures - 🗓️ Session 3: Project management</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,27 +21,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./content/index.html" rel="next">
-<link href="./figures/icons/course_favicon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../content/material/session04.html" rel="next">
+<link href="../../content/material/session02.html" rel="prev">
+<link href="../../figures/icons/course_favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -63,8 +98,8 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<meta property="og:title" content="Theoretical and Empirical Research Methodology - The R Lectures - Theoretical and Empirical Research Methodology">
-<meta property="og:description" content="An Introduction to R">
+<meta property="og:title" content="Theoretical and Empirical Research Methodology - The R Lectures - 🗓️ Session 3: Project management">
+<meta property="og:description" content="">
 <meta property="og:site-name" content="Theoretical and Empirical Research Methodology - The R Lectures">
 </head>
 
@@ -75,7 +110,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Theoretical and Empirical Research Methodology - The R Lectures</span>
     </a>
   </div>
@@ -94,7 +129,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">🏠 Home</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/material/index.html">🗓️ Material</a></li><li class="breadcrumb-item"><a href="../../content/material/session03.html">Session 03</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -108,13 +143,13 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">🏠 Home</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">🏢 Getting Started</span></a>
   </div>
 </li>
@@ -129,67 +164,67 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/material/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Overview</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session01.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/material/session01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 01</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session02.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/material/session02.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 02</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session03.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/material/session03.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Session 03</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session04.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/material/session04.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 04</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session05.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/material/session05.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Sessions 05</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session06.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/material/session06.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 06</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session07.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/material/session07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 07</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session08.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/material/session08.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 08</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session09.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/material/session09.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 09</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/material/session10.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/material/session10.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Session 10</span></a>
   </div>
 </li>
@@ -197,7 +232,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./content/tutorials.html" class="sidebar-item-text sidebar-link">
+  <a href="../../content/tutorials.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">💻 Tutorials</span></a>
   </div>
 </li>
@@ -211,8 +246,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-course-in-brief" id="toc-the-course-in-brief" class="nav-link active" data-scroll-target="#the-course-in-brief">📑 The course in brief</a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">🎯 Learning Objectives</a></li>
+  <li><a href="#lecture-slides" id="toc-lecture-slides" class="nav-link active" data-scroll-target="#lecture-slides">👨‍🏫 Lecture Slides</a></li>
+  <li><a href="#lecture-videos" id="toc-lecture-videos" class="nav-link" data-scroll-target="#lecture-videos">🎥 Lecture videos</a></li>
+  <li><a href="#mandatory-reading" id="toc-mandatory-reading" class="nav-link" data-scroll-target="#mandatory-reading">📚 Mandatory Reading</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further Reading</a></li>
+  <li><a href="#coursework" id="toc-coursework" class="nav-link" data-scroll-target="#coursework">✍️ Coursework</a></li>
   </ul>
 </nav>
     </div>
@@ -221,8 +259,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Theoretical and Empirical Research Methodology</h1>
-<p class="subtitle lead">An Introduction to R</p>
+<h1 class="title">🗓️ Session 3: Project management</h1>
 </div>
 
 
@@ -236,32 +273,77 @@ ul.task-list li input[type="checkbox"] {
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">28 03 2025</p>
+    </div>
+  </div>
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">25 02 2025</p>
+    </div>
+  </div>
     
   </div>
   
 
 </header>
 
-<section id="the-course-in-brief" class="level1">
-<h1>📑 The course in brief</h1>
-<p><strong>Focus:</strong> This course is part of the module <em>Theoretical and Empirical Research Methodology</em>. It complements the theoretical lectures by introducing you to the statistical programming language R and acquire practical knowledge about how to implement essential research tools and all theoretical concepts discussed during the main lecture in R.</p>
-<p><strong>How:</strong> The course comprises a mixture of (i) lectures, in which I introduce concepts in the classroom, (ii) automated hands-on exercises for you to do at home on your own and (iii) instructional videos for topics that are best learned and practiced by yourself. Of course, you are always invited to post your questions to the course forum and more intricate problems can be solved in class.</p>
-<p><strong>Prerequisites:</strong> The course does not require you to have any prior knowledge in R or any other programming language. Depending on your prior knowledge or affinity to programming, the course will be quite demanding, but equip you with computational skills that are most valuable both within academia and the business world.</p>
+<p>This is one of the most underestimated topics. In this session you learn how to adequately set up your working environment on your computer. This means where you should save which files, which directory structure you should use, and how to point the computer to other files on your computer. While this sounds boring at first, taking seriously the insights from this session will save you tons of hours of frustration in the future!</p>
+<section id="lecture-slides" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-slides">👨‍🏫 Lecture Slides</h2>
+<p>Either click on the slide area below or click <a href="../../content/material/slides/E3-ProjectSetup.pdf">here</a> to download the slides.</p>
+<div class="embed-container">
+  <iframe src="../../content/material/slides/E3-ProjectSetup.pdf" style="border: 0.5px" width="80%" height="80%"></iframe>
+</div>
 </section>
-<section id="learning-objectives" class="level1">
-<h1>🎯 Learning Objectives</h1>
+<section id="lecture-videos" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-videos">🎥 Lecture videos</h2>
+<p>Currently, no videos are available for this session. Check out the tutorial on <a href="../../content/tutorials/setting-up-an-r-project/index.html">project setup</a> instead.</p>
+</section>
+<section id="mandatory-reading" class="level2">
+<h2 class="anchored" data-anchor-id="mandatory-reading">📚 Mandatory Reading</h2>
 <ul>
-<li>Use R together with the integrated development environment R Studio</li>
-<li>Understand the use of R packages to perform specific data analytic tasks</li>
-<li>Write reproducible data analysis reports using Quarto</li>
-<li>Transform raw data into tidy data, which is suitable for further analysis</li>
-<li>Choose and justify the correct visualization approach, and create appealing visualizations using the R package <code>ggplot2</code></li>
-<li>Implement and interpret linear regression models with numerical and categorial variables</li>
-<li>Analyze experimental data in R</li>
+<li>The tutorial <a href="../../content/tutorials/setting-up-an-r-project/index.html">Setting up an R project</a></li>
 </ul>
-<hr>
-<p><a href="https://euf-datascience-spring23.netlify.app"> <button class="button-61">The main course on moodle</button> </a></p>
+</section>
+<section id="further-reading" class="level2">
+<h2 class="anchored" data-anchor-id="further-reading">Further Reading</h2>
+<p>While we do not cover this in this course, I highly recommend learning the version control system <a href="https://git-scm.com/">Git</a>. Personally, I can recommend the following:</p>
+<ul>
+<li><a href="https://rogerdudler.github.io/git-guide/">Very concise introduction</a> to Git</li>
+<li>Introduction to GitHub: <a href="https://skills.github.com/">GitHub skills</a> and the <a href="https://docs.github.com/en">official docs</a></li>
+</ul>
+</section>
+<section id="coursework" class="level2">
+<h2 class="anchored" data-anchor-id="coursework">✍️ Coursework</h2>
+<ul>
+<li>Do the exercises <code>ProjectOrga</code> from the <code>DataScienceExercises</code> package that refer to setting up an R project</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Quick code for starting the exercises
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>learnr<span class="sc">::</span><span class="fu">run_tutorial</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"ProjectOrga"</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">package =</span> <span class="st">"DataScienceExercises"</span>, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">shiny_args=</span><span class="fu">list</span>(<span class="st">"launch.browser"</span><span class="ot">=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -516,10 +598,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../../content/material/session02.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Session 02</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./content/index.html" class="pagination-link">
-        <span class="nav-page-text">🏢 Getting Started</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/material/session04.html" class="pagination-link">
+        <span class="nav-page-text">Session 04</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
