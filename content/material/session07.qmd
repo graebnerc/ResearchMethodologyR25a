@@ -1,11 +1,11 @@
 ---
 title: "🗓️ Session 7: A very short introduction to Quarto"
-date: "2024-05-02"
+date: "2025-05-02"
 date-modified: last-modified
 ---
 
 Quarto is a modern multi-language version of *R Markdown*. As with its
-predessessor, the idea is to provide people with the opportunity to write 
+predecessor, the idea is to provide people with the opportunity to write 
 text and code into the very same document. This makes the creation of nice
 looking and reproducible reports or paper very easy. Moreoever, with Quarto
 it is very easy to create very nice papers, reports, websites or interactive
