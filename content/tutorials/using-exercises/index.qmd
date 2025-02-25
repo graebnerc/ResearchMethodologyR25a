@@ -1,7 +1,7 @@
 ---
 title: Using the exercise package
 author: Claudius Gräbner-Radkowitsch
-date: '2025-02-24'
+date: '2025-03-14'
 documentclass: scrartcl
 format: 
   html:

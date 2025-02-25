@@ -1,7 +1,7 @@
 ---
 title: Installation of the necessary software # Also check out line 43
 author: Claudius Gräbner-Radkowitsch
-date: '2024-03-14'
+date: '2025-03-14'
 documentclass: scrartcl
 format: 
   html:
@@ -60,7 +60,7 @@ During this course we will use the following software and services:
 * Netlify
 
 You will need to install the software and register for these services on
-your own. While we will use one session for joint 
+your own. While I offer an optional session for joint 
 troubleshooting, it is absolutely necessary that you do your best to install 
 the software on your own before that date. 
 To this end, this document is meant to provide you with all the information
@@ -189,7 +189,7 @@ you to install the software.
 
 In case R is already installed on your computer you should make sure that your
 version is more of less up to date. For our seminar you should use at least R
-version `R 4.3.2`. The version you are currently using is shown as soon as you
+version `R 4.4.2`. The version you are currently using is shown as soon as you
 start `R`.
 
 Please note: if you installed R anew in the previous step, you do *not* need 

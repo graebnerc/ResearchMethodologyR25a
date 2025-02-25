@@ -1,7 +1,7 @@
 ---
 title: "Fundamental object types in R I: Functions" # Also check out line 43
 author: Claudius Gräbner-Radkowitsch
-date: '2024-03-28'
+date: '2024-04-04'
 documentclass: scrartcl
 format: 
   html:
