@@ -15,4 +15,4 @@ listing:
 ---
 
 Here are some additional exercises, on top of those provided by the 
-[exercise package](/2024Spring/tutorials/using-exercises/).
+[exercise package](/content/tutorials/using-exercises/).

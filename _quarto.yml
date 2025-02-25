@@ -1,6 +1,6 @@
 project:
   type: "website"
-  title: "Data science using R"
+  title: "Theoretical and Empirical Research Methodology (Spring 2025)"
   output-dir: _site
   render:
     - "index.qmd"

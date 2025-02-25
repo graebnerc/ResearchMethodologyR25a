@@ -1,6 +1,7 @@
 .vscode/
 /.quarto/
 #/_site/
+content/material/slides/old
 
 .Rproj.user
 .Rhistory

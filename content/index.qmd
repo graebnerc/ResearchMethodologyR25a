@@ -10,7 +10,7 @@ format: html
 
 (12/03/2023)
 
-- [🗓️ Week 01 lecture material](/2024Spring/weeks/week01/page.qmd) is now available!
+- [🗓️ Week 01 lecture material](/content/weeks/week01/page.qmd) is now available!
 
 :::
 
@@ -19,7 +19,7 @@ format: html
 # 📍 Lecture
 
 Wednesday 14:15-15:45 in MAD 131 &
-Fridays 14:15-15:45 in MAD 131
+Fridays 14:15-15:45 in MAD 131 (biweekly, see seminar timetable)
 
 Please make sure to check out the most recent version of the seminar timetable 
 since lecture dates might differ from one week to another. 
@@ -31,26 +31,26 @@ There is an R package with interactive exercises for this course.
 I strongly recommend to do the exercises for each session since regular 
 practice is the most important determinant in your success in learning R.
 You find more information on how to use the exercises in 
-[this tutorial](/2024Spring/tutorials/using-exercises/).
+[this tutorial](/content/tutorials/using-exercises/).
 On top of that, there are some additional exercises on selected topics
-[here](/2024Spring/exercises.qmd).
+[here](/content/exercises.qmd).
 
 # 📂 Material
 
 You find an overview about all lecture materials, such as slides and
-reading lists [here](/2024Spring/material/).
+reading lists [here](/content/material/).
 Complete material lists for the single sessions are distributed via the 
 respective session pages.
 Lecture videos can, so far, only be accessed via Moodle. EUF students can
 register for the Moodle course
-[13895](https://elearning.uni-flensburg.de/moodle/course/view.php?id=13895) 
+[ADD NUMBER]() 
 using the password `DataScience24`.
 
 # 📖 Tutorials
 
 Complementary to the lectures there are also short tutorials, 
 which explain certain concepts in a more detailed and applied manner.
-You can find an overview over all tutorials [here](/2024Spring/tutorials.qmd).
+You can find an overview over all tutorials [here](/content/tutorials.qmd).
 
 # 💌 Contact and discussion
 
