@@ -1,27 +1,26 @@
 ---
 title: "🗓️ Session 01 - Introduction, overview and installation"
-date: "2024-03-14"
+date: "2025-03-14"
 date-modified: last-modified
 ---
 
-In this first week, we will cover what you can expect to learn from this course 
-and the course logistics: all you need to know about the structure of the 
-lectures, exercises, and assessments, what will be expected of you, what you
-will learn and what has helped previous participants in excelling in this 
-course. Finally, we are installing all the programs and packages we need in
-this course.
+In this first week, we will cover what you can expect to learn from these exercises 
+and how they differ from the main lecture. 
+I will elaborate a bit on why I chose R for this course, what you can do
+with it, and what has helped previous participants helped excelling in this 
+course. Finally, I explain a bit what R is, how it relates to R Studio and LaTeX.
 
 ## 👨‍🏫 Lecture Slides 
 
 Either click on the slide area below or click 
-[here](/2024Spring/material/slides/T1-Introduction.pdf) to download the slides.
+[here](/content/material/slides/E1-Introduction.pdf) to download the slides.
 
 
 ```{=html}
 <div class="embed-container">
   <iframe 
   width="370" height="208"
-  src="/2024Spring/material/slides/T1-Introduction.pdf" 
+  src="/content/material/slides/E1-Introduction.pdf" 
   style="border: 0.5px" 
   ></iframe>
 </div>
@@ -56,9 +55,9 @@ All the videos are available via this [playlist](https://www.youtube.com/playlis
 
 Read the following tutorials:
 
-- [Installation of the necessary software](/2024Spring/tutorials/installation/index.qmd)
-- [Installing R packages](/2024Spring/tutorials/installing-packages/index.qmd)
-- [Using the exercise package](/2024Spring/tutorials/using-exercises/index.qmd)
+- [Installation of the necessary software](/content/tutorials/installation/index.qmd)
+- [Installing R packages](/content/tutorials/installing-packages/index.qmd)
+- [Using the exercise package](/content/tutorials/using-exercises/index.qmd)
 
 ## ✍️ Coursework
 

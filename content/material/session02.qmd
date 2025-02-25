@@ -1,6 +1,6 @@
 ---
 title: "🗓️ Session 2: First steps in R"
-date: "2024-03-21"
+date: "2025-03-21"
 date-modified: last-modified
 ---
 
@@ -12,12 +12,12 @@ assignments and functions.
 ## 👨‍🏫 Lecture Slides 
 
 Either click on the slide area below or click 
-[here](/2024Spring/material/slides/T2-Basics-Functions.pdf) to download the slides.
+[here](/content/material/slides/E2-Basics-Functions.pdf) to download the slides.
 
 ```{=html}
 <div class="embed-container">
   <iframe 
-  src="/2024Spring/material/slides/T2-Basics-Functions.pdf" 
+  src="/content/material/slides/E2-Basics-Functions.pdf" 
   style="border: 0.5px" 
   width="80%"
   height="80%"
@@ -82,7 +82,7 @@ All the videos are available via this [playlist](https://www.youtube.com/playlis
 
 ## 📚 Mandatory Reading
 
-- Tutorial [First steps in R](/2024Spring/tutorials/first-steps/index.qmd)
+- Tutorial [First steps in R](/content/tutorials/first-steps/index.qmd)
 - [Chapter 2](https://r4ds.hadley.nz/workflow-basics) in @r4ds.
 
 ### 🏆 Further readings
