@@ -4,8 +4,8 @@ date: "2025-04-04"
 date-modified: last-modified
 ---
 
-In this session you 
-learn about the most important and most fundamental object types in R, such as
+In the first part of this session you 
+learn some additional details about R packages and about the most important and most fundamental object types in R, such as
 decimal numbers or words. While this might look a bit boring at first, understanding
 these basic types is fundamental for all the more advanced (and exiting) stuff
 in the future! 
@@ -19,14 +19,15 @@ kinds of integers, and data frames are special kinds of lists.
 
 ## 👨‍🏫 Lecture Slides 
 
-Either click on the slide area below or click 
-[here](/content/material/slides/E4-Objects.pdf) to download the slides.
+For the slides of the first part of this session (*Packages and basic object types*)
+on click on the slide area below or click 
+[here](/content/material/slides/E4a-Objects.pdf) to download the slides.
 
 
 ```{=html}
 <div class="embed-container">
   <iframe 
-  src="/content/material/slides/E4-Objects.pdf" 
+  src="/content/material/slides/E4a-Objects.pdf" 
   style="border: 0.5px" 
   width="80%"
   height="80%"
@@ -35,19 +36,35 @@ Either click on the slide area below or click
 ```
 
 ::: {.callout-tip collapse="true"}
-## Solutions to the intermediate exercises
+## Solutions to the intermediate exercises of part 1
 <script src="https://gist.github.com/graebnerc/de4c233f8901905a5d4c15a586547801.js"></script>
 :::
 
+For the slides of the second part of this session (*Advanced object types*) 
+on click on the slide area below or click 
+[here](/content/material/slides/E4b-AdvObjects.pdf) to download the slides.
+
+```{=html}
+<div class="embed-container">
+  <iframe 
+  src="/content/material/slides/E4b-AdvObjects.pdf" 
+  style="border: 0.5px" 
+  width="80%"
+  height="80%"
+  ></iframe>
+</div>
+```
+
+
 ::: {.callout-tip collapse="true"}
-## The R script of this session
+## Notes and solutions for the second part of this session
 <script src="https://gist.github.com/graebnerc/daef5dee107ee89ca9cd618fa0dde96d.js"></script>
 :::
 
 
 ## 🎥 Lecture videos 
 
-All the videos for the part on basic object types
+All the videos for the first part on basic object types
 are available via this [playlist](https://www.youtube.com/playlist?list=PLZDawQMrG1RJ1oZwuZtiG0fOWSOgyZhYC).
 
 ::: {.callout-note collapse="true"}
@@ -86,7 +103,7 @@ are available via this [playlist](https://www.youtube.com/playlist?list=PLZDawQM
 :::
 
 
-All the videos for the part on advanced object types 
+All the videos for the second part on advanced object types 
 are available via this [playlist](https://www.youtube.com/playlist?list=PLZDawQMrG1RK0Ia3Y3AFqf_FP59GJnIP7).
 
 ::: {.callout-note collapse="true"}
