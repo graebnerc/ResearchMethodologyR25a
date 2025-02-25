@@ -1,0 +1,35 @@
+---
+title: "🗓️ Session 8: Using AI for coding"
+date: "2025-05-09"
+date-modified: last-modified
+---
+
+In this lecture you learn the basics of using AI tools for coding tasks.
+While no AI tool will help you to write code in a language you do not understand,
+modern AI tools are well suited to assist you in writing code in a language you are familiar with.
+Here we discuss some of the most common use cases for AI when it comes to the
+development of R code. We focus on, first, getting a first sketch of an R script and, 
+second, on using AI to help you find mistakes in your current code.
+We highlight how important it is to provide the AI with context - 
+something you can only do if you already know the basics of the programming 
+language you and the AI are working with.
+
+## 👨‍🏫 Lecture Slides 
+
+TBA
+
+## 🎥 Lecture videos 
+
+So far, there are no learning videos available for this lecture. 
+
+## 📚 Mandatory Reading
+
+- TBA
+
+## Further Reading
+
+- TBA
+
+## ✍️ Coursework
+
+- TBA
