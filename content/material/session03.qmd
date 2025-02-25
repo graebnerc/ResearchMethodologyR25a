@@ -1,6 +1,6 @@
 ---
-title: "🗓️ Session 3: Basic object types in R"
-date: "2024-03-28"
+title: "🗓️ Session 4: Basic object types in R"
+date: "2025-04-04"
 date-modified: last-modified
 ---
 
@@ -14,13 +14,13 @@ in the future!
 ## 👨‍🏫 Lecture Slides 
 
 Either click on the slide area below or click 
-[here](/2024Spring/material/slides/T3-Objects.pdf) to download the slides.
+[here](/content/material/slides/E4-Objects.pdf) to download the slides.
 
 
 ```{=html}
 <div class="embed-container">
   <iframe 
-  src="/2024Spring/material/slides/T3-Objects.pdf" 
+  src="/content/material/slides/E4-Objects.pdf" 
   style="border: 0.5px" 
   width="80%"
   height="80%"
@@ -76,8 +76,8 @@ All the videos are available via this [playlist](https://www.youtube.com/playlis
 
 Read the following tutorials:
 
-- [Fundamental object types in R I: Functions](/2024Spring/tutorials/obj-types-i-functions/index.qmd)
-- [Fundamental object types in R II: Vectors](/2024Spring/tutorials/obj-types-ii-vectors/index.qmd)
+- [Fundamental object types in R I: Functions](/content/tutorials/obj-types-i-functions/index.qmd)
+- [Fundamental object types in R II: Vectors](/content/tutorials/obj-types-ii-vectors/index.qmd)
 
 ### 🏆 Further readings
 
