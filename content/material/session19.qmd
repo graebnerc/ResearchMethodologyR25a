@@ -1,8 +1,0 @@
----
-title: "🗓️ Session 19: Recap and practice"
-date: "2024-06-21"
-date-modified: last-modified
----
-
-[Possible solution](/2024Spring/material/FinalRecap.zip) to the wrangling 
-task in the mock exam
