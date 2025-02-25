@@ -1,7 +1,7 @@
 ---
 title: "Importing and exporting data" # Also check out line 43
 author: Claudius Gräbner-Radkowitsch
-date: '2024-04-25'
+date: '2025-05-16'
 documentclass: scrartcl
 format: 
   html:
