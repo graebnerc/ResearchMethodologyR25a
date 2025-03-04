@@ -13,7 +13,7 @@ project:
     - "content/exercises/*/*.qmd"
 
 website:
-  title: "Theoretical and Empirical Research Methodology - The R Lectures" # Title of website shown on top left
+  title: "Theoretical and Empirical Research Methodology - Implementation Lab" # Title of website shown on top left
   page-navigation: true
   reader-mode: true
   open-graph: true
@@ -41,7 +41,7 @@ website:
          - href: content/material/session04.qmd
            text: Session 04
          - href: content/material/session05.qmd
-           text: Sessions 05
+           text: Session 05
          - href: content/material/session06.qmd
            text: Session 06
          - href: content/material/session07.qmd
