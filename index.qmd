@@ -13,14 +13,14 @@ essential research tools and all theoretical concepts discussed during the
 main lecture in R. 
 
 **How:** 
-The course comprises a mixture of (i) lectures, in which I introduce concepts
+The implementation lab comprises a mixture of (i) lectures, in which I introduce concepts
 in the classroom, (ii) automated hands-on exercises for you to do at home on
 your own and (iii) instructional videos for topics that are best learned and
 practiced by yourself. Of course, you are always invited to post your questions
-to the course forum and more intricate problems can be solved in class.
+to the course forum on Moodle and more intricate problems can be solved in class.
 
 **Prerequisites:**
-The course does not require you to have any prior knowledge in R or any other 
+The lab does not require you to have any prior knowledge in R or any other 
 programming language. Depending on your prior knowledge or affinity to 
 programming, the course will be quite demanding, but equip you with 
 computational skills that are most valuable both within academia and the 
