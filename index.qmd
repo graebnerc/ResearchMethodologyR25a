@@ -41,6 +41,6 @@ business world.
 -----------------
 
 
-<a href=https://euf-datascience-spring23.netlify.app>
+<a href=https://elearning.uni-flensburg.de/moodle/course/view.php?id=15556>
     <button class="button-61">The main course on moodle</button>
 </a>
