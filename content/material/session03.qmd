@@ -29,6 +29,13 @@ Either click on the slide area below or click
 </div>
 ```
 
+::: {.callout-note collapse="true"}
+## Lecture script
+<script src="https://gist.github.com/graebnerc/8bf1c6ec558a68b1a8320d77e7b3539b.js"></script>
+:::
+
+
+
 ## 🎥 Lecture videos 
 
 Currently, no videos are available for this session. Check out the tutorial
@@ -52,6 +59,7 @@ Personally, I can recommend the following:
 ## ✍️ Coursework
 
 - Do the exercises `ProjectOrga` from the `DataScienceExercises` package that refer to setting up an R project
+- If you still have problems with R Packages, re-read the [respective section](https://researchmethodology25spring.netlify.app/content/tutorials/first-steps/#r-packages) of the tutorial from session 2
 
 ::: {.callout-tip collapse="true"}
 ## Quick code for starting the exercises

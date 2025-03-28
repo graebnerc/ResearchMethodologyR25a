@@ -130,7 +130,7 @@
     "href": "content/material/session03.html#lecture-slides",
     "title": "🗓️ Session 3: Project management",
     "section": "👨‍🏫 Lecture Slides",
-    "text": "👨‍🏫 Lecture Slides\nEither click on the slide area below or click here to download the slides."
+    "text": "👨‍🏫 Lecture Slides\nEither click on the slide area below or click here to download the slides.\n\n  \n\n\n\n\n\n\n\nLecture script"
   },
   {
     "objectID": "content/material/session03.html#lecture-videos",
@@ -158,7 +158,7 @@
     "href": "content/material/session03.html#coursework",
     "title": "🗓️ Session 3: Project management",
     "section": "✍️ Coursework",
-    "text": "✍️ Coursework\n\nDo the exercises ProjectOrga from the DataScienceExercises package that refer to setting up an R project\n\n\n\n\n\n\n\nQuick code for starting the exercises\n\n\n\n\n\n\nlearnr::run_tutorial(\n  name = \"ProjectOrga\", \n  package = \"DataScienceExercises\", \n  shiny_args=list(\"launch.browser\"=TRUE))"
+    "text": "✍️ Coursework\n\nDo the exercises ProjectOrga from the DataScienceExercises package that refer to setting up an R project\nIf you still have problems with R Packages, re-read the respective section of the tutorial from session 2\n\n\n\n\n\n\n\nQuick code for starting the exercises\n\n\n\n\n\n\nlearnr::run_tutorial(\n  name = \"ProjectOrga\", \n  package = \"DataScienceExercises\", \n  shiny_args=list(\"launch.browser\"=TRUE))"
   },
   {
     "objectID": "content/material/session04.html",
