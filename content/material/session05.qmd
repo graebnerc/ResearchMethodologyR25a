@@ -34,7 +34,4 @@ There will be no videos for recap sessions.
 
 - [Exercise sheet for this session](session05-exercises.qmd)
 - [R file template for your solutions](https://gist.github.com/graebnerc/3725a703f7fcbc6d429993810d7a81fd)
-
-<!---
 - [Possible solutions to the exercises](session05-solutions.qmd)
---->
