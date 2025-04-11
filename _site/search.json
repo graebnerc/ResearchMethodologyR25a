@@ -235,14 +235,14 @@
     "href": "content/material/session05.html#suggested-reading",
     "title": "🗓️ Session 5: Recap and practice",
     "section": "📚 Suggested Reading",
-    "text": "📚 Suggested Reading\nTBA"
+    "text": "📚 Suggested Reading\n\nThe tutorial Setting up an R project\nFundamental object types in R I: Functions\nThe section on lists in Fundamental object types in R II: Vectors\nThe section on factors in Fundamental object types in R III: Factors and data frames"
   },
   {
     "objectID": "content/material/session05.html#coursework",
     "href": "content/material/session05.html#coursework",
     "title": "🗓️ Session 5: Recap and practice",
     "section": "✍️ Coursework",
-    "text": "✍️ Coursework\nDuring the first 60 minutes of the session you will work on this sheet in groups of three people. Please use only one computer but develop the solutions together. In the remaining 30 minutes we will go through your solutions and discuss problems. I will post my own solutions online after the session, but urge to first try to come up with solutions on your own.\n\nExercise sheet for this session\nR file template for your solutions"
+    "text": "✍️ Coursework\nDuring the fthe session you will work on this sheet in groups of three people. Please use only one computer but develop the solutions together. LAter we will go through your solutions and discuss problems. I will post my own solutions online after the session, but urge to first try to come up with solutions on your own.\n\nExercise sheet for this session\nR file template for your solutions"
   },
   {
     "objectID": "content/material/session06.html",
@@ -789,5 +789,33 @@
     "title": "Quarto exercises",
     "section": "",
     "text": "Create a new Quarto document where you set the title, date, and the author explicitly. Write a sample text that comprises…\n\n…at least one level 1 heading\n…at least two level 2 headings\n…a YAML part that specifies that R code remains hidden by default\n…one R chunk where both the output and the code is printed in the final document\n…one R chunk that produces a simply ggplot object and where the code producing the plot is hidden\n\nThen do the following:\n\nKnit the document to html with a floating table of contents and a special theme.\nMake the document available via Netlify Drop and add the possibility to download the underlying Rmd file. Note: For Netlify Drop to work, the html file must be called index.html!\nKnit the document to PDF and make sure that it includes a table of contents.\n\nA sample solution for the Rmd file can be found here (the Netlify version is here)."
+  },
+  {
+    "objectID": "content/material/session05.html#lecture-script",
+    "href": "content/material/session05.html#lecture-script",
+    "title": "🗓️ Session 5: Recap and practice",
+    "section": "👨‍🏫 Lecture script",
+    "text": "👨‍🏫 Lecture script\n\nThe script summarizing the key parts of the session"
+  },
+  {
+    "objectID": "content/material/session05-notes.html",
+    "href": "content/material/session05-notes.html",
+    "title": "First recap session",
+    "section": "",
+    "text": "library(DataScienceExercises)"
+  },
+  {
+    "objectID": "content/material/session05-notes.html#using-functions",
+    "href": "content/material/session05-notes.html#using-functions",
+    "title": "First recap session",
+    "section": "Using functions",
+    "text": "Using functions\nFunctions are algorithms that apply a certain routine on an input, thereby producing (almost always) an output. The function sqrt(), for instance, takes as input a number and returns as output another number, namely the square root of the input:\n\nsqrt(2.5)\n\n[1] 1.581139\n\n\nTo call a function we first write its name, followed by parentheses. Inside the parentheses we can specify the arguments of the function. Most of the time, the first argument(s) are the input(s).\nOften, you can give more arguments to the function. These specify how the algorithm of the function works. If you are not sure which arguments a function accepts, you can always use help().\nLet us consider the example of mean(). This function takes a vector of numbers as input and returns the mean of these numbers:\n\ntest_1 &lt;- c(1, 4, 2, 4, 9, NA, 44)\nmean(test_1)\n\n[1] NA\n\n\nThis result might be surprising. Lets inspect mean() further:\n\nhelp(mean)\n\nWe see that the first argument of mean() is called x. We can, but do not have to specify this name for the first argument. Neither we must for the further argumens, but this is highly recommended.\nThere are two more arguments for mean(): trim and na.rm. In our case, the second one is relevant: if na.rm is set to TRUE, the function removes all NA values from the input before computing the mean:\n\nmean(test_1, na.rm = TRUE)\n\n[1] 10.66667"
+  },
+  {
+    "objectID": "content/material/session05-notes.html#defining-functions",
+    "href": "content/material/session05-notes.html#defining-functions",
+    "title": "First recap session",
+    "section": "Defining functions",
+    "text": "Defining functions\nWhenever you perform certain actions several times, it is often a good idea to define a function. This way, you can call the function instead of writing the code for the action every time anew.\nAssume we want to define a function that takes as input a vector of numbers and returns the sum of the natural logarithms of these numbers.\nWe define a new function by using the function function(). - We start our definition by associating the new function with a name (here: log_sum) so that we can use it later. - The arguments to function() are then arguments that our new function should accept. In our case, we only have one argument. - After that comes the function body. It contains all the routines that the function should execute when called. The function body is always enclosed by curly brackets. - Finally, we use the return() function to specify what the function should return. This is not strictly necessary, but it is a good practice to do so.\n\nlog_sum &lt;- function(input_vector){\n  logs &lt;- log(input_vector)\n  sum_logs &lt;- sum(logs)\n  return(sum_logs)\n}\n\nWe can then call the function by name:\n\nlog_sum(c(1, 2, 3, 4, 5))\n\n[1] 4.787492"
   }
 ]

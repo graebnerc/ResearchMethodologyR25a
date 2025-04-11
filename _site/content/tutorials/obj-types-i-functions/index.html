@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">28 03 2024</p>
+        <p class="date">04 04 2025</p>
       </div>
     </div>
     
@@ -362,7 +362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We always define a new function by using the function <code>function()</code>. We start our definition by associating the new function with a name (here: ‘pythagoras’) so that we can use it later.</p>
-<p>The argumtents to <code>function()</code> are then arguments that our new function should accept. In the present case there are two such arguments: <code>cathetus_1</code> and <code>cathetus_2</code>. After that comes the so called ‘function body’. It contains all the routines that the function should execute when called. The function body is always enclosed by curly brackets. In the example above we first compute the sum of the squares of the two catheti, and save this intermediate result as <code>hypo_squared</code>. This is the part of the Pythagorean theorem that you might know as <span class="math inline">\(c^2 = a^2 + b^2\)</span>. Since we are interested in the ‘normal’ length of the hypotenuse, we then use the function <code>sqrt()</code> to get the square root of <code>hypo_squared</code>. This is also the value that we wish our function would return to us. To make this explicit, we use the keyword <code>return</code> to specify the return value of the function.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>The arguments to <code>function()</code> are then arguments that our new function should accept. In the present case there are two such arguments: <code>cathetus_1</code> and <code>cathetus_2</code>. After that comes the so called ‘function body’. It contains all the routines that the function should execute when called. The function body is always enclosed by curly brackets. In the example above we first compute the sum of the squares of the two catheti, and save this intermediate result as <code>hypo_squared</code>. This is the part of the Pythagorean theorem that you might know as <span class="math inline">\(c^2 = a^2 + b^2\)</span>. Since we are interested in the ‘normal’ length of the hypotenuse, we then use the function <code>sqrt()</code> to get the square root of <code>hypo_squared</code>. This is also the value that we wish our function would return to us. To make this explicit, we use the keyword <code>return</code> to specify the return value of the function.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>If we now call our function with the correct arguments, the routine above will be executed:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pythagoras</span>(<span class="dv">2</span>, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -390,7 +390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   hypotenuse &lt;- sqrt(hypo_squared) # sqrt() takes square root
   return(hypotenuse)
 }
-&lt;bytecode: 0x7fea956d0398&gt;</code></pre>
+&lt;bytecode: 0x7f7b3ef42bb8&gt;</code></pre>
 </div>
 </div>
 <p>Note that all object names used within the function body are lost after the function has been called. The deeper reason is that functions have their own <a href="https://adv-r.hadley.nz/environments.html">environment</a>. Because of this behavior, <code>R</code> produces an error in the following example, in which <code>hypo_squared</code> exists <em>only</em> within the function body.</p>

@@ -9,9 +9,9 @@ you suggest, and recap concepts you found particularly hard to grasp. To this
 end, make sure you communicate your preferences on topics via Moodle until 
 one week before this session.
 
-## 👨‍🏫 Lecture Slides 
+## 👨‍🏫 Lecture script 
 
-TBA
+- The [script](session05-notes.qmd) summarizing the key parts of the session
 
 ## 🎥 Lecture videos 
 
@@ -19,13 +19,16 @@ There will be no videos for recap sessions.
 
 ## 📚 Suggested Reading
 
-TBA
+- The tutorial [Setting up an R project](/content/tutorials/setting-up-an-r-project/index.qmd)
+- [Fundamental object types in R I: Functions](/content/tutorials/obj-types-i-functions/index.qmd)
+- The section on lists in [Fundamental object types in R II: Vectors](/content/tutorials/obj-types-ii-vectors/index.qmd)
+- The section on factors in [Fundamental object types in R III: Factors and data frames](/content/tutorials/obj-types-iii-adv/index.qmd)
 
 ## ✍️ Coursework
 
-*During the first 60 minutes of the session you will work on this sheet in groups*
+*During the fthe session you will work on this sheet in groups*
 *of three people. Please use only one computer but develop the solutions together.*
-*In the remaining 30 minutes we will go through your solutions and discuss problems.*
+*LAter we will go through your solutions and discuss problems.*
 *I will post my own solutions online after the session, but urge to first try*
 *to come up with solutions on your own.*
 
