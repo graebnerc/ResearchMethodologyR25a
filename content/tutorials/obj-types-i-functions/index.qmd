@@ -182,7 +182,7 @@ We always define a new function by using the function `function()`.
 We start our definition by associating the new function with a name 
 (here: 'pythagoras') so that we can use it later.
 
-The argumtents to `function()` are then arguments that our new function should
+The arguments to `function()` are then arguments that our new function should
 accept. In the present case there are two such arguments: `cathetus_1` and 
 `cathetus_2`. 
 After that comes the so called 'function body'. It contains all the routines
