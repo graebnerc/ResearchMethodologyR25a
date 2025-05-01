@@ -1,6 +1,6 @@
 ---
-title: "🗓️ Session 7: A very short introduction to Quarto"
-date: "2025-05-02"
+title: "🗓️ Session 9: A very short introduction to Quarto"
+date: "2025-05-16"
 date-modified: last-modified
 ---
 
@@ -17,13 +17,13 @@ documents. In fact, its really straighforward once you get the basic idea.
 ## 👨‍🏫 Lecture Slides 
 
 Either click on the slide area below or click 
-[here](/content/material/slides/E7-Quarto.pdf) to download the slides.
+[here](/content/material/slides/E9-Quarto.pdf) to download the slides.
 
 
 ```{=html}
 <div class="embed-container">
   <iframe 
-  src="/content/material/slides/E7-Quarto.pdf" 
+  src="/content/material/slides/E9-Quarto.pdf" 
   style="border: 0.5px" 
   width="80%"
   height="80%"
