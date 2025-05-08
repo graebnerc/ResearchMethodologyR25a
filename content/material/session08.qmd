@@ -10,13 +10,42 @@ modern AI tools are well suited to assist you in writing code in a language you 
 Here we discuss some of the most common use cases for AI when it comes to the
 development of R code. We focus on, first, getting a first sketch of an R script and, 
 second, on using AI to help you find mistakes in your current code.
-We highlight how important it is to provide the AI with context - 
+
+You also learn how important it is to provide the AI with context - 
 something you can only do if you already know the basics of the programming 
-language you and the AI are working with.
+language you and the AI are working with. Finally, we also touch upon some
+AI-like tools and advice on how to avoid typos in code.
 
 ## 👨‍🏫 Lecture Slides 
 
-TBA
+Either click on the slide area below or click 
+[here](/content/material/slides/L8-AICoding.pdf) to download the slides.
+
+```{=html}
+<div class="embed-container">
+  <iframe 
+  src="/content/material/slides/L8-AICoding.pdf" 
+  style="border: 0.5px" 
+  width="80%"
+  height="80%"
+  ></iframe>
+</div>
+```
+
+::: {.callout-tip collapse="true"}
+## Prompts and code examples from the lecture
+<script src="https://gist.github.com/graebnerc/5bf7f47a92afc22beb63c6fbc1d30831.js"></script>
+:::
+
+- Details for the [exercise on e-commerce data](session08-Exercise.qmd) ("generate R code")
+
+::: {.callout-tip collapse="true"}
+## Base code for exercises on debugging, documenting and optimizing R code
+<script src="https://gist.github.com/graebnerc/f4a4822676d81f5f608b1a9c4648614f.js"></script>
+:::
+
+
+
 
 ## 🎥 Lecture videos 
 
@@ -24,12 +53,15 @@ So far, there are no learning videos available for this lecture.
 
 ## 📚 Mandatory Reading
 
-- TBA
+NA
 
 ## Further Reading
 
-- TBA
+- How to use [Github Copilot in R Studio](https://docs.posit.co/ide/user/ide/guide/tools/copilot.html) and a guideline on how to get free student access[through Github Education](https://github.com/education/students)
+- Resources for [Gemini Code Assist](https://codeassist.google), which is free but cannot be integrated directly into R Studio
+- More information on [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview), which is most interesting for doing advanced programming work
+- More information on [Windsurf](https://windsurf.com), which has a good free tier but no plugin for R Studio
 
 ## ✍️ Coursework
 
-- TBA
+- Do the in-class exercises you did not complete during the session

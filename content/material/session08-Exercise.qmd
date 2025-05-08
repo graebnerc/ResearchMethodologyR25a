@@ -1,0 +1,48 @@
+---
+title: "Identify Patterns in E-Commerce Data"
+date: "2025-05-09"
+format: html
+---
+
+# Customer Sample Dataset Description
+
+## Overview
+This dataset contains information about 200 customers of an e-commerce platform. It includes demographic information, spending habits, and behavioral metrics that the marketing team wants to analyze to develop more targeted campaigns.
+
+## File
+[customer_sample.csv](customer_sample.csv)
+
+## Variables
+
+| Variable | Description | Type |
+|----------|-------------|------|
+| `customer_id` | Unique identifier for each customer | Integer |
+| `age` | Customer's age in years | Integer |
+| `spending` | Monthly spending on the platform (in dollars) | Numeric |
+| `visit_frequency` | Average number of website visits per month | Numeric |
+| `customer_type` | Customer classification based on purchasing history | Categorical |
+| `preferred_category` | Primary product category the customer purchases | Categorical |
+
+### Details on Categorical Variables
+
+**customer_type:**
+
+- **New**: Recently joined customers (first purchases within last 3 months)
+- **Occasional**: Make purchases sporadically (no consistent pattern)
+- **Regular**: Consistent purchases but not at high frequency
+- **Loyal**: Frequent, consistent purchasers over extended period
+
+**preferred_category:**
+
+- **Electronics**: Technology products, gadgets, computers, etc.
+- **Clothing**: Apparel items, accessories, shoes
+- **Home**: Furniture, decor, kitchen items, garden supplies
+- **Beauty**: Cosmetics, personal care, grooming products
+- **Food**: Groceries, specialty foods, meal kits
+
+## Your task
+Your marketing team needs insights to develop targeted campaigns that will increase customer engagement and spending. The team believes there may be hidden patterns in how different customer segments interact with their platform.
+
+**Your task:** Create a visualization that reveals an interesting pattern in this data that could help inform marketing strategy.
+
+- [Example solution](session08-ex-solution.qmd)

@@ -1,0 +1,57 @@
+---
+title: "Sample solution for analyzing sales data"
+format: html
+---
+
+This is an example solution revealing one of the hidden patterns in the data.
+
+We use the following packages:
+
+```{r}
+library(readr)
+library(ggplot2)
+```
+
+Loading the data:
+
+```{r}
+customer_data <- read_csv("customer_sample.csv")
+```
+
+Create a figure on the relationship between age, spending, and product category:
+
+```{r}
+ggplot(customer_data, aes(x = age, y = spending, color = preferred_category, size = visit_frequency)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(aes(group = preferred_category), method = "loess", se = FALSE, linewidth = 1) +
+  scale_color_brewer(palette = "Set1") +
+  scale_size_continuous(range = c(1, 8)) +
+  labs(
+    title = "Customer Spending Patterns by Age and Product Category",
+    subtitle = "Bubble size represents visit frequency",
+    x = "Customer Age",
+    y = "Monthly Spending ($)",
+    color = "Preferred Category",
+    size = "Visits per Month"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+From his visualization we can infer the following insights:
+1. The non-linear relationship between age and spending (peaks at middle age)
+2. Electronics customers spend more across all age groups
+3. Visit frequency (bubble size) correlates with spending
+4. Different product categories have different age-spending curves
+5. Some categories are more popular with specific age groups
+
+One conclusion for a marketing strategy could be:
+
+> Middle-aged customers (35-55) have the highest spending across all categories, 
+with Electronics shoppers spending significantly more.
+A targeted campaign for Electronics products to middle-aged customers combined with
+cross-selling opportunities to younger and older demographics could maximize revenue.
