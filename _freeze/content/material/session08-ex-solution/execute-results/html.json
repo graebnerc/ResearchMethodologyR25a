@@ -1,0 +1,17 @@
+{
+  "hash": "513f959ec38c455b96e01982b3fa731d",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Sample solution for analyzing sales data\"\nformat: html\n---\n\nThis is an example solution revealing one of the hidden patterns in the data.\n\nWe use the following packages:\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(readr)\nlibrary(ggplot2)\n```\n:::\n\n\nLoading the data:\n\n\n::: {.cell}\n\n```{.r .cell-code}\ncustomer_data <- read_csv(\"customer_sample.csv\")\n```\n\n::: {.cell-output .cell-output-stderr}\n\n```\nRows: 200 Columns: 6\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (2): customer_type, preferred_category\ndbl (4): customer_id, age, spending, visit_frequency\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n```\n\n\n:::\n:::\n\n\nCreate a figure on the relationship between age, spending, and product category:\n\n\n::: {.cell}\n\n```{.r .cell-code}\nggplot(customer_data, aes(x = age, y = spending, color = preferred_category, size = visit_frequency)) +\n  geom_point(alpha = 0.7) +\n  geom_smooth(aes(group = preferred_category), method = \"loess\", se = FALSE, linewidth = 1) +\n  scale_color_brewer(palette = \"Set1\") +\n  scale_size_continuous(range = c(1, 8)) +\n  labs(\n    title = \"Customer Spending Patterns by Age and Product Category\",\n    subtitle = \"Bubble size represents visit frequency\",\n    x = \"Customer Age\",\n    y = \"Monthly Spending ($)\",\n    color = \"Preferred Category\",\n    size = \"Visits per Month\"\n  ) +\n  theme_minimal() +\n  theme(\n    legend.position = \"right\",\n    plot.title = element_text(face = \"bold\"),\n    panel.grid.minor = element_blank()\n  )\n```\n\n::: {.cell-output .cell-output-stderr}\n\n```\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead.\n```\n\n\n:::\n\n::: {.cell-output .cell-output-stderr}\n\n```\n`geom_smooth()` using formula = 'y ~ x'\n```\n\n\n:::\n\n::: {.cell-output .cell-output-stderr}\n\n```\nWarning: The following aesthetics were dropped during statistical transformation: size.\nℹ This can happen when ggplot fails to infer the correct grouping structure in\n  the data.\nℹ Did you forget to specify a `group` aesthetic or to convert a numerical\n  variable into a factor?\n```\n\n\n:::\n\n::: {.cell-output-display}\n![](session08-ex-solution_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n\n\nFrom his visualization we can infer the following insights:\n1. The non-linear relationship between age and spending (peaks at middle age)\n2. Electronics customers spend more across all age groups\n3. Visit frequency (bubble size) correlates with spending\n4. Different product categories have different age-spending curves\n5. Some categories are more popular with specific age groups\n\nOne conclusion for a marketing strategy could be:\n\n> Middle-aged customers (35-55) have the highest spending across all categories, \nwith Electronics shoppers spending significantly more.\nA targeted campaign for Electronics products to middle-aged customers combined with\ncross-selling opportunities to younger and older demographics could maximize revenue.\n",
+    "supporting": [
+      "session08-ex-solution_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
