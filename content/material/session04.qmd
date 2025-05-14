@@ -41,7 +41,7 @@ on click on the slide area below or click
 :::
 
 For the slides of the second part of this session (*Advanced object types*) 
-on click on the slide area below or click 
+see the slide area below or click 
 [here](/content/material/slides/E4b-AdvObjects.pdf) to download the slides.
 
 ```{=html}
@@ -67,75 +67,20 @@ on click on the slide area below or click
 All the videos for the first part on basic object types
 are available via this [playlist](https://www.youtube.com/playlist?list=PLZDawQMrG1RJ1oZwuZtiG0fOWSOgyZhYC).
 
-::: {.callout-note collapse="true"}
-## Expand to access the videos directly
-
 ```{=html}
 <div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/2pTzLhBfjRI?si=CM9MBNOOuvAQ0xGa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/videoseries?si=Oaw5AHoXca2QkbFL&amp;list=PLZDawQMrG1RJ1oZwuZtiG0fOWSOgyZhYC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 ```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/8A5x-uENcrQ?si=wAaxGUzltTk5rpDu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/ETZgjjWbUEM?si=awPGu3J-q5Rosq8v" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/2sTn2nBypEE?si=pJzRnVSf0kAUqcWT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/pcwTeS3H39w?si=4xSvvkZOqDiY7XpZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/qpeRL-Pm0C4?si=SKBEYVM0fIcMaHsN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-:::
-
 
 All the videos for the second part on advanced object types 
 are available via this [playlist](https://www.youtube.com/playlist?list=PLZDawQMrG1RK0Ia3Y3AFqf_FP59GJnIP7).
 
-::: {.callout-note collapse="true"}
-## Expand to access the videos directly
-
 ```{=html}
 <div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/y-2i8MmT7y8?si=zqoHXyn0R43wDgtD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/videoseries?si=2Dpn5w5dNSh4yw5y&amp;list=PLZDawQMrG1RK0Ia3Y3AFqf_FP59GJnIP7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 ```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/0-oFA2V6b-Q?si=McN3QrmKbZ_IjWwK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/yYR3C77UQC0?si=KPMM21mc-w6k862A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/GrEdx3T4Ylk?si=eiDv6FSQSoipMPE7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/TnFbHp7MFRk?si=qcff5TBtPmX3hJlU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-:::
 
 ## 📚 Mandatory Reading
 

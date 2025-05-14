@@ -34,51 +34,11 @@ Either click on the slide area below or click
 
 All the videos are available via this [playlist](https://www.youtube.com/playlist?list=PLZDawQMrG1RLPfd_e-ktZ_IIg9Kkbr16a).
 
-::: {.callout-note collapse="true"}
-## Expand to access the videos directly
-
 ```{=html}
 <div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/tSNv_GLxRdQ?si=AA44WYJWkGZVfOaR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/videoseries?si=ATCNZhcnP9HlPYDc&amp;list=PLZDawQMrG1RLPfd_e-ktZ_IIg9Kkbr16a" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 ```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/CRQruT__X8Y?si=OSJttrCjon7mRdwa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/VutTy0OmX7Y?si=GYZLQaKLgdbmPfGP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/1ppc7I8Xt5Q?si=2_wcH6Wcy8xEMzZ-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/lKlTKaQT6zk?si=j6Upn-0SrrFu65jW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/GDYWKgQ_zjs?si=f7TRvmDLgXq4MT9T" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/-MIm1U-ZLPA?si=Og6foZoGy5TchH7n" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/KBwHfeGVtnI?si=3Dw2YlNM0n58SaLy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-:::
 
 ## 📚 Mandatory Reading
 

@@ -46,68 +46,12 @@ Either click on the slide area below or click
 
 All the videos are available via this [playlist](https://www.youtube.com/playlist?list=PLZDawQMrG1RIzp07hiVKmu6wUs8tqdKod).
 
-::: {.callout-note collapse="true"}
-## Expand to access the videos directly
-
 ```{=html}
 <div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/0MMPyRCEufg?si=wODXoBKkK_7uqy0n" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/videoseries?si=t69pnr-CSejvV0ZH&amp;list=PLZDawQMrG1RIzp07hiVKmu6wUs8tqdKod" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 ```
 
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/OdCcBWHJKvU?si=Q9doQYZFnodFnI6E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/9L0xAgymcKo?si=lSlKxnPq_OsCtxrg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/7Sp1U0CLlts?si=ffij8rCZLlXMkqBq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/khegEBj6Bqk?si=9RnXuia3lolgYPJF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/K4MPQkRZUhw?si=aneKHgSZnH8Y2ZUb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/HGkrF-_tvog?si=dpqO9urb1uRIdhwy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/1fLZoRsSi-M?si=RBLqN0weVmH_g7kX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/gaA2j6CLVRQ?si=QHvM2x337ZYk_PnO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
-```
-:::
-
-::: {.callout-tip collapse="true"}
-## Solutions to the intermediate exercises
-<script src=""></script>
-:::
 
 ## 📚 Mandatory Reading
 

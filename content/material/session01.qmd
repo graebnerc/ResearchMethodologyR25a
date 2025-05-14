@@ -30,26 +30,12 @@ Either click on the slide area below or click
 
 All the videos are available via this [playlist](https://www.youtube.com/playlist?list=PLZDawQMrG1RImURlbldAF773MDRqeARNu).
 
-::: {.callout-note collapse="true"}
-## Expand to access the videos directly
-
 ```{=html}
 <div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/szeZPKiK7LM?si=-UW5AP58W3I1-Ig6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/videoseries?si=UBJo1AiCblQZFtZD&amp;list=PLZDawQMrG1RImURlbldAF773MDRqeARNu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 ```
 
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/3sJoV_7DGDw?si=GaOWRYmo1K6obIph" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
-```
-
-```{=html}
-<div class="embed-container">
-<iframe width="370" height="208" src="https://www.youtube.com/embed/AKGUGQt2dvo?si=kXRPe6lXWNNq4gB9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-```
-:::
 
 ## 📚 Mandatory Reading
 
