@@ -44,7 +44,18 @@ Either click on the slide area below or click
 
 ## 🎥 Lecture videos 
 
-So far, there are no learning videos available for this lecture. 
+All the videos are available via this [playlist](https://youtube.com/playlist?list=PLZDawQMrG1RLKUDufKf8EJz4Kj4WC_Kco&feature=shared).
+
+```{=html}
+<iframe 
+width="560" height="315" 
+src="https://www.youtube-nocookie.com/embed/videoseries?si=Ts2M1v35TDmtfbr3&amp;list=PLZDawQMrG1RLKUDufKf8EJz4Kj4WC_Kco" 
+title="YouTube video player" 
+frameborder="0" 
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+referrerpolicy="strict-origin-when-cross-origin" 
+allowfullscreen></iframe>
+```
 
 ## 📚 Mandatory Reading
 
