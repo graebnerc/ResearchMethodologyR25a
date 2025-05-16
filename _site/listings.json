@@ -1,5 +1,14 @@
 [
   {
+    "listing": "/content/statrecap.html",
+    "items": [
+      "/content/statrecap/ConceptualFoundations/index.html",
+      "/content/statrecap/DataFundamentals/index.html",
+      "/content/statrecap/DescriptiveStatistics/index.html",
+      "/content/statrecap/ProbabilityTheory/index.html"
+    ]
+  },
+  {
     "listing": "/content/exercises.html",
     "items": [
       "/content/exercises/obj-types-exercises/index.html",
