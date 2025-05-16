@@ -1,5 +1,5 @@
 ---
-title: "Essentials in Probability Theory for Statistics"
+title: "4: Essentials in Probability Theory for Statistics"
 date: '2025-05-13'
 
 execute: 

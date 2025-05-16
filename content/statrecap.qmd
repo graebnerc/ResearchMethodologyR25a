@@ -4,14 +4,13 @@ listing:
   contents: 
     - statrecap
   type: table # or `grid` or `default` or `table`; each type has its own set of yaml options to include
-  sort: "date asc" # can also sort on more than one field
-  categories: true # allows you to sort posts by assigned categories
+  sort: "name asc"
+  categories: false # allows you to sort posts by assigned categories
+  sort-ui: false
+  filter-ui: false
   table-striped: true
   table-hover: true
-  fields: [date, title]
-  date-format: long
-  field-display-names:
-    date: "Standard sequence"
+  fields: [title]
 ---
 
 Here I provide you with explanations of the basics in statistics and mathematics

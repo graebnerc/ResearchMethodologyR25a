@@ -1,5 +1,5 @@
 ---
-title: "Data Fundamentals"
+title: "2: Data Fundamentals"
 date: '2025-05-11'
 ---
 
