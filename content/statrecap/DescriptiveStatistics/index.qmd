@@ -1,0 +1,490 @@
+---
+title: "Descriptive Statistics"
+date: '2025-05-12'
+---
+
+# Descriptive Statistics - An Overview
+
+Descriptive statistics help us understand and summarize the key characteristics of our dataset. Think of descriptive statistics as a set of tools that allow us to paint a clear picture of what our data looks like without getting lost in the individual data points. Just as a painter might capture the essence of a landscape rather than documenting every single blade of grass, descriptive statistics capture the essential features of our data.
+
+To this end we can use a variety of different measures, which are often put in one of the following categories:
+
+- Measures of centrality: tell us where the "center" of our data lies
+- Measures of dispersion: tell us how spread out our data is
+- Measures of association: tell us how different variables in our data relate to each other
+
+We will now go through these categories one by one.
+
+# Measures of Centrality
+
+Measures of central tendency tell us where the "center" of our data lies. Imagine you're trying to describe the typical height of students in your class - you're looking for a single number that best represents the whole group.
+
+**The Mean** is what most people think of as the average. You add up all values and divide by the number of observations. The mean is like the balancing point of your data - if you imagine your data points as weights on a seesaw, the mean is where you'd place the fulcrum to balance it perfectly.
+
+> The mean is particularly useful when your data is normally distributed (bell-shaped), but it can be heavily influenced by extreme values (outliers). For example, if most employees in a company earn around €45,000 annually, but the CEO earns €500,000, the mean salary will be pulled upward by this outlier.
+
+**The Median** is the middle value when your data is arranged in order. Think of it as the value that splits your data into two equal halves. Unlike the mean, the median is not affected by extreme values, making it more robust when dealing with skewed data or outliers.
+
+> If you have employee satisfaction scores of 3.2, 3.5, 3.8, 4.1, and 4.9 (on a 5-point scale), the median is 3.8. Even if that last score were 1.0 instead of 4.9, the median would still be 3.8.
+
+**The Mode** is the value that appears most frequently in your dataset. In some datasets, there might be no mode (if all values appear equally often) or multiple modes (if several values tie for most frequent).
+
+> In a dataset of customer purchase categories where "electronics" appears 150 times, "clothing" appears 89 times, and "books" appears 112 times, "electronics" is the mode.
+
+
+```{r}
+# Computing measures of central tendency in R
+# Using business-relevant sample data: employee salaries in thousands of euros
+salaries <- c(35, 38, 42, 45, 48, 52, 55, 58, 62, 120)
+
+# Mean - notice how the outlier (120k) affects it
+mean_salary <- mean(salaries)
+
+# Median - more robust to outliers
+median_salary <- median(salaries)
+
+# Mode (R doesn't have a built-in mode function, so you can create one yourself)
+get_mode <- function(x) {
+ unique_x <- unique(x)
+ unique_x[which.max(tabulate(match(x, unique_x)))]
+}
+
+# Use synthetic department data
+departments <- c(
+  "Sales", "IT", "Sales", "Marketing", "IT", "Sales", "HR", "IT", "Sales")
+mode_dept <- get_mode(departments) # Gives most common department
+
+```
+
+```{r}
+# Using dplyr for grouped calculations 
+library(dplyr)
+
+# Example with employee data by department
+set.seed(123) # for reproducibility
+employee_data <- data.frame(
+ department = rep(c("Sales", "IT", "Marketing"), each = 10),
+ salary = c(
+   rnorm(10, mean = 45, sd = 5),  # Sales
+   rnorm(10, mean = 55, sd = 8),  # IT
+   rnorm(10, mean = 48, sd = 6)   # Marketing
+ )
+)
+
+# Calculate measures by department
+dept_summary <- employee_data %>%
+ group_by(department) %>%
+ summarise(
+   mean_salary = round(mean(salary), 2),
+   median_salary = round(median(salary), 2),
+   .groups = 'drop'
+ )
+```
+
+
+# Measures of Dispersion
+While measures of central tendency tell us where our data is centered, measures of dispersion tell us how spread out our data is. Two datasets can have the same mean but very different patterns of spread.
+
+**Range** is the simplest measure of dispersion - it's just the difference between the maximum and minimum values. While easy to calculate, the range only considers the two extreme values and ignores everything in between.
+
+> If customer satisfaction scores range from 2.1 to 4.8 on a 5-point scale, the range is 2.7 points. However, this doesn't tell us whether most scores are clustered around the mean or spread evenly throughout this range.
+
+**Variance** measures how much individual data points deviate from the mean, on average. Think of it as the average squared distance from the mean. We square the differences to ensure positive and negative deviations don't cancel each other out.
+
+> If a company's monthly sales figures are all very close to the average, the variance will be small, indicating consistent performance. If sales are widely scattered, the variance will be large, suggesting high volatility.
+
+**Standard Deviation** is simply the square root of the variance. The great advantage of standard deviation over variance is that it's expressed in the same units as your original data, making it more interpretable than variance.
+
+> If the mean monthly revenue is €100,000 and the standard deviation is €15,000, you can think of most months generating revenue within about €15,000 of the average (between €85,000 and €115,000).
+
+While standard deviation is an excellent measure of how spread out a single variable your data is, the fact that it is expressed in the same units as this data can become an important limitation comparing different business metrics. 
+
+The **Coefficient of Variation (CV)** solves this problem by standardizing the variability of a variable relative to its mean. Think of it as asking the question: "How large is the standard deviation relative to the average value?" The CV is calculated as the standard deviation divided by the mean, often expressed as a percentage.
+
+> Imagine you're a business analyst comparing the consistency of two different metrics: monthly sales revenue (measured in thousands of euros) and customer satisfaction scores (measured on a 1-5 scale). Sales might have a standard deviation of €15,000 with a mean of €100,000, while satisfaction scores might have a standard deviation of 0.3 with a mean of 3.8. Without the coefficient of variation, these numbers are difficult to compare directly.
+
+Generally speaking, a CV below 10% suggests relatively low variability (high consistency), while a CV above 30% indicates high variability (less predictability). However, these thresholds can vary significantly depending on your industry and the specific metric being measured.
+
+
+[Consider including a figure showing two normal distributions with the same mean but different standard deviations to illustrate this concept visually]
+
+```{r}
+#| code-summary: R code example for range, variance, and mean
+# Creating artificial business data: monthly sales figures in euros
+monthly_sales <- c(
+  85000, 92000, 78000, 105000, 88000, 94000, 110000, 87000, 96000, 150000)
+
+sales_range <- range(monthly_sales)
+
+sales_variance <- var(monthly_sales)
+
+sales_std <- sd(monthly_sales) # Standard deviation 
+
+```
+
+```{r}
+#| code-summary: R code example for coefficient of variation
+
+# Dataset 1: Monthly sales in euros
+monthly_sales <- c(
+  85000, 92000, 78000, 105000, 88000, 94000, 110000, 87000, 96000, 150000)
+
+# Dataset 2: Customer satisfaction scores (1-5 scale)
+customer_satisfaction <- c(3.8, 4.1, 3.9, 4.2, 3.7, 4.0, 4.3, 3.6, 4.1, 3.9)
+
+# Calculate coefficient of variation for monthly sales
+sales_mean <- mean(monthly_sales)
+sales_sd <- sd(monthly_sales)
+sales_cv <- (sales_sd / sales_mean) * 100  
+# CV ~ 21% -> moderate sales variability
+
+# Calculate coefficient of variation for customer satisfaction
+satisfaction_mean <- mean(customer_satisfaction)
+satisfaction_sd <- sd(customer_satisfaction)
+satisfaction_cv <- (satisfaction_sd / satisfaction_mean) * 100  
+# CV ~ 5%, showing very consistent satisfaction
+
+# Key insight: while sales figures vary by thousands of euros, their 
+#  coefficient of variation (around 21%) shows moderate business volatility. 
+#  In contrast, customer satisfaction scores, though varying by just decimal 
+#  points, have a very low coefficient of variation (around 5%), indicating 
+#  remarkably consistent customer experience. 
+# This comparison illustrates why coefficient of variation is so valuable in 
+#  business analytics - it reveals that this company has achieved stable 
+#  customer satisfaction despite fluctuating sales performance, suggesting 
+#  strong service quality regardless of revenue variations.
+```
+
+
+```{r}
+#| code-summary: R code example for grouped computation
+
+library(dplyr)
+
+# Example with quarterly performance data
+quarterly_data <- data.frame(
+  quarter = rep(c("Q1", "Q2", "Q3", "Q4"), each = 6),
+  revenue = c(
+    rnorm(6, mean = 180, sd = 20),  # Q1
+    rnorm(6, mean = 195, sd = 15),  # Q2
+    rnorm(6, mean = 210, sd = 25),  # Q3
+    rnorm(6, mean = 185, sd = 18)   # Q4
+  )
+)
+
+quarterly_summary <- quarterly_data %>%
+  group_by(quarter) %>%
+  summarise(
+    mean_revenue = round(mean(revenue), 2),
+    std_dev_revenue = round(sd(revenue), 2),
+    cv_percent = round((sd(revenue)/mean(revenue)) * 100, 1), 
+    .groups = 'drop'
+  )
+```
+
+
+# Measures of association
+When we have two variables, we often want to understand whether they move together or independently. This is where correlation and covariance become essential tools in business analysis.
+
+**Covariance** measures whether two variables tend to move in the same direction. If both variables tend to be above their respective means together, or below their means together, the covariance will be positive. If one tends to be high when the other is low, covariance will be negative.
+
+> Consider the relationship between advertising spending and sales revenue. If companies that spend more on advertising tend to have higher sales, we'd expect a positive covariance between these variables.
+
+However, covariance has a significant limitation: its magnitude depends on the scale of measurement, making it difficult to interpret. This is where correlation comes in.
+
+**Correlation** is essentially standardized covariance, ranging from -1 to +1. A correlation of +1 indicates a perfect positive relationship, -1 indicates a perfect negative relationship, and 0 indicates no linear relationship.
+
+> A correlation of 0.75 between marketing budget and quarterly sales suggests a strong positive relationship - as marketing investment increases, sales tend to increase as well.
+
+Note, however, there there are different calculation methods for measures of
+correlation. The choice is dictated by the data type and the relationship you 
+expect. This are the two primary correlation coefficients used in business 
+analytics:
+
+The **Pearson correlation** measures linear relationships and works best with normally distributed continuous data. It assesses how well your data points fit along a straight line. This is the standard "correlation" most people reference when analyzing financial metrics or other continuous business variables.
+
+> When advertising spending and sales revenue increase proportionally, Pearson correlation effectively captures this direct linear relationship.
+
+**Spearman correlation** measures monotonic relationships - whether variables consistently move in the same direction, regardless of whether that movement follows a straight line. This makes it ideal for ordinal data (like satisfaction ratings) and relationships that might be curved rather than linear.
+
+> If customer satisfaction increases with service quality but at a decreasing rate, Spearman correlation captures this curved relationship better than Pearson.
+
+In practice, use Pearson for financial metrics that follow normal patterns and linear relationships. Choose Spearman for survey data, when you have outliers, or when you suspect non-linear relationships in your business processes. Spearman's rank-based approach makes it more robust to extreme values than Pearson's assumption of normal distribution.
+
+[Consider including a scatter plot showing different correlation strengths to help students visualize these relationships]
+
+```{r}
+# Computing correlation and covariance in R
+# Creating realistic business sample data
+set.seed(123)  # For reproducible results
+
+# Relationship between advertising spend and sales
+advertising_spend <- seq(10, 100, by = 5)  # In thousands of euros
+sales_revenue <- advertising_spend * 2.5 + rnorm(19, mean = 0, sd = 15) + 50
+
+# Covariance - note the units are hard to interpret
+covariance_value <- cov(advertising_spend, sales_revenue)
+
+# Correlation - much easier to interpret
+correlation_value <- cor(advertising_spend, sales_revenue)
+
+# Different correlation methods for different data types
+# Pearson: for linear relationships with normally distributed data
+# Spearman: for monotonic relationships, robust to outliers
+cor_pearson <- cor(advertising_spend, sales_revenue, method = "pearson")
+cor_spearman <- cor(advertising_spend, sales_revenue, method = "spearman")
+```
+
+## Correlation Matrices
+When working with multiple variables simultaneously, correlation matrices become invaluable tools in business analysis. A correlation matrix shows the correlation between every pair of variables in your dataset. Reading a correlation matrix is like reading a multiplication table, but for relationships between business metrics.
+
+The diagonal of a correlation matrix always contains 1s because every variable is perfectly correlated with itself. The matrix is symmetric because the correlation between X and Y is the same as the correlation between Y and X.
+
+In a correlation matrix examining business performance metrics, you might find that "customer satisfaction" correlates strongly with "repeat purchase rate" (0.82) but weakly with "marketing spend" (0.15), while "employee satisfaction" might have a moderate positive correlation with "customer satisfaction" (0.58).
+
+When interpreting correlation matrices in business contexts, look for:
+
+- Strong positive correlations (close to +1) that suggest complementary metrics
+- Strong negative correlations (close to -1) that might indicate trade-offs
+- Weak correlations (close to 0) suggesting independent factors
+
+[Consider including a visual representation of a correlation matrix with color coding to show the strength of relationships]
+
+```{r}
+#| code-summary: "Create artificial data 'business_metrics'"
+
+library(dplyr)
+# Creating a realistic business dataset
+set.seed(123)
+business_metrics <- data.frame(
+  advertising_spend = rnorm(100, mean = 50, sd = 15),  # thousands of euros
+  customer_satisfaction = rnorm(100, mean = 3.8, sd = 0.5),  # 1-5 scale
+  employee_satisfaction = rnorm(100, mean = 3.5, sd = 0.6),  # 1-5 scale
+  training_hours = rnorm(100, mean = 25, sd = 8)  # hours per quarter
+)
+
+# Create interdependent business metrics
+business_metrics <- business_metrics %>%
+  mutate(
+    # Sales influenced by advertising and customer satisfaction
+    sales_revenue = 100 + 
+      1.2 * advertising_spend + 
+      30 * customer_satisfaction + 
+      rnorm(100, 0, 20),
+    
+    # Customer satisfaction influenced by employee satisfaction
+    customer_satisfaction = customer_satisfaction + 
+      0.3 * employee_satisfaction + 
+      rnorm(100, 0, 0.2),
+    
+    # Employee satisfaction influenced by training
+    employee_satisfaction = employee_satisfaction + 
+      0.02 * training_hours + 
+      rnorm(100, 0, 0.15),
+    
+    # Profit margin influenced by efficiency (inverse of spending per revenue)
+    profit_margin = 15 + 
+      sales_revenue * 0.1 - 
+      advertising_spend * 0.5 + 
+      customer_satisfaction * 2 + 
+      rnorm(100, 0, 5)
+  )
+
+# Clean up the correlations by ensuring realistic ranges
+business_metrics$customer_satisfaction <- pmax(
+  1, pmin(5, business_metrics$customer_satisfaction))
+business_metrics$employee_satisfaction <- pmax(
+  1, pmin(5, business_metrics$employee_satisfaction))
+```
+
+
+```{r}
+#| code-summary: "Create correlation matrix in R"
+correlation_matrix <- cor(business_metrics)
+```
+
+```{r}
+#| code-summary: "Visualize correlation matrix"
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+# Assuming your correlation matrix is stored in 'correlation_matrix'
+# First, let's understand what we're working with
+correlation_visualization <- correlation_matrix %>%
+  # Convert the matrix to a data frame if it isn't already
+  as.data.frame() %>%
+  # Add row names as a column (these are our first variable names)
+  mutate(var1 = rownames(.)) %>%
+  # Reshape from wide to long format
+  pivot_longer(cols = -var1,           
+               names_to = "var2", 
+               values_to = "correlation") %>%
+  # Create a more readable format for variable names
+  mutate(
+    var1_clean = case_when(
+      var1 == "advertising_spend" ~ "Advertising Spend",
+      var1 == "customer_satisfaction" ~ "Customer Satisfaction", 
+      var1 == "employee_satisfaction" ~ "Employee Satisfaction",
+      var1 == "training_hours" ~ "Training Hours",
+      var1 == "sales_revenue" ~ "Sales Revenue",
+      var1 == "profit_margin" ~ "Profit Margin",
+      TRUE ~ var1
+    ),
+    var2_clean = case_when(
+      var2 == "advertising_spend" ~ "Advertising Spend",
+      var2 == "customer_satisfaction" ~ "Customer Satisfaction",
+      var2 == "employee_satisfaction" ~ "Employee Satisfaction", 
+      var2 == "training_hours" ~ "Training Hours",
+      var2 == "sales_revenue" ~ "Sales Revenue",
+      var2 == "profit_margin" ~ "Profit Margin",
+      TRUE ~ var2
+    )
+  )
+
+# Create the visualization
+correlation_heatmap <- correlation_visualization %>%
+  ggplot(aes(x = var2_clean, y = var1_clean, fill = correlation)) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  geom_text(aes(label = round(correlation, 2)), 
+            color = "black", size = 3) +
+  scale_fill_gradient2(low = "darkred", mid = "white", high = "darkblue",
+                       midpoint = 0, limit = c(-1, 1),
+                       name = "Correlation\nCoefficient") +
+  # Rotate x-axis labels for better readability
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title = element_blank(),
+        panel.grid = element_blank()) +
+  labs(title = "Business Metrics Correlation Matrix")
+
+```
+
+
+# A Note on Visualizing Data
+
+ADD THIS FIGURE EXAMPLE
+
+The power of descriptive statistics is greatly enhanced when combined with appropriate visualizations. Charts and graphs can reveal patterns that numbers alone might hide, making them essential tools for understanding your business data.
+A famous example is "Anscombe’s quartet", a compilation of four data sets that have nearly identical  descriptive statistics but are in fact very different, something that is easy to show visually:
+
+```{r}
+#| code-summary: "R code for the visualization"
+# Load required libraries
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggpubr)  # For ggarrange function
+
+# Step 1: Transform the Anscombe data into a more workable format
+# The original data has separate columns for each dataset, we need to reshape it
+anscombe_long <- anscombe %>%
+  # Add row numbers to track observations
+  mutate(observation = row_number()) %>%
+  # Reshape to long format - this is where the magic happens
+  pivot_longer(cols = -observation,
+               names_to = "variable", 
+               values_to = "value") %>%
+  # Extract dataset number and variable type from column names
+  mutate(
+    dataset = str_extract(variable, "\\d+"),  # Extract number (1,2,3,4)
+    axis = str_extract(variable, "[xy]"),     # Extract x or y
+    dataset = paste("Dataset", dataset)        # Make it more readable
+  ) %>%
+  select(-variable) |> 
+  # Reshape wider to have x and y as separate columns
+  pivot_wider(names_from = axis, values_from = value)
+
+# Step 2: Create individual scatter plots for each dataset
+# We'll create a function to ensure consistency across all plots
+create_anscombe_plot <- function(data_subset, title) {
+  # Calculate correlation for the subtitle
+  correlation <- cor(data_subset$x, data_subset$y)
+  
+  # Create the scatter plot with regression line
+  ggplot(data_subset, aes(x = x, y = y)) +
+    geom_point(size = 3, alpha = 0.7, color = "steelblue") +
+    # Add regression line with confidence interval
+    geom_smooth(method = "lm", se = FALSE, color = "coral2", alpha = 0.2) +
+    # Ensure consistent scales across all plots for fair comparison
+    scale_x_continuous(limits = c(3, 20), breaks = seq(4, 18, 2)) +
+    scale_y_continuous(limits = c(3, 13), breaks = seq(4, 12, 2)) +
+    labs(
+      title = title,
+      subtitle = paste("r =", round(correlation, 3)),
+      x = "X Values",
+      y = "Y Values"
+    ) +
+    # Clean minimal theme
+    theme_minimal() +
+    theme(
+      plot.title = element_text(size = 12, face = "bold"),
+      plot.subtitle = element_text(size = 10),
+      axis.title = element_text(size = 10)
+    )
+}
+
+# Step 3: Create individual plots for each dataset
+plot1 <- anscombe_long %>%
+  filter(dataset == "Dataset 1") %>%
+  create_anscombe_plot("Dataset I: Linear Relationship")
+
+plot2 <- anscombe_long %>%
+  filter(dataset == "Dataset 2") %>%
+  create_anscombe_plot("Dataset II: Curved Relationship")
+
+plot3 <- anscombe_long %>%
+  filter(dataset == "Dataset 3") %>%
+  create_anscombe_plot("Dataset III: Linear with Outlier")
+
+plot4 <- anscombe_long %>%
+  filter(dataset == "Dataset 4") %>%
+  create_anscombe_plot("Dataset IV: Vertical Outlier")
+
+# Step 4: Arrange all plots in a 2x2 grid
+final_plot <- ggarrange(plot1, plot2, plot3, plot4,
+                       ncol = 2, nrow = 2,
+                       common.legend = FALSE)
+
+# Add an overall title to tie everything together
+final_plot <- annotate_figure(final_plot,
+                             top = text_grob("Anscombe's Quartet: Why Visualization Matters",
+                                           face = "bold", size = 16))
+
+# Display the final visualization
+print(final_plot)
+```
+
+And here are the summary statistics:
+
+```{r}
+#| code-summary: "R code "
+library(knitr)
+summary_stats <- anscombe_long %>%
+  group_by(dataset) %>%
+  summarise(
+    mean_x = round(mean(x), 2),
+    mean_y = round(mean(y), 2),
+    sd_x = round(sd(x), 2),
+    sd_y = round(sd(y), 2),
+    correlation = round(cor(x, y), 3),
+    .groups = 'drop'
+  )
+kable(summary_stats)
+```
+
+
+For detailed guidance on creating effective data visualizations using `R` and `ggplot2`, please refer to the comprehensive tutorial available on our course homepage. 
+
+Remember that the goal of descriptive statistics is not just to calculate numbers, but to gain genuine insight into your data. Each measure tells part of the story - the mean tells you where your data centers, the standard deviation tells you how spread out it is, and correlation tells you how variables relate to each other. Together, these tools provide a comprehensive picture that guides further analysis and decision-making.
+
+As you practice using these concepts with business data, remember that no single statistic tells the complete story. Always consider multiple measures together, visualize your data when possible, and think critically about what the numbers are revealing about the underlying business phenomena you're studying. For instance, when analyzing customer satisfaction scores, look at both the average satisfaction and the variability - consistent high satisfaction is very different from highly variable satisfaction that averages to the same number.
+
+Think of descriptive statistics as the foundation of all business analytics. Just as you wouldn't build a house without first understanding the characteristics of your building materials, you shouldn't make business decisions without first understanding the basic characteristics of your data through these fundamental statistical measures.
+
+
+# Next steps
+- [Back to the recap overview](content/statrecap.qmd)
+- [Next topic: Essentials in Probability Theory](content/statrecap/ProbabilityTheory.qmd)
+

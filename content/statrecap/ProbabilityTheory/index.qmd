@@ -1,0 +1,1634 @@
+---
+title: "Essentials in Probability Theory for Statistics"
+date: '2025-05-13'
+
+execute: 
+  freeze: false
+  message: false
+  warning: false
+  error: true
+
+format: 
+  html:
+    theme:
+      light: 
+        - journal
+        - ../../../css/custom.scss # Change the default colour
+    highlight: tango
+    toc: true
+    toc_depth: 2
+    toc-location: left
+    number_sections: true
+    code-fold: true
+    code-tools: true
+    code-summary: "R example code"
+---
+
+```{r}
+#| code-summary: "Packages used for R examples"
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(purrr)
+library(ggpubr)
+library(latex2exp)
+
+```
+
+
+# Introduction: Why Probability Matters in Management Research
+
+Before diving into more details of statistical analyses, we need a solid foundation in probability. Think of probability as the mathematical language we use to describe uncertainty.
+In management research, uncertainty refers to situations where we cannot know the exact outcome beforehand, even though we might understand the general patterns or factors involved.
+
+> **Example of Uncertainty**: When launching a new product, you know that sales will depend on factors like price, marketing expenditures, and competitor actions. However, you cannot predict exactly how many units you'll sell next month - customer preferences might shift, unexpected events could occur, or competitors might change their strategies. This unpredictability represents uncertainty.
+
+Why does this matter for your research and work? Probability theory serves two crucial purposes. First, it provides the mathematical framework we need to generalize findings from our sample data to broader populations - the foundation of inferential statistics, which you'll explore in detail in the next chapters. Second, probability gives us reasonable comparison points or benchmarks for evaluating our observed data. It helps us determine whether our findings are genuinely surprising or just normal variation we should expect.
+
+Thus, this chapter will build your intuitive understanding of core probability concepts that form the backbone of statistical inference. We'll focus on practical understanding rather than mathematical proofs, using examples that connect to real-world management scenarios.
+
+# The Basic Building Blocks: Experiments, Events, and Probability
+
+Before diving into the numerical world of random variables, we need to establish some fundamental concepts that will help you think clearly about uncertainty in business contexts. Think of these as the foundational vocabulary for discussing any uncertain situation you'll encounter in management research and practice.
+
+## Random Experiments: The Source of Uncertainty
+
+A **random experiment** is any process or activity whose outcome cannot be predicted with certainty beforehand, even when we understand the factors involved. In business, almost every decision involves random experiments - from market research to product launches to employee performance.
+
+**Key characteristics of random experiments:**
+
+- The outcome is uncertain before the experiment occurs
+- We can usually identify all possible outcomes
+- Under similar conditions, different outcomes may occur
+
+Here are some examples of random experiments typical for the business world:
+
+> **Example 1: Product Launch**
+Launching a new product in a regional market is a random experiment. Even with extensive market research, competitor analysis, and careful planning, you cannot know with certainty how many units will sell in the first quarter. Multiple factors - economic conditions, competitor responses, changing consumer preferences - combine to create uncertainty.
+
+> **Example 2: Job Interview Process**
+Selecting a candidate through interviews is a random experiment. Despite standardized questions and evaluation criteria, the final hiring decision involves uncertainty about how well the candidate will actually perform on the job.
+
+> **Example 3: Marketing Campaign**
+Running an advertising campaign across different channels represents a random experiment. Though you can estimate response rates based on historical data, the actual number of conversions remains uncertain until the campaign runs.
+
+## Events: What We Care About
+
+An **event** is a specific outcome or collection of outcomes from a random experiment that we're particularly interested in. Events represent the business questions we want to answer or the scenarios we want to evaluate.
+
+If we consider the examples for random experiments from above we can also provide some examples for events.
+In the context of our product launch experiment, possible events include:
+
+- Event A: "Sales exceed €1 million in the first quarter"
+- Event B: "The product breaks even within six months"  
+- Event C: "Customer satisfaction scores average above 8.0"
+
+In the context of the the job interview experiment we could think of the following:
+
+- Event A: "The hired candidate receives a performance rating of 'exceeds expectations' in their first year"
+- Event B: "The candidate stays with the company for at least two years"
+
+Notice how events allow us to focus on specific business outcomes rather than all possible details of the experiment.
+
+## Probability: Measuring Likelihood
+
+**Probability** quantifies how likely an event is to occur. It provides a numerical scale from 0 to 1 (or 0% to 100%) where:
+- Probability = 0 means the event is impossible
+- Probability = 1 means the event is certain
+- Probability = 0.5 means the event is equally likely to occur or not occur
+
+In business contexts, the concept of probability is essential when assessing risks and opportunities, making informed decisions under uncertainty, or communicating about likelihood in precise and transparent terms. In other words, making rational decisions requires thinking about probabilities.
+
+Often, we make statements about probabilities based on our previous knowledge or after inspecting relevant data. In fact, statistics is exactly about that: how to make smart statements about probabilities given what we know.
+
+Here is an example of how such statements could look and how they are often expressed more formally:
+
+> **Example: Product Launch Probabilities**
+> Based on market research and historical data, you might conclude that:
+>
+> - The probability that total sales exceed 1M EUR is 70%, i.e., there is a 70% chance that the event "Sales exceed 1M EUR" actually occurs in the future.
+>   - More formally: $\mathbb{P}(R>1M)=0.7$, where $R$ stands for 'revenues'.
+> - The probability that our project breaks even within 6 months is 85%, i.e., there is an 85% chance that the event "Break even within 6 months" actually occurs.
+>   - More formally: $\mathbb{P}(BE)=0.85$, where $BE$ stands for "Break even within 6 months".
+> - The probability that the customer satisfaction score exceeds 8 is 60%, i.e., there is a 60% chance that the event "Customer satisfaction score is larger than 8" actually occurs.
+>   - More formally: $\mathbb{P}(CSC>8)=0.6$, where $CSC$ stands for "Customer Satisfaction Score".
+
+## Conditional Probability: When Context Matters
+
+Often in business, the probability that one event occurs depends on the circumstances. 
+**Conditional probability** is an important concept in this context as it helps answer the question: 
+
+- "What's the likelihood of Event A happening, given that Event B has already occurred or is known to be true?"
+
+We write this as $\mathbb{P}(A|B)$, read as "the probability of A given B." (or, more verbosely: "The probability that event A occurs, given that event B has occurred.")
+
+Conditional probabilities are a key concept because most business decisions involve conditional thinking. 
+Also, while you usually cannot predict the future with certainty, you are also 
+rarely operating in a situation of complete uncertainty - you usually have some relevant information that should influence your probability assessments.
+
+
+**Example: Marketing Campaign Success**
+
+Consider the probability that a marketing campaign generates high conversion rates.
+This actually depends on factors such as the general economic situation. 
+So while we can operate with the following baseline 
+probability:
+
+$$\mathbb{P}(\text{High conversions}) = 0.3$$
+
+additional information about the general economic situation and the
+market environment would allow us to make more precise statements
+(because we know these variables influence the likelihood for high conversions).
+
+For example, if we knew that we were operating in a booming environment:
+
+$$\mathbb{P}(\text{High conversions}|\text{Economic boom}) = 0.5$$
+
+Similarly, if we were in a recession:
+
+$$\mathbb{P}(\text{High conversions}|\text{Economic recession}) = 0.15$$
+
+Note that:
+
+$$\mathbb{P}(\text{High conversions}|\text{Economic boom}) > \mathbb{P}(\text{High conversions})$$
+and
+$$\mathbb{P}(\text{High conversions}|\text{Economic recession}) < \mathbb{P}(\text{High conversions})$$
+
+The conditional probabilities differ significantly from the baseline probability, 
+showing how context dramatically affects business outcomes.
+Conditional probabilities allow us to formalize our knowledge (or hypotheses)
+about relationships within the language of probabilities. As we will learn 
+below, this is key for developing rational decision strategies and learning
+rationally from observations.
+
+## Short recap
+
+These building blocks work together in every business analysis:
+
+1. **Identify the random experiment**: What uncertain process are you analyzing?
+2. **Define relevant events**: What specific outcomes matter for your decision?
+3. **Assess probabilities**: What's the likelihood of each event?
+4. **Consider conditional probabilities**: How does available information change these likelihoods?
+
+Understanding these fundamentals prepares you to work with random variables, 
+which provide a systematic way to assign numbers to the outcomes of random experiments. 
+This numerical approach, which we'll explore next, enables the powerful 
+statistical methods you'll use throughout your research and management career.
+
+
+
+
+# Random Variables: Capturing Numerical Outcomes of Uncertain Processes
+
+A **random variable** is a function whose value is a numerical outcome of a random process, and often this value is related to a particular phenomenon we want to study. Rather than dealing with abstract uncertainty, random variables give us concrete numbers we can analyze mathematically.
+
+Think of a random variable as a systematic way to assign numbers to the outcomes of uncertain situations. This numbering system allows us to move from qualitative descriptions like "customers seem satisfied" to quantitative analysis using specific values.
+
+## Detour: Why is a random variable called a "function"?
+
+You might find it confusing that we call a random *variable* a *function* - after all, we usually think of variables as containers that hold values, not as functions that produce them. But this terminology actually captures something important about how random variables work.
+
+A random variable is indeed a function, but with a specific purpose: it maps the possible outcomes of a random experiment to numerical values. Think of it as a systematic rule that converts whatever might happen into numbers we can analyze mathematically.
+
+Consider a concrete example. When flipping a coin twice, four outcomes are possible: HH, HT, TH, or TT. Now imagine we define a random variable $X$ that counts the number of heads. This random variable works as a function by applying the same rule to each possible outcome:
+- $X(HH)$ = 2  (two heads)
+- $X(HT)$ = 1  (one head)  
+- $X(TH)$ = 1  (one head)
+- $X(TT)$ = 0  (zero heads)
+
+Notice that $X$ isn't random in the sense of being unpredictable - it's a fixed rule that always gives the same output for the same input. The randomness comes from not knowing which outcome will actually occur when we flip the coins. Once we know the outcome, the function X deterministically tells us what number to assign.
+ 
+Think of a random variable like a machine with a dial that can be set to different positions (representing possible outcomes). For each dial position, the machine displays a specific number according to its fixed programming. The machine's function is predictable, but which position the dial lands on depends on the random process we're studying.
+ 
+This functional perspective explains why random variables are so powerful in business and management research. They allow us to transform complex, qualitative uncertain situations - like customer satisfaction, market conditions, or employee performance - into numerical values we can analyze using mathematical and statistical tools. The systematic nature of this transformation (the function) combined with uncertainty about outcomes (the randomness) gives us a rigorous way to study and make decisions about uncertain phenomena.
+
+## Examples for random variables
+
+Consider these management scenarios as examples where random variables emerge naturally:
+
+> **Example 1**: Customer satisfaction surveys represent a random process where each customer's experience leads to a numerical rating. A random variable assigns values 1 through 10 to capture the phenomenon of satisfaction levels across your customer base.
+
+> **Example 2**: Marketing campaign performance involves a random process where various factors (timing, message, audience, economic conditions) combine to produce a numerical outcome. A random variable might be the ROI percentage, which quantifies the phenomenon of campaign effectiveness.
+
+> **Example 3**: Employee attendance involves a random process where personal, health, and motivational factors influence whether employees come to work. A random variable counts monthly sick days, capturing the phenomenon of workforce availability.
+
+Notice how each random variable transforms a complex, uncertain phenomenon into specific numbers we can analyze. This transformation is what makes statistical analysis possible.
+
+## Discrete vs. Continuous Random Variables
+
+Random variables come in two main types:
+
+**Discrete random variables** result from c*ounting processes* - they can only take specific, separated values. Customer satisfaction ratings (1, 2, 3, ..., 10) and sick day counts (0, 1, 2, 3, ...) are discrete because you cannot have fractional ratings or partial sick days.
+
+**Continuous random variables** result from measuring processes - they can take any value within a range. Marketing ROI could be 5.23%, 5.234%, or 5.2341%. These values represent points along a continuous spectrum. Continuous random variables are often used to represent quantities like time, weight, distance, or percentages.
+
+The distinction between discrete and continuous random variables matters because discrete and continuous variables require different visualization techniques, different probability calculations, and different statistical tests.
+
+## Using random variables in R - a first glance
+
+One way to use random variables in R is to make draws from a probability distribution. We will learn more about these distributions in the next section. Another way to use them is to use functions such as `sample()`.
+
+The  function `sample()` allows you to draw random values from a specified vector of possible outcomes. This makes it particularly well-suited for discrete random variables.
+
+```{r}
+#| code-summary: "Discrete RV in R using sample()"
+
+# Simulating coin flips (discrete)
+# The possible outcomes, i.e. values the random variable can take:
+coin_outcomes_possible <- c("Heads", "Tails") 
+
+coin_outcomes_actual <- sample(
+  x = coin_outcomes_possible, # The vector from which to draw
+  size = 10, # The size of the sample you draw
+  replace = TRUE 
+  # Draw with replacement (i.e. you can can draw "Heads" more than once)
+  )
+
+# Simulating dice rolls (discrete)
+dice_outcomes_possible <- 1:6 # # The possible outcomes
+
+dice_outcomes_actual <- sample(
+  x = dice_outcomes_possible, # The vector from which to draw
+  size = 5, # The size of the sample you draw
+  replace = TRUE # Draw with replacement
+  )
+
+# Sampling employees for a focus group (discrete, without replacement)
+employee_ids <- 1:50  # 50 employees in the department
+employee_sample <- sample(
+  x = employee_ids, # The vector from which to draw
+  size = 8, # The size of the sample you draw
+  replace = FALSE # Draw without replacement
+  )
+# Sampling without replacement here means once an employee is selected for 
+#  the focus group, they cannot be selected again - just like in real life
+#  where you wouldn't invite the same person twice to the same meeting.
+```
+
+In the examples above, each element of the initial vector was equally likely to
+be drawn.
+But you can also specify different probabilities for each outcome using the 
+argument `prob`.
+This allows you to model situations where outcomes are not equally likely:
+
+```{r}
+#| code-summary: "Using different probabilities in sample()"
+
+# Modeling customer purchase decisions with different probabilities:
+#   70% chance of "No Purchase", 
+#   20% chance of "Small Purchase", 
+#   10% chance of "Large Purchase"
+purchase_outcomes <- c("No Purchase", "Small Purchase", "Large Purchase")
+purchase_probabilities <- c(0.7, 0.2, 0.1)
+purchases <- sample(
+  x = purchase_outcomes, 
+  size = 100, 
+  replace = TRUE, 
+  prob = purchase_probabilities
+  )
+```
+
+
+This weighted sampling reflects real business scenarios where some outcomes are naturally more common than others. For instance, in customer behavior analysis, you might observe that most visitors to your website don't make a purchase, some make small purchases, and only a few make large purchases.
+
+While `sample()` technically works with discrete vectors, you can create the appearance of continuous sampling by providing a very fine-grained vector of values:
+
+```{r}
+#| code-summary: "Using sample() for continuous RV in R"
+# Approximating continuous values by sampling from many discrete points
+prices_possible <- seq(10.00, 50.00, by = 0.01)  # Creates 4001 price points
+prices_actual <- sample(
+  x = prices_possible, # The vector from which to draw, here almost continuous
+  size = 100, # The size of the sample you draw
+  replace = TRUE # Draw with replacement
+  )
+```
+
+However, for true continuous random variables, R provides specialized functions for different probability distributions (like `rnorm()` for normal distributions, `runif()` for uniform distributions, etc.), which we'll explore in detail when we discuss probability distributions.
+
+
+# Probability Distributions: The Shape of Uncertainty
+
+A probability distribution describes how probability is allocated across all possible values of a random variable. Think of it as a complete blueprint that tells us not just what values are possible, but how likely each value is to occur.
+
+> **Example:** The following two probability distributions provide information
+about two dices. The first distribution represents a fair dice, i.e. a dive 
+where each value between 1 and 6 is equally likely.
+The second distribution represents a biased dice, where larger numbers are 
+more likely to occur.
+
+```{r}
+#| code-summary: "R code for visualization"
+# Create data for fair dice (equal probabilities)
+fair_dice <- tibble(
+  outcome = 1:6,
+  probability = rep(1/6, 6),  # Each outcome has probability 1/6
+  dice_type = "Fair Dice"
+)
+
+# Create data for biased dice (probability increases with outcome)
+# Using a simple linear increase, then normalizing so probabilities sum to 1
+raw_probs <- 1:6  # Weights: 1, 2, 3, 4, 5, 6
+biased_dice <- tibble(
+  outcome = 1:6,
+  probability = raw_probs / sum(raw_probs),  # Normalize to sum to 1
+  dice_type = "Biased Dice"
+)
+
+# Combine both datasets for easy plotting
+dice_data <- bind_rows(fair_dice, biased_dice) %>%
+  mutate(dice_type = factor(# Set order for visualization
+    dice_type, levels = c("Fair Dice", "Biased Dice")))
+
+# Create the visualization
+ggplot(dice_data, aes(x = outcome, y = probability, fill = dice_type)) +
+  geom_col(position = "dodge", width = 0.7, alpha = 0.8) +
+  facet_wrap(~ dice_type, scales = "free_y") +
+  scale_x_continuous(breaks = 1:6, labels = 1:6) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 0.1)) +
+  labs(
+    title = "Probability Distributions: Fair vs. Biased Dice",
+    x = "Dice Outcome",
+    y = "Probability",
+    fill = "Dice Type"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",  # Remove legend since facet labels are clear
+    strip.text = element_text(size = 12, face = "bold"),
+    axis.title = element_text(size = 11),
+    plot.title = element_text(size = 14, face = "bold", hjust = 0.5)
+  ) +
+  scale_fill_manual(
+    values = c("Fair Dice" = "#3498db", "Biased Dice" = "#e74c3c"))
+```
+
+
+Probability distributions answer crucial questions for managers: Which outcomes should we expect most often? How likely are extreme results? What's the typical range of variation we should plan for?
+
+Here is another example:
+
+> **Example:**
+> Imagine you're collecting data on monthly sales performance across all regional offices. The distribution of these sales figures tells a story: Are most months clustered around a typical value? Is the distribution symmetric, or do you see more months with unusually high or low performance? Are extreme months equally likely to be positive or negative?
+
+```{r}
+#| code-summary: "R code for visualization"
+# Generate realistic monthly sales data for regional offices
+set.seed(123)  # For reproducible results
+
+# Create sales data with a slight right skew (common in business data)
+# Most offices perform around the average, but a few have high sales
+monthly_sales <- tibble(
+  # Generate sales figures centered around 45,000 EUR with some variation
+  sales_amount = rnorm(n = 500, mean = 45000, sd = 8000) %>%
+    # Add a slight right skew by incorporating some exponential component
+    map_dbl(~ max(15000, .x + rexp(1, rate = 0.0001)))
+  ) %>%
+  # Round to nearest hundred for realistic business figures
+  mutate(sales_amount = round(sales_amount / 100) * 100)
+
+# Create the histogram visualization
+ggplot(monthly_sales, aes(x = sales_amount)) +
+  geom_histogram(
+    bins = 25,                   # Choose number of bins for clear visualization
+    fill = "#3498db",            
+    color = "white",             
+    alpha = 0.8               
+  ) +
+  # Add a density curve overlay to emphasize the bell shape
+  geom_density(
+    aes(
+      y = after_stat(density) * nrow(monthly_sales) * 
+        (max(monthly_sales$sales_amount) - 
+           min(monthly_sales$sales_amount)) / 25),
+    color = "#e74c3c",
+    size = 1.2
+  ) +
+  # Format the x-axis to show currency in thousands
+  scale_x_continuous(
+    labels = scales::label_number(
+      scale = 1/1000,
+      suffix = "k",
+      accuracy = 1
+    ),
+    breaks = scales::pretty_breaks(n = 6)
+  ) +
+  # Format y-axis for clarity
+  scale_y_continuous(
+    labels = scales::label_number(),
+    expand = expansion(mult = c(0, 0.05)) 
+  ) +
+  # Add informative labels
+  labs(
+    title = "Distribution of Monthly Sales Performance Across Regional Offices",
+    x = "Monthly Sales Amount in EUR",
+    y = "Number of Office-Months",
+    caption = paste("Each bar represents the frequency of\n",
+                    "offices achieving sales within that range")
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", margin = margin(b = 10)),
+    plot.subtitle = element_text(size = 11, color = "gray60", margin = margin(b = 15)),
+    axis.title = element_text(size = 11),
+    axis.text = element_text(size = 10),
+    plot.caption = element_text(size = 9, color = "gray60", margin = margin(t = 10)),
+    panel.grid.minor = element_blank(),  # Remove minor grid lines for cleaner look
+    panel.grid.major.x = element_line(size = 0.3, color = "gray90"),
+    panel.grid.major.y = element_line(size = 0.3, color = "gray90")
+  )
+```
+
+
+## The Normal Distribution: Nature's Favorite Pattern
+
+There is one distribution that deserver special attention:
+The normal distribution 
+This distribution appears remarkably often when many small, independent factors combine to influence an outcome. This isn't mathematical coincidence - it's a consequence of how complex systems work in the real world.
+
+The theoretical normal distribution is characterized by:
+- Perfect symmetry around its center point
+- Most values clustering near the center
+- Probability decreasing smoothly toward the tails
+- A distinctive bell shape that appears throughout nature and business
+
+What do we mean by 'theoretical' normal distribution above?
+When we refer to a "theoretical" normal distribution, we mean the mathematically perfect, idealized version described by precise equations. This theoretical distribution has exact properties - perfect symmetry, infinite tails, and specific mathematical relationships between its parameters. Think of it as the mathematical blueprint or recipe for what a normal distribution should look like.
+
+In contrast, when we collect real business data like our sales figures, we get an *empirical* distribution - actual observations from the real world. This empirical data can "approximate" the theoretical normal distribution, meaning it roughly follows the same bell-shaped pattern without being mathematically perfect. Real data might have slight asymmetries, finite ranges, or small irregularities due to measurement limitations, sample size, or the complex nature of business processes. The key insight is that even when real data isn't perfectly normal, it often resembles the theoretical distribution closely enough that we can use normal distribution methods for analysis and prediction. 
+
+To illustrate this, in the following two examples we show both the empirical 
+distribution using a histogram, as well as a close theoretical normal 
+distribution, which was chosen to "fit" the data (we talk more about "fitting"
+a distributionlater).
+
+> **Management Example**: Employee performance ratings in large organizations often approximate normal distributions. This happens because performance results from many factors (skill, effort, training, luck, health, motivation) combining in complex ways. Most employees cluster around average performance, with fewer showing exceptional or poor performance.
+
+> **Business Example**: Product defect rates in manufacturing often follow normal patterns when many small sources of variation (material quality, machine precision, worker attention, environmental conditions) combine to influence the final outcome.
+
+```{r}
+#| code-summary: "R code for the visualization"
+
+# Example 1: Employee Performance Ratings
+# Generate realistic performance data that approximates normal distribution
+set.seed(123)  # For reproducible results
+
+# Create employee performance data (scale 1-100)
+performance_data <- tibble(
+  # Generate ratings with slight positive skew (more common in HR data)
+  # Most employees rated around 75-80, fewer at extremes
+  performance_rating = rnorm(n = 800, mean = 77, sd = 12) %>%
+    # Bound the ratings between 1 and 100 (realistic HR scale)
+    pmax(1) %>% pmin(100) %>%
+    # Round to whole numbers (typical for performance reviews)
+    round()
+)
+
+# Calculate sample statistics to fit theoretical normal distribution
+sample_mean <- mean(performance_data$performance_rating)
+sample_sd <- sd(performance_data$performance_rating)
+
+# Create the visualization comparing empirical and theoretical distributions
+p1 <- ggplot(performance_data, aes(x = performance_rating)) +
+  # Empirical distribution (histogram)
+  geom_histogram(
+    aes(y = after_stat(density)),
+    bins = 20,
+    fill = "#3498db",
+    alpha = 0.7,
+    color = "white"
+  ) +
+  # Theoretical normal distribution overlay
+  stat_function(
+    fun = dnorm,
+    args = list(mean = sample_mean, sd = sample_sd),
+    color = "#e74c3c",
+    size = 1.5,
+    linetype = "solid"
+  ) +
+  scale_x_continuous(
+    breaks = seq(40, 120, 10),
+    limits = c(40, 120)
+  ) +
+  scale_y_continuous(
+    labels = scales::label_number(accuracy = 0.001)
+  ) +
+  labs(
+    title = "Employee Performance Ratings",
+    subtitle = paste(
+      "Empirical vs. Theoretical Distribution\n", "Sample Mean =", 
+      round(sample_mean, 1), ", Sample SD =", round(sample_sd, 1)),
+    x = "Performance Rating (1-100 scale)",
+    y = "Density",
+    caption = "Blue bars: actual data\nRed line: fitted normal distribution"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 13, face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(size = 11, color = "gray60", hjust = 0.5),
+    plot.caption = element_text(size = 9, color = "gray60"),
+    panel.grid.minor = element_blank()
+  )
+
+# Example 2: Manufacturing Defect Rates
+# Generate defect rate data (percentage) that approximates normal
+set.seed(456)
+
+defect_data <- tibble(
+  # Defect rates centered around 2.5% with some variation
+  # Using log-normal transformation to ensure positive values
+  defect_rate = exp(rnorm(n = 600, mean = log(2.5), sd = 0.3)) %>%
+    # Cap at reasonable maximum (no batch has >15% defects)
+    pmin(15) %>%
+    # Round to realistic precision
+    round(2)
+)
+
+# Calculate sample statistics for theoretical fit
+defect_mean <- mean(defect_data$defect_rate)
+defect_sd <- sd(defect_data$defect_rate)
+
+# Create the second visualization
+p2 <- ggplot(defect_data, aes(x = defect_rate)) +
+  # Empirical distribution (histogram)
+  geom_histogram(
+    aes(y = after_stat(density)),
+    bins = 25,
+    fill = "#27ae60",
+    alpha = 0.7,
+    color = "white"
+  ) +
+  # Theoretical normal distribution overlay
+  stat_function(
+    fun = dnorm,
+    args = list(mean = defect_mean, sd = defect_sd),
+    color = "#c0392b",
+    size = 1.5,
+    linetype = "solid"
+  ) +
+  scale_x_continuous(
+    limits = c(-0.9, 6.5),
+    breaks = seq(0, 6, 2),
+    labels = function(x) paste0(x, "%")
+  ) +
+  scale_y_continuous(
+    labels = scales::label_number(accuracy = 0.01)
+  ) +
+  labs(
+    title = "Manufacturing Defect Rates",
+    subtitle = paste0(
+      "Empirical vs. Theoretical Distribution\n", 
+      "Sample Mean=", round(defect_mean, 2), 
+      "%, Sample SD=", round(defect_sd, 2), "%"),
+    x = "Defect Rate per Batch",
+    y = "Density",
+    caption = "Green bars: actual data\nRed line: fitted normal distribution"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 13, face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(size = 11, color = "gray60", hjust = 0.5),
+    plot.caption = element_text(size = 9, color = "gray60"),
+    panel.grid.minor = element_blank()
+  )
+
+ggarrange(p1, p2, ncol = 2)
+```
+
+
+## Parameters: The Dials That Control Distribution Shape
+
+Now that you understand what the normal distribution looks like, let's explore how we can adjust its shape for different situations. Every probability distribution is governed by parameters - specific numbers that determine the distribution's exact shape and characteristics. Parameters act like control dials on a stereo: change a parameter value, and you change the entire character of the distribution.
+
+Understanding parameters is crucial because they connect abstract mathematical distributions to concrete real-world phenomena. Different parameter values create different distributions that might describe the data from different situations.
+
+Let us stick to the example of the normal distribution for a bit longer.
+The normal distribution has two key parameters that completely determine its appearance:
+
+**Mean $\mu$**: This parameter controls where the distribution is centered. The mean is the peak of the bell curve, the value around which all other values cluster. Change the mean, and you slide the entire distribution left or right without changing its shape.
+
+**Standard deviation $\sigma$**: This parameter controls how spread out the distribution is. A smaller standard deviation creates a narrow, tall bell curve where values cluster tightly around the mean. A larger standard deviation creates a wider, flatter bell curve where values are more dispersed.
+
+```{r}
+#| code-summary: "R code for the visualization"
+
+# Create a range of x values for smooth curves
+x_values <- seq(-10, 20, length.out = 1000)
+
+# Define four different normal distributions to showcase parameter effects
+distributions <- tibble(
+  # Create all combinations of x values with distribution parameters
+  x = rep(x_values),
+  
+  # Distribution 1: Small mean, small standard deviation (narrow, left-centered)
+  density_1 = dnorm(x_values, mean = 2, sd = 1),
+  
+  # Distribution 2: Small mean, large standard deviation (wide, left-centered)  
+  density_2 = dnorm(x_values, mean = 2, sd = 3),
+  
+  # Distribution 3: Large mean, small standard deviation (narrow, right-centered)
+  density_3 = dnorm(x_values, mean = 10, sd = 1),
+  
+  # Distribution 4: Large mean, large standard deviation (wide, right-centered)
+  density_4 = dnorm(x_values, mean = 10, sd = 3)
+) %>%
+  # Reshape data for ggplot (convert from wide to long format)
+  pivot_longer(
+    cols = starts_with("density_"),
+    names_to = "distribution",
+    values_to = "density",
+    names_prefix = "density_"
+  ) %>%
+  # Add descriptive labels that explain each distribution's parameters
+  mutate(
+    distribution_label = case_when(
+      distribution == "1" ~ "μ = 2, σ = 1\n(Small mean, small SD)",
+      distribution == "2" ~ "μ = 2, σ = 3\n(Small mean, large SD)", 
+      distribution == "3" ~ "μ = 10, σ = 1\n(Large mean, small SD)",
+      distribution == "4" ~ "μ = 10, σ = 3\n(Large mean, large SD)"
+    ),
+    # Create factor with logical ordering for facets
+    distribution_label = factor(distribution_label, levels = c(
+      "μ = 2, σ = 1\n(Small mean, small SD)",
+      "μ = 2, σ = 3\n(Small mean, large SD)",
+      "μ = 10, σ = 1\n(Large mean, small SD)",
+      "μ = 10, σ = 3\n(Large mean, large SD)"
+    ))
+  )
+
+# Create the four-panel visualization
+ggplot(distributions, aes(x = x, y = density)) +
+  # Draw the normal distribution curves
+  geom_line(
+    aes(color = distribution_label),
+    size = 1.2,
+    alpha = 0.9
+  ) +
+  # Add area under curves for better visual impact
+  geom_area(
+    aes(fill = distribution_label),
+    alpha = 0.3
+  ) +
+  # Add vertical lines at the means to emphasize centering
+  geom_vline(
+    data = tibble(
+      distribution_label = factor(c(
+        "μ = 2, σ = 1\n(Small mean, small SD)",
+        "μ = 2, σ = 3\n(Small mean, large SD)",
+        "μ = 10, σ = 1\n(Large mean, small SD)",
+        "μ = 10, σ = 3\n(Large mean, large SD)"
+      ), levels = c(
+        "μ = 2, σ = 1\n(Small mean, small SD)",
+        "μ = 2, σ = 3\n(Small mean, large SD)",
+        "μ = 10, σ = 1\n(Large mean, small SD)",
+        "μ = 10, σ = 3\n(Large mean, large SD)"
+      )),
+      mean_value = c(2, 2, 10, 10)
+    ),
+    aes(xintercept = mean_value),
+    linetype = "dashed",
+    color = "black",
+    alpha = 0.7
+  ) +
+  # Create separate panels for each distribution
+  facet_wrap(~ distribution_label, scales = "free_y", ncol = 2) +
+  # Define custom colors that are distinct but harmonious
+  scale_color_manual(values = c(
+    "μ = 2, σ = 1\n(Small mean, small SD)" = "#e74c3c",
+    "μ = 2, σ = 3\n(Small mean, large SD)" = "#3498db",
+    "μ = 10, σ = 1\n(Large mean, small SD)" = "#27ae60",
+    "μ = 10, σ = 3\n(Large mean, large SD)" = "#9b59b6"
+  )) +
+  scale_fill_manual(values = c(
+    "μ = 2, σ = 1\n(Small mean, small SD)" = "#e74c3c",
+    "μ = 2, σ = 3\n(Small mean, large SD)" = "#3498db", 
+    "μ = 10, σ = 1\n(Large mean, small SD)" = "#27ae60",
+    "μ = 10, σ = 3\n(Large mean, large SD)" = "#9b59b6"
+  )) +
+  # Customize axis formatting
+  scale_x_continuous(
+    breaks = seq(-5, 15, 5),
+    limits = c(-8, 20)
+  ) +
+  scale_y_continuous(
+    labels = scales::label_number(accuracy = 0.01)
+  ) +
+  labs(
+    title = "How Mean and Standard Deviation Shape Normal Distributions",
+    x = "Value",
+    y = "Probability Density",
+    caption = "Dashed lines show the mean (μ) of each distribution"
+  ) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    strip.text = element_text(size = 11, face = "bold"),
+    plot.title = element_text(size = 14, face = "bold", margin = margin(b = 5)),
+    plot.subtitle = element_text(size = 12, color = "gray60", margin = margin(b = 15)),
+    plot.caption = element_text(size = 10, color = "gray60", margin = margin(t = 10)),
+    axis.title = element_text(size = 11),
+    axis.text = element_text(size = 10),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_line(color = "gray90", size = 0.3)
+  )
+```
+
+To write that we are talking about a random variable $X$ that follows a normal
+distribution with particular values for $\mu$ and $\sigma$ we often write
+$$X \sim \mathcal{N}\left(\mu,  \sigma\right) $$
+for the general case or
+
+$$X \sim \mathcal{N}\left(2,1\right) $$
+
+for the case with concrete values for $\mu$ and $\sigma$.
+
+Let us now look now at a real world example where we can use the normal distribution with two different parameter constellations to "fit" the data. Note that "fitting" here refers to the process of choosing those parameter values that maximize the similarity between the theoretical probability distribution and the empirical distribution of the data.
+
+> **Example**: Consider two different business scenarios:
+>
+> - **Customer satisfaction scores** might be distributed such that the best fit of a normal distribution is achieved if we choose $\mu=7.5$ and $\sigma=1.2$. This means satisfaction centers around 7.5, with most scores falling between roughly 6 and 9.
+> 
+> - **Monthly sales revenue** might be roughly follow a normal distribution with $\mu=50,000$ and $\sigma=8,000$ (in EUR), such that we should choose these values for a theoretical distribution to get the best fit.
+
+```{r}
+#| code-summary: "R code for the visualization"
+
+# Set seed for reproducible results
+set.seed(789)
+
+# Generate realistic customer satisfaction data
+# We'll create data that naturally centers around 7.5 with spread of 1.2
+customer_satisfaction <- tibble(
+  # Generate satisfaction scores with slight boundary effects
+  # (scores can't go below 1 or above 10 on typical scales)
+  satisfaction_score = rnorm(n = 400, mean = 7.5, sd = 1.2) %>%
+    # Apply realistic bounds for satisfaction surveys
+    pmax(1) %>% pmin(10) %>%
+    # Round to one decimal place (typical for survey scales)
+    round(1)
+)
+
+# Generate realistic monthly sales revenue data
+# Create data that centers around €50,000 with spread of €8,000
+monthly_sales <- tibble(
+  # Generate sales figures with business-realistic constraints
+  sales_revenue = rnorm(n = 350, mean = 50000, sd = 8000) %>%
+    # Ensure no negative sales (impossible in practice)
+    pmax(10000) %>%
+    # Round to nearest 100 (realistic for business reporting)
+    round(-2)  # -2 rounds to nearest hundred
+)
+
+# Calculate actual sample statistics to verify our fit
+satisfaction_stats <- customer_satisfaction %>%
+  summarise(
+    sample_mean = mean(satisfaction_score),
+    sample_sd = sd(satisfaction_score)
+  )
+
+sales_stats <- monthly_sales %>%
+  summarise(
+    sample_mean = mean(sales_revenue),
+    sample_sd = sd(sales_revenue)
+  )
+
+# Create visualization for customer satisfaction
+p1 <- ggplot(customer_satisfaction, aes(x = satisfaction_score)) +
+  # Empirical distribution using histogram
+  geom_histogram(
+    aes(y = after_stat(density)),
+    bins = 18,  # Good resolution for satisfaction scale  
+    fill = "#3498db",
+    alpha = 0.7,
+    color = "white",
+    boundary = 1  # Align bins with whole numbers
+  ) +
+  # Overlay the fitted theoretical normal distribution
+  stat_function(
+    fun = dnorm,
+    args = list(mean = 7.5, sd = 1.2),
+    color = "#e74c3c",
+    size = 1.5,
+    linetype = "solid"
+  ) +
+  # Add vertical lines to mark mean and one standard deviation
+  geom_vline(
+    xintercept = 7.5,
+    color = "#2c3e50",
+    linetype = "dashed",
+    size = 1
+  ) +
+  geom_vline(
+    xintercept = c(7.5 - 1.2, 7.5 + 1.2),
+    color = "#95a5a6",
+    linetype = "dotted",
+    alpha = 0.8
+  ) +
+  # Format x-axis for satisfaction scale
+  scale_x_continuous(
+    breaks = 1:10,
+    limits = c(1, 10)
+  ) +
+  scale_y_continuous(
+    labels = scales::label_number(accuracy = 0.01)
+  ) +
+  # Add comprehensive labels with statistical details
+  labs(
+    title = "Customer Satisfaction Scores",
+    subtitle = "Empirical Data vs. Fitted Normal Distribution",
+    x = "Customer Satisfaction Score (1-10 scale)",
+    y = "Probability Density",
+    caption = "Blue bars: actual survey data \n Red line: N(7.5, 1.2) | Dashed: mean | Dotted: ±1 SD"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 13, face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(size = 11, color = "gray60", hjust = 0.5),
+    plot.caption = element_text(size = 9, color = "gray60"),
+    axis.title = element_text(size = 11),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_line(color = "gray90", size = 0.3)
+  )
+
+# Create visualization for monthly sales revenue
+p2 <- ggplot(monthly_sales, aes(x = sales_revenue)) +
+  # Empirical distribution using histogram
+  geom_histogram(
+    aes(y = after_stat(density)),
+    bins = 20,
+    fill = "#27ae60",
+    alpha = 0.7,
+    color = "white"
+  ) +
+  # Overlay the fitted theoretical normal distribution
+  stat_function(
+    fun = dnorm,
+    args = list(mean = 50000, sd = 8000),
+    color = "#c0392b",
+    size = 1.5,
+    linetype = "solid"
+  ) +
+  # Add vertical lines to mark mean and one standard deviation
+  geom_vline(
+    xintercept = 50000,
+    color = "#2c3e50",
+    linetype = "dashed",
+    size = 1
+  ) +
+  geom_vline(
+    xintercept = c(50000 - 8000, 50000 + 8000),
+    color = "#95a5a6",
+    linetype = "dotted",
+    alpha = 0.8
+  ) +
+  # Format x-axis for currency values
+  scale_x_continuous(
+    labels = scales::label_number(
+      scale = 1/1000,
+      suffix = "k",
+      accuracy = 1
+    ),
+    breaks = scales::pretty_breaks(n = 6)
+  ) +
+  scale_y_continuous(
+    labels = scales::label_scientific(digits = 2)
+  ) +
+  # Add comprehensive labels with statistical details
+  labs(
+    title = "Monthly Sales Revenue: ",
+    subtitle = "Empirical Data vs. Fitted Normal Distribution",
+    x = "Monthly Sales Revenue (EUR)",
+    y = "Probability Density", 
+    caption = "Green bars: actual sales data \n Red line: N(50000, 8000²) | Dashed: mean | Dotted: ±1 SD"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 13, face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(size = 11, color = "gray60", hjust = 0.5),
+    plot.caption = element_text(size = 9, color = "gray60"),
+    axis.title = element_text(size = 11),
+    panel.grid.minor = element_blank()
+  )
+
+ggarrange(p1, p2, ncol = 2)
+```
+
+
+The ability to adjust parameters means you can fit the normal distribution to match the specific characteristics of your data. In practice, you'll estimate these parameters from your sample data, then use the fitted distribution to make predictions about future observations or the broader population. But this is the topic of the next chapters.
+
+## Why Focus on the Normal Distribution?
+
+You might wonder why it is always the normal distribution that is used as the 
+basic example for probability distributions almost everywhere?
+While it might true that the use of the normal distribution is sometimes 
+excessive and even misleading, there are some good reasons for why it is
+often (but not always) a very good application case:
+
+**Ubiquity in business data**: Many measurements in management research approximate normal distributions, especially when multiple factors influence outcomes. This makes it a practical starting point for many analyses.
+
+**Mathematical tractability**: The normal distribution has elegant mathematical properties that make statistical calculations manageable and formulas interpretable. This is why it appears so frequently in statistical methods.
+
+**Foundation for inference**: The Central Limit Theorem (which we'll discuss later) shows that sample means tend toward normal distributions regardless of the underlying population shape, making the normal distribution central to statistical inference.
+
+**Benchmark for comparison**: Understanding the normal distribution helps you recognize when your data deviates from this pattern, often revealing important insights about underlying business processes.
+
+```{r}
+#| code-summary: "How to work the the normal distribution in R"
+```
+
+Still, you should be aware of the fact that the normal distribution is often used also for situations in which it is not the best choice and might even be misleading. You can find information about other distributions below in
+@sec-appendix.
+
+
+## Working with the normal distribution in R
+
+There are three important functions that you might use in R when working with the
+normal distribution: `dnorm()`, `pnorm()`, and `rnorm()`.
+
+## Working with the normal distribution in R
+
+There are three important functions that you might use in R when working with the normal distribution: `dnorm()`, `pnorm()`, and `rnorm()`. Each function takes the same basic arguments: the value(s) of interest, the mean (`mean`), and standard deviation (`sd`). By default, they assume the standard normal distribution (`mean = 0, sd = 1`), but you can specify any normal distribution by adjusting these parameters.
+
+Think of these functions as three different ways to interact with the normal distribution, each serving a distinct purpose in your analysis:
+
+- **`dnorm()`** (for **density** of the normal) calculates the height of the normal curve at any given point. This function gives you the probability density, which tells you how likely values are in that region of the distribution. You use this when you want to know how "concentrated" the probability is at a specific value, or when you're creating smooth curves for visualization.
+
+```{r}
+#| eval: false
+# Basic usage with standard normal distribution (mean=0, sd=1)
+dnorm(0)    # Height at the peak (mean)
+dnorm(1)    # Height one unit to the right of mean
+dnorm(-1)   # Height one unit to the left of mean
+
+# Customer satisfaction example: Normal distribution with mean=7.5, sd=1.2
+# How dense is the probability around a score of 8?
+dnorm(8, mean = 7.5, sd = 1.2)
+
+# You can calculate densities for multiple values at once
+satisfaction_scores <- c(5, 6.5, 7.5, 8.5, 10)
+dnorm(satisfaction_scores, mean = 7.5, sd = 1.2)
+
+# This is particularly useful for creating smooth curves in plots
+ggplot() +
+  stat_function(
+    fun = dnorm, args = list(mean = 7.5, sd = 1.2), xlim = c(4, 11)
+  ) +
+  labs(
+    title = "Customer Satisfaction Distribution",
+    x = "Satisfaction Score", y = "Density") + 
+  theme_linedraw()
+```
+
+
+- **`pnorm()`** (for **probability** of the normal) calculates cumulative probabilities, answering questions like "What's the probability that a randomly selected value is less than or equal to X?". This is equivalent to calculating the area under the normal curve up to that point. So this function is your go-to tool for computing areas under the normal curve, which correspond to actual probabilities of events occurring.
+
+```{r}
+#| eval: false
+# Standard normal examples
+pnorm(0)    # Probability of getting 0 or less (exactly 0.5)
+pnorm(1)    # Probability of getting 1 or less (about 0.84)
+pnorm(-1)   # Probability of getting -1 or less (about 0.16)
+
+# Business application: Monthly sales with mean=€50,000, sd=€8,000
+# What's the probability that monthly sales are €45,000 or less?
+pnorm(45000, mean = 50000, sd = 8000)
+
+# What's the probability of sales exceeding €60,000?
+# Remember: P(X > 60000) = 1 - P(X ≤ 60000)
+1 - pnorm(60000, mean = 50000, sd = 8000)
+
+# Probability of sales falling between €45,000 and €55,000
+# P(45000 < X < 55000) = P(X ≤ 55000) - P(X ≤ 45000)
+pnorm(55000, mean = 50000, sd = 8000) - pnorm(45000, mean = 50000, sd = 8000)
+
+# Customer satisfaction: Probability of score above 8.5
+1 - pnorm(8.5, mean = 7.5, sd = 1.2)
+```
+
+
+- **`qnorm()`** (for **quantiles** of the normal) works as the inverse of `pnorm()`, answering the opposite question: "Given a probability (or percentile), what value corresponds to that point in the distribution?" Think of it as finding the boundary values that separate different portions of your data. For instance, while `pnorm()` tells you the probability of scoring below a certain value, 
+`qnorm()` tells you what score you need to achieve to be in the top 10% of performers. This function is essential for setting thresholds, identifying outliers, and understanding percentile ranks in business contexts. When you want to know what sales figure represents the 90th percentile of performance, or what score puts an employee in the bottom 5% for improvement planning, `qnorm()` provides those critical boundary values.
+
+```{r}
+#| eval: false
+# Basic usage: What value corresponds to the 90th percentile?
+qnorm(0.9, mean = 7.5, sd = 1.2)  # Customer satisfaction: top 10%
+
+# Finding cutoff scores for performance ratings
+qnorm(0.25, mean = 75, sd = 12)  # Bottom 25% (needs improvement)
+qnorm(0.75, mean = 75, sd = 12)  # Top 25% (high performers)
+
+# Sales thresholds: What revenue puts you in top 5%?
+qnorm(0.95, mean = 50000, sd = 8000)
+
+# Finding values for symmetric intervals
+qnorm(c(0.025, 0.975), mean = 100, sd = 15)  # Middle 95% boundaries
+
+# Setting quality control limits (3-sigma rule)
+qnorm(c(0.00135, 0.99865), mean = 2.5, sd = 0.3)  # Defect rate limits
+
+# Notice how qnorm() essentially reverses the logic of pnorm(). 
+# While pnorm(8.5, mean = 7.5, sd = 1.2) tells you what percentage of customers 
+# score 8.5 or below, qnorm(0.9, mean = 7.5, sd = 1.2) tells you what score 
+# puts a customer in the 90th percentile. This makes qnorm() particularly 
+# valuable for setting benchmarks, identifying outliers, and establishing 
+# performance thresholds in business contexts.
+
+```
+
+
+- **`rnorm()`** (for **random number** from the normal) generates random samples from a normal distribution. This function is important for creating example data for teaching purposes, or testing statistical methods under known conditions.
+
+```{r}
+#| eval: false
+# Generate 10 random values from standard normal distribution
+rnorm(10)
+
+# Generate 100 customer satisfaction scores
+# with realistic parameters (mean=7.5, sd=1.2)
+set.seed(123)  # For reproducible results
+customer_scores <- rnorm(100, mean = 7.5, sd = 1.2)
+head(customer_scores)  # Look at first few values
+
+# Generate monthly sales data for a year (12 months)
+monthly_sales <- rnorm(12, mean = 50000, sd = 8000)
+monthly_sales
+
+# Create a larger sample for simulation study
+set.seed(456)
+large_sample <- rnorm(1000, mean = 7.5, sd = 1.2)
+
+# Verify our simulation matches the theoretical parameters
+mean(large_sample)    # Should be close to 7.5
+sd(large_sample)      # Should be close to 1.2
+
+# Visualize the simulated data
+hist(large_sample, breaks = 30, 
+     main = "Simulated Customer Satisfaction Scores",
+     xlab = "Satisfaction Score", 
+     col = "lightblue", border = "white")
+```
+
+
+```{r}
+#| code-summary: "Example for combined use of all three functions"
+#| eval: false
+
+# Scenario: Analyzing employee productivity scores (scale 0-100)
+# Assume scores follow Normal(μ = 75, σ = 12)
+
+# 1. Use rnorm() to simulate realistic data
+set.seed(789)
+productivity_scores <- rnorm(250, mean = 75, sd = 12)
+
+# 2. Use dnorm() to create theoretical comparison
+score_range <- seq(40, 110, by = 1)
+theoretical_density <- dnorm(score_range, mean = 75, sd = 12)
+
+# 3. Use pnorm() and qnorm() to answer business questions
+# What percentage of employees score above 85?
+high_performers <- 1 - pnorm(85, mean = 75, sd = 12)
+
+# What score represents the 90th percentile? 
+percentile_90 <- qnorm(0.9, mean = 75, sd = 12)
+```
+
+
+
+# Expected Values: The Long-Run Average
+
+The expected value of a random variable represents the average outcome you would observe if you could repeat the underlying random process infinitely many times under identical conditions.^[
+This is the so called "frequentist interpretation of probability". The most
+influential alternative is the "Bayesian" interpretation, but we will not go
+into the details here.] Think of it as the "center of gravity" of a probability distribution - the balance point where the distribution would rest if it were a physical object.
+
+The expected value represents a single number summary of a complex uncertain situation, but it's crucial to understand what this number represents and what it doesn't. The expected value is not a prediction of the next outcome - it's a summary of long-term behavior.
+
+> **Business Example**: A new product launch has these potential outcomes, which are associated with the random variable $X$:
+> - 30% chance of losing 100,000 EUR (perhaps due to poor market reception); 
+we write $\mathbb{P}(X=100000)=0.3$
+> - 50% chance of breaking even (0 EUR) (modest success covering costs);
+we write $\mathbb{P}(X=0)=0.5$
+> - 20% chance of gaining 300,000 EUR (strong market acceptance);
+we write $\mathbb{P}(X=300000)=0.2$
+> 
+> This way we compute the expected value as follows:
+> $$\mathbb{E}(X)=0.3\cdot -100000 + 0.5\cdot 0 + 0.2\cdot 300000=30000 
+> 
+> This means if you launched many similar products under similar conditions, 
+you would average about 30,000 EUR profit per launch. It does not mean any 
+individual launch will yield exactly 30,000 EUR!
+
+## Expected Value vs. Typical Value
+
+A common misconception is confusing expected value with the most likely outcome or a typical observation. These can be quite different:
+
+> **Example**: When rolling a standard die, the expected value is 3.5 (calculated as 1/6 × 1 + 1/6 × 2 + ... + 1/6 × 6 = 3.5). However, you cannot actually roll 3.5! The expected value represents the average across many rolls, not the outcome of any single roll.
+
+This distinction is vital for business planning. Expected revenue might be 50,000 EUR, but individual months might typically range from 30,000 EUR to 70,000 eUR, with the average working out to 50,000 EUR over time.
+
+## Properties of Expected Value
+
+Expected values have mathematical properties that make them particularly useful for business analysis:
+
+**Linearity**: If you multiply all outcomes by a constant or add a constant to all outcomes, the expected value changes in the same predictable way. This helps with currency conversions, scaling, and adjusting for inflation.
+
+**Additivity for independent variables**: When random variables are independent, the expected value of their sum equals the sum of their expected values. This property is invaluable when combining multiple uncertain factors in financial projections.
+
+These properties allow managers to break complex uncertain situations into manageable components and combine them systematically.
+
+## Properties of Expected Value
+
+Expected values have mathematical properties that make them particularly useful for business analysis:
+
+**Linearity**: If you multiply all outcomes by a constant or add a constant to all outcomes, the expected value changes in the same predictable way. This helps with currency conversions, scaling, and adjusting for inflation.
+
+> **Example**: Your company operates in both Germany and the United States, and you need to convert expected quarterly profits from euros to dollars. If your expected quarterly profit in Germany is 150,000 EUR and the exchange rate is 1.10 USD per Euro, you can simply multiply: 
+> $$\mathbb{E}[Profit_{\text{USD}}] = 1.10 × 150,000 EUR = 165,000 USD$$
+> Similarly, if you need to account for a fixed quarterly tax of 20,000 USD, you add it directly: 
+> $$\mathbb{E}[Profit_{\text{AfterTax}}] = 165,000 USD + 20,000 USD = 185,000 USD$$
+> The linearity property ensures that these transformations preserve the expected value relationship, making currency conversions and cost adjustments straightforward in your financial planning.
+
+**Additivity for independent variables**: When random variables are independent, the expected value of their sum equals the sum of their expected values. This property is invaluable when combining multiple uncertain factors in financial projections.
+
+> **Example**: When planning next year's budget, you're combining revenues from three independent business units: online sales (expected 500,000 EUR), retail stores (expected 300,000 EUR), and consulting services (expected 150,000 EUR). Because these revenue streams are independent, you can calculate the total expected revenue by simply adding the individual expected values: 
+> $$\mathbb{E}[Total Revenue] = 500,000 EUR + 300,000 EUR + 150,000 EUR = 950,000 EUR$$
+> This additivity property allows you to build complex financial models by breaking them into independent components, calculating expectations for each piece separately, and then combining them to get the overall expected outcome for your business.
+
+These properties allow managers to break complex uncertain situations into manageable components and combine them systematically.
+
+
+
+# Bridging Probability and Descriptive Statistics
+
+As you've learned about descriptive statistics in the previous chapter, you've focused on summarizing and understanding datasets you've already collected. Now that we've explored probability concepts, it's essential to understand how these two areas of statistics connect. Think of descriptive statistics as describing what we've observed, while probability concepts help us understand what we might observe and prepare us for making inferences about broader populations - a topic we'll explore comprehensively in the next chapter on inferential statistics.
+
+## Understanding the Connection Between Sample and Population
+
+The relationship between descriptive statistics and probability becomes clear when we distinguish between what we observe in our sample data and what we want to understand about the broader population or underlying process.
+
+When you calculate the mean of customer satisfaction scores from 100 surveyed customers, you're computing a **sample mean** using descriptive statistics. But the **expected value** of customer satisfaction represents the theoretical average you would get if you could survey all customers infinitely many times. These concepts are intimately related - your sample mean serves as an estimate of the expected value.
+
+> **Business Example**: Imagine you're analyzing employee productivity scores for 50 employees in your department. You calculate a sample mean of 85 points. This descriptive statistic summarizes your observed data. However, the expected value of productivity scores for all employees in similar departments represents the theoretical average you're trying to estimate. Your sample mean of 85 points is your best estimate of this expected value, though you recognize it might differ somewhat due to sampling variation.
+
+## The Estimation Connection
+
+Descriptive statistics serve as estimates of probability concepts. When we calculate sample statistics, we're making educated guesses about the corresponding population parameters or probability characteristics:
+
+**Sample statistics estimate population parameters**: Your sample mean can be used as an estimator for the population mean (which equals the expected value for the population). Your sample standard deviation can be used as an estimator for the population standard deviation (a parameter of the population's probability distribution).
+
+**Sample distributions approximate theoretical distributions**: When you create a histogram of your sample data, you're approximating what the true probability distribution might look like. The larger your sample, the better this approximation typically becomes.
+
+## Two Perspectives on the Same Data
+
+Consider the same dataset from two viewpoints. You survey 200 customers about their monthly spending and find the average is 347 EUR with a standard deviation of 89 EUR. 
+
+From a **descriptive statistics perspective**, you're summarizing what happened: "These 200 customers spent an average of 347 EUR, with spending typically varying by about 89 EUR from this average."
+
+From a **probability perspective**, you're making inferences: "Based on this sample, we estimate the expected monthly spending per customer is approximately 347 EUR, and the underlying spending distribution appears to have a standard deviation of about 89 EUR. This suggests future customers will likely spend around this amount, with similar variability."
+
+## A Comparison Table
+
+| Probability Concept | Descriptive Statistic | Relationship & Interpretation |
+|---------------------|----------------------|------------------------------|
+| **Expected Value (μ)** | **Sample Mean (x̄)** | The sample mean serves as an estimator for the expected value. As sample size increases, this estimator converges to the true expected value by the Law of Large Numbers |
+| **Population Variance ($var$)** | **Sample Variance ($\sigma^2$)** | Sample variance serves as an estimator for population variance. Both measure spread, but sample version adjusts for estimation uncertainty |
+| **Probability Distribution** | **Sample Distribution (Histogram)** | Sample histogram approximates the shape of the probability distribution. More data yields better approximation |
+| **Population Median** | **Sample Median** | Sample median serves as an estimator for the population median. Both represent "middle" values, but sample version depends on specific data points |
+| **Theoretical Quartiles** | **Sample Quartiles (Q1, Q3)** | Sample quartiles serve as estimators for theoretical quartiles. Both divide data into quarters for analysis |
+| **Probability (P(X = x))** | **Relative Frequency** | Sample relative frequency serves as an estimator for probability. Proportion of sample with specific value estimates probability of that value occurring |
+
+Note that the estimators mentioned above are not necessarily the best estimators you can use to estimate a population property of interest. How to come up with the best estimators is a question of inferential statistics.
+
+
+## From Description to Prediction
+
+Understanding these connections transforms how you think about data analysis and prepares you for inferential statistics in the next chapters. Descriptive statistics tell you what happened in your sample, but probability concepts help you predict what might happen in the future or with different samples.
+
+When you calculate that the average customer spends 347 EUR, you're not bound to just describing past behavior - you can estimate a parameter that helps you predict future customer behavior and forms the basis for confidence intervals about the true population mean. When you observe that spending appears normally distributed in your sample, you're gathering evidence about the probability distribution that generates customer spending patterns, which will inform hypothesis tests about population characteristics.
+
+
+# Short recap
+
+The fundamental concepts we discussed in this chapter work together to create a coherent framework for understanding and analyzing uncertainty in business contexts, while preparing you for the inferential statistical methods you'll learn in upcoming chapters:
+
+**Random variables** transform abstract uncertain phenomena into concrete numerical outcomes we can analyze mathematically. They bridge the gap between real-world uncertainty and statistical analysis, providing the foundation for both descriptive and inferential statistics.
+
+**Probability distributions** provide complete descriptions of how uncertainty is structured, telling us not just what can happen, but how likely different outcomes are. Parameters allow us to customize distributions to match specific business situations, and understanding these distributions helps us interpret both sample data and make population inferences.
+
+**Expected values** distill complex uncertain situations into single summary numbers useful for planning and decision-making, while respecting the long-term nature of probabilistic thinking. These concepts directly connect to sample means and form the basis for point estimates in inferential statistics.
+
+**The bridge between descriptive and probability concepts** shows how sample statistics estimate population parameters, preparing you to understand the uncertainty inherent in all statistical inference procedures.
+
+These concepts form the foundation for all advanced statistical techniques you'll encounter in management research. When you learn about confidence intervals, hypothesis testing, and effect sizes in the next chapters, you'll see these fundamental ideas appearing repeatedly. 
+
+Understanding these probability essentials provides the conceptual scaffolding that makes inferential statistics accessible and meaningful. Rather than memorizing formulas, you should try to understand why statistical procedures work the way they do, enabling you to apply them appropriately and interpret results correctly in your management research.
+
+# Appendix: Other Important Probability Distributions {#sec-appendix}
+
+While the normal distribution is fundamental, many business phenomena follow other probability patterns. Understanding these distributions helps you choose appropriate models for different types of data and situations, and prepares you for more advanced modeling techniques you may encounter in specialized management research. Below we show some common examples, on which you will find plenty information in basically all textbooks out there.
+
+- A visual overview over the different distributions is given in @fig-distributions.
+- An overview over the related R functions is given in @tbl-distributions.
+
+## Discrete Distributions
+
+**Binomial Distribution**
+The binomial distribution models the number of successes in a fixed number of independent trials, each with the same probability of success.
+
+**Parameters**: 
+
+- $n$ (number of trials)
+- $p$ (probability of success per trial)
+
+**Business applications**: 
+
+- Quality control (number of defective items in a batch)
+- Marketing (number of customers who respond to an email campaign)
+- Employee behavior (number of employees who attend optional training)
+- Survey research (number of positive responses)
+
+> **Example**: If 30% of customers typically purchase after viewing a product demo, and you show demos to 50 customers, the binomial distribution tells you the probability of getting exactly 12, 15, or 20 purchases.
+
+**Poisson Distribution**  
+The Poisson distribution models the number of events occurring in a fixed interval when events happen independently at a constant average rate.
+
+**Parameters**: 
+
+- $\lambda$ (lambda, the average rate of occurrence)
+
+**Business applications**: 
+
+- Customer arrivals (number of customers entering a store per hour)
+- System failures (number of server crashes per month)
+- Call center volume (number of support calls per day)
+- Defect counting in manufacturing
+
+> **Example**: If your website averages 3 crashes per month, the Poisson distribution helps you calculate the probability of experiencing 0, 1, 2, or 5 crashes in a given month.
+
+## Continuous Distributions
+
+**Uniform Distribution**
+The uniform distribution assigns equal probability to all values within a specified range, representing complete uncertainty within known bounds.
+
+**Parameters**: 
+
+- $a$ (minimum value)
+- $b$ (maximum value)
+
+*Business applications*: Monte Carlo simulations, modeling worst-case scenarios where you know only the possible range, random sampling for A/B testing, representing complete uncertainty about timing within a known window
+
+> **Example**: If project completion time could be anywhere between 30 and 50 days with no particular preference, the uniform distribution represents this complete uncertainty within the known bounds.
+
+**Exponential Distribution**
+The exponential distribution models the time between events in a Poisson process, or the duration until something happens.
+
+**Parameters**: 
+
+- $\lambda$ (rate parameter)
+
+**Business applications**: 
+
+- Customer service (time until next service request)
+- Product reliability (time until failure)
+- Queue management (waiting times)
+- Modeling time between purchases
+
+> **Example**: If customers arrive at your service desk following a Poisson process, the exponential distribution models how long you'll wait between consecutive arrivals.
+
+**Beta Distribution**
+The beta distribution is highly flexible and bounded between 0 and 1, making it ideal for modeling proportions and percentages.
+
+**Parameters**:
+
+- $\alpha$ (alpha)
+- $\beta$ (beta)
+
+*Business applications*: 
+
+- Market share analysis
+- Project completion percentages
+- Conversion rates
+- Budget allocation proportions
+- Moeling success probabilities when you have prior information
+
+> **Example**: When modeling the proportion of budget different departments might receive, the beta distribution can represent various scenarios from equal allocation to highly skewed distributions.
+
+**Gamma Distribution**  
+The gamma distribution models positive continuous values and includes the exponential distribution as a special case. It's particularly useful for modeling sums of exponential random variables.
+
+**Parameters**: 
+
+- $\alpha$ (shape) and $\beta$ (rate) or 
+- $\alpha$ (shape) and $\theta$ (scale)
+
+**Business applications**: 
+
+- Project duration modeling when projects consist of multiple phases
+- Income distribution analysis
+- Insurance claim amounts
+- Inventory management (modeling demand over lead time)
+
+> **Example**: Total project time when the project consists of several independent phases, each following an exponential distribution, results in a gamma distribution.
+
+## Visual illustration
+
+```{r}
+#| code-summary: "R code for the visualization"
+
+# Set up common theme for all plots
+custom_theme <- theme_minimal() +
+  theme(
+    plot.title = element_text(size = 12, face = "bold"),
+    plot.subtitle = element_text(size = 10, color = "gray60"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 8),
+    legend.position = "bottom",
+    legend.title = element_text(size = 9),
+    legend.text = element_text(size = 8)
+  )
+
+# Common color palette for consistency
+colors <- c("#e74c3c", "#3498db", "#27ae60", "#9b59b6")
+
+# 1. BINOMIAL DISTRIBUTION
+# Create data for different parameter combinations
+binomial_data <- expand_grid(
+  # Different scenarios: small n with different p, large n with different p
+  scenario = c("n=10, p=0.3", "n=10, p=0.7", "n=50, p=0.3", "n=50, p=0.7"),
+  x = 0:50
+) %>%
+  mutate(
+    # Extract parameters for calculation
+    n = case_when(
+      str_detect(scenario, "n=10") ~ 10,
+      str_detect(scenario, "n=50") ~ 50
+    ),
+    p = case_when(
+      str_detect(scenario, "p=0.3") ~ 0.3,
+      str_detect(scenario, "p=0.7") ~ 0.7
+    ),
+    # Calculate probabilities for valid range only
+    probability = ifelse(x <= n, dbinom(x, n, p), 0),
+    # Keep only non-zero probabilities for cleaner visualization
+    probability = ifelse(probability > 0.001, probability, NA)
+  ) %>%
+  filter(!is.na(probability))
+
+p1 <- ggplot(binomial_data, aes(x = x, y = probability, color = scenario)) +
+  geom_point(size = 1.5, alpha = 0.8) +
+  geom_line(alpha = 0.6) +
+  scale_color_manual(values = colors, ) +
+  labs(
+    title = "Binomial Distribution",
+    subtitle = "Number of successes in fixed trials",
+    x = "Number of Successes",
+    y = "Probability",
+    color = "Parameters"
+  ) +
+  custom_theme +
+  guides(color = guide_legend(nrow = 2, byrow = TRUE))
+
+# 2. POISSON DISTRIBUTION  
+# Model different rates of occurrence
+poisson_data <- expand_grid(
+  lambda = c(0.5, 2, 5, 10),
+  x = 0:25
+) %>%
+  mutate(
+    scenario = paste0("λ = ", lambda),
+    probability = dpois(x, lambda),
+    # Filter out very small probabilities for cleaner visualization
+    probability = ifelse(probability > 0.001, probability, NA)
+  ) %>%
+  filter(!is.na(probability))
+
+p2 <- ggplot(poisson_data, aes(x = x, y = probability, color = scenario)) +
+  geom_point(size = 1.5, alpha = 0.8) +
+  geom_line(alpha = 0.6) +
+  scale_color_manual(values = colors) +
+  labs(
+    title = "Poisson Distribution", 
+    subtitle = "Number of events in fixed interval",
+    x = "Number of Events",
+    y = "Probability",
+    color = "Parameters"
+  ) +
+  custom_theme +
+  guides(color = guide_legend(nrow = 2, byrow = TRUE))
+
+# 3. UNIFORM DISTRIBUTION
+# Different ranges and intervals
+uniform_data <- expand_grid(
+  scenario = c("U(0,1)", "U(0,10)", "U(5,15)", "U(-2,2)"),
+  x = seq(-3, 16, 0.1)
+) %>%
+  mutate(
+    # Extract bounds for each scenario
+    a = case_when(
+      scenario == "U(0,1)" ~ 0,
+      scenario == "U(0,10)" ~ 0, 
+      scenario == "U(5,15)" ~ 5,
+      scenario == "U(-2,2)" ~ -2
+    ),
+    b = case_when(
+      scenario == "U(0,1)" ~ 1,
+      scenario == "U(0,10)" ~ 10,
+      scenario == "U(5,15)" ~ 15, 
+      scenario == "U(-2,2)" ~ 2
+    ),
+    # Calculate uniform density
+    density = ifelse(x >= a & x <= b, 1/(b-a), 0)
+  )
+
+p3 <- ggplot(uniform_data, aes(x = x, y = density, color = scenario)) +
+  geom_line(linewidth = 1.2, alpha = 0.8) +
+  scale_color_manual(values = colors) +
+  labs(
+    title = "Uniform Distribution",
+    subtitle = "Equal probability across specified range", 
+    x = "Value",
+    y = "Density",
+    color = "Parameters"
+  ) +
+  custom_theme +
+  guides(color = guide_legend(nrow = 2, byrow = TRUE))
+
+# 4. EXPONENTIAL DISTRIBUTION
+# Different rates showing varying "wait times"
+exponential_data <- expand_grid(
+  lambda = c(0.5, 1, 2, 3),
+  x = seq(0, 8, 0.1)
+) %>%
+  mutate(
+    scenario = paste0("λ = ", lambda),
+    density = dexp(x, lambda)
+  )
+
+p4 <- ggplot(exponential_data, aes(x = x, y = density, color = scenario)) +
+  geom_line(size = 1.2, alpha = 0.8) +
+  scale_color_manual(values = colors) +
+  labs(
+    title = "Exponential Distribution",
+    subtitle = "Time between events in Poisson process",
+    x = "Time",
+    y = "Density", 
+    color = "Parameters"
+  ) +
+  custom_theme +
+  guides(color = guide_legend(nrow = 2, byrow = TRUE))
+
+# 5. BETA DISTRIBUTION
+# Different shapes representing various proportion scenarios
+beta_data <- expand_grid(
+  scenario = c("α=1, β=1", "α=2, β=5", "α=5, β=2", "α=3, β=3"),
+  x = seq(0, 1, 0.01)
+) %>%
+  mutate(
+    # Extract alpha and beta parameters
+    alpha = case_when(
+      scenario == "α=1, β=1" ~ 1,
+      scenario == "α=2, β=5" ~ 2,
+      scenario == "α=5, β=2" ~ 5,
+      scenario == "α=3, β=3" ~ 3
+    ),
+    beta = case_when(
+      scenario == "α=1, β=1" ~ 1,
+      scenario == "α=2, β=5" ~ 5,
+      scenario == "α=5, β=2" ~ 2,
+      scenario == "α=3, β=3" ~ 3
+    ),
+    density = dbeta(x, alpha, beta)
+  )
+
+p5 <- ggplot(beta_data, aes(x = x, y = density, color = scenario)) +
+  geom_line(size = 1.2, alpha = 0.8) +
+  scale_color_manual(values = colors) +
+  labs(
+    title = "Beta Distribution",
+    subtitle = "Modeling proportions and percentages",
+    x = "Proportion",
+    y = "Density",
+    color = "Parameters"
+  ) +
+  custom_theme +
+  guides(color = guide_legend(nrow = 2, byrow = TRUE))
+
+# 6. GAMMA DISTRIBUTION
+# Different shape and rate combinations
+gamma_data <- expand_grid(
+  scenario = c("α=1, β=1", "α=2, β=1", "α=5, β=1", "α=2, β=2"),
+  x = seq(0, 10, 0.1)
+) %>%
+  mutate(
+    # Extract shape (alpha) and rate (beta) parameters
+    shape = case_when(
+      str_detect(scenario, "α=1") ~ 1,
+      str_detect(scenario, "α=2") ~ 2,
+      str_detect(scenario, "α=5") ~ 5
+    ),
+    rate = case_when(
+      str_detect(scenario, "β=1") ~ 1,
+      str_detect(scenario, "β=2") ~ 2
+    ),
+    density = dgamma(x, shape = shape, rate = rate)
+  )
+
+p6 <- ggplot(gamma_data, aes(x = x, y = density, color = scenario)) +
+  geom_line(size = 1.2, alpha = 0.8) +
+  scale_color_manual(values = colors) +
+  labs(
+    title = "Gamma Distribution",
+    subtitle = "Sum of exponential random variables",
+    x = "Value",
+    y = "Density",
+    color = "Parameters"
+  ) +
+  custom_theme +
+  guides(color = guide_legend(nrow = 2, byrow = TRUE))
+
+# Combine all plots using ggarrange
+combined_plot <- ggarrange(
+  p1, p2, p3, p4, p5, p6,
+  ncol = 2, nrow = 3,
+  common.legend = FALSE,  # Each plot keeps its own legend for clarity
+  align = "hv"  # Align both horizontally and vertically
+)
+
+# Add an overall title
+annotated_plot <- annotate_figure(
+  combined_plot,
+  top = text_grob("Common Probability Distributions in Business Analytics",
+                  color = "black", face = "bold", size = 16)
+)
+
+# For such larger plots I find it easier to save them and then include them
+#  as pdf:
+ggexport(
+  annotated_plot,
+  filename = "probability_distributions_overview.pdf", 
+  width = 8, height = 10, 
+  dpi = 300)
+
+```
+
+```{r}
+#| label: fig-distributions
+#| fig.cap: "Overview of common probability distributions"
+#| out.width: "100%"
+#| out.height: "900px"  # This is the key addition
+#| fig.align: "center"
+knitr::include_graphics("probability_distributions_overview.pdf")
+```
+
+
+
+## Overview table
+
+: Overview of probability distributions and their R functions {#tbl-distributions}
+
+| Name | Type | Parameters | Density Function | Probability Function | Quantile Function | Random Function |
+|------|------|------------|------------------|---------------------|-------------------|-----------------|
+| Normal | Continuous | μ (mean), σ (sd) | `dnorm(x, mean, sd)` | `pnorm(q, mean, sd)` | `qnorm(p, mean, sd)` | `rnorm(n, mean, sd)` |
+| Binomial | Discrete | n (trials), p (success prob) | `dbinom(x, size, prob)` | `pbinom(q, size, prob)` | `qbinom(p, size, prob)` | `rbinom(n, size, prob)` |
+| Poisson | Discrete | λ (rate) | `dpois(x, lambda)` | `ppois(q, lambda)` | `qpois(p, lambda)` | `rpois(n, lambda)` |
+| Uniform | Continuous | a (min), b (max) | `dunif(x, min, max)` | `punif(q, min, max)` | `qunif(p, min, max)` | `runif(n, min, max)` |
+| Exponential | Continuous | λ (rate) | `dexp(x, rate)` | `pexp(q, rate)` | `qexp(p, rate)` | `rexp(n, rate)` |
+| Beta | Continuous | α (shape1), β (shape2) | `dbeta(x, shape1, shape2)` | `pbeta(q, shape1, shape2)` | `qbeta(p, shape1, shape2)` | `rbeta(n, shape1, shape2)` |
+| Gamma | Continuous | α (shape), β (rate) | `dgamma(x, shape, rate)` | `pgamma(q, shape, rate)` | `qgamma(p, shape, rate)` | `rgamma(n, shape, rate)` |
+
+There are three observations that I would like to highlight:
+
+- First, notice how every distribution, regardless of type, follows the same four-function pattern (`d`, `p`, `q`, `r` followed by the abbrevation for the distribution name). 
+- Second, when you examine the Type column, you'll notice an interesting pattern that connects to fundamental concepts in probability theory. The discrete distributions (binomial and Poisson) deal with counting scenarios, which naturally produce whole number outcomes. In business contexts, you use these when analyzing events like:
+  - Number of successful sales calls (binomial)
+  - Number of customer complaints per day (Poisson)
+  - Number of defective products in a batch (binomial)
+  - Number of website crashes per month (Poisson)
+- The continuous distributions handle measurement scenarios where the outcomes can take any value within a range. These prove essential for modeling:
+  - Customer satisfaction scores (normal, beta)
+  - Sales revenue amounts (normal, gamma)
+  - Time until next customer arrival (exponential)
+  - Project completion percentages (beta)
+  - Manufacturing tolerances (normal, uniform)
+- Finally, note that the parameter names in R functions sometimes differ slightly from the mathematical notation we typically use. For instance, where we write $\mu$ for the mean in mathematical contexts, R uses the more explicit `mean` parameter. Similarly, the binomial distribution uses `size` instead of $n$ for the number of trials, which helps distinguish it from the $n$ parameter used in random number generation.
+
+
+## Choosing the Right Distribution
+
+Selecting appropriate distributions depends on several factors that connect to the research design principles you'll encounter in later chapters:
+
+**Nature of your data**: Discrete vs. continuous, bounded vs. unbounded, positive vs. can be negative
+
+**Underlying process**: Are you counting events, measuring durations, looking at proportions, or modeling sums of other random variables?
+
+**Available information**: Do you know the range, the average rate, the shape characteristics? What does theory suggest about the process?
+
+**Practical considerations**: Can you estimate the distribution parameters from your data? Does the distribution have a reasonable interpretation in your business context?
+
+Understanding these distributions expands your analytical toolkit beyond the normal distribution. While the Central Limit Theorem, a concept that we will explore in later chapters, often makes normal distribution methods appropriate for sample means, recognizing situations where other distributions better model the underlying phenomena leads to more accurate analyses and better business insights.
+
+The choice of distribution also connects to the concept of model assumptions that becomes important in regression analysis and other advanced techniques. Different distributions embody different assumptions about the data-generating process, and choosing appropriately helps ensure your statistical inferences are valid.
+
+**Note for R implementation**: *Students could explore these distributions using R's built-in functions like `dbinom()`, `dpois()`, `dunif()`, `dexp()`, `dbeta()`, and `dgamma()`, along with their corresponding random number generators (`rbinom()`, `rpois()`, etc.) to see how different parameter values affect distribution shapes and characteristics. This exploration reinforces the connection between theoretical distributions and practical data analysis.*

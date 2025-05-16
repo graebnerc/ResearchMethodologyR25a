@@ -1,0 +1,21 @@
+---
+title: "A short and friendly recap of mathematical and statistical fundamentals"
+listing: 
+  contents: 
+    - statrecap
+  type: table # or `grid` or `default` or `table`; each type has its own set of yaml options to include
+  sort: "date asc" # can also sort on more than one field
+  categories: true # allows you to sort posts by assigned categories
+  table-striped: true
+  table-hover: true
+  fields: [date, title]
+  date-format: long
+  field-display-names:
+    date: "Standard sequence"
+---
+
+Here I provide you with explanations of the basics in statistics and mathematics
+that are required for this course, as explicated in the seminar description.
+
+This is ongoing work, so I greatly value your feedback and your suggestions on
+how to make this material more comprehensive and accessible.
