@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -279,6 +314,16 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<div class="cell">
+<details class="code-fold">
+<summary>Packages used for R examples</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <section id="introduction-why-statistics-might-feel-intimidating-and-why-it-shouldnt" class="level1">
 <h1>Introduction: Why Statistics Might Feel Intimidating (And Why It Shouldn’t)</h1>
 <p>If you’re reading this with a slight sense of dread, you’re not alone. Many master’s students in management and business fields approach statistics with apprehension, often because they’ve had negative experiences with mathematics in the past or because statistics feels abstract and removed from practical business applications. Let’s start by addressing this directly: statistics is not about complex mathematical formulas that only mathematicians can understand. Instead, it’s a powerful toolkit for making sense of uncertainty and making better decisions in an uncertain world.</p>
@@ -288,9 +333,209 @@ ul.task-list li input[type="checkbox"] {
 <h1>What is Statistics and Why Do We Need It?</h1>
 <p>At its core, statistics is the science of learning from data. More specifically, it’s a collection of methods and principles that help us collect, organize, analyze, and interpret information to answer questions and solve problems. But why do we need this formal approach? Why can’t we just look at data and draw conclusions intuitively?</p>
 <blockquote class="blockquote">
-<p>Consider a simple business scenario: You’re the marketing manager for a company that recently launched a new advertising campaign. After three months, you notice that sales have increased by 15%. This sounds like good news, but several questions immediately arise: Is this increase actually due to your campaign, or could it be caused by seasonal trends, competitor actions, or random fluctuations? How confident can you be that this trend will continue? Is a 15% increase significant enough to justify the campaign’s cost?</p>
+<p>Consider a simple business scenario: You’re the marketing manager for a company that recently launched a new advertising campaign. After three months, you notice that sales have increased by over 56% if compared to the average sales before the campaign. This sounds like good news, but several questions immediately arise: Is this increase actually due to your campaign, or could it be caused by seasonal trends, competitor actions, or random fluctuations? How confident can you be that this trend will continue? Is this increase significant enough to justify the campaign’s cost? <a href="#fig-campaign" class="quarto-xref">Figure&nbsp;1</a> gives a first idea of why the answer to these questions is not as easy as it might appear and requires thorough statistical reasoning and computation skills!</p>
 </blockquote>
-<p><em>[Visualization suggestion: A line graph showing sales over time with the campaign launch marked, including seasonal patterns from previous years for comparison]</em></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Creating the dataset used in example</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create monthly dates for a 2-year period</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2023-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2024-12-01"</span>), <span class="at">by =</span> <span class="st">"month"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>month <span class="ot">&lt;-</span> <span class="fu">format</span>(dates, <span class="st">"%m"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>year <span class="ot">&lt;-</span> <span class="fu">format</span>(dates, <span class="st">"%Y"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a seasonal pattern (higher in Q4, lower in Q1)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>seasonal_factor <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.7</span>, <span class="fl">0.8</span>, <span class="fl">0.9</span>, <span class="fl">1.0</span>, <span class="fl">1.0</span>, <span class="fl">0.9</span>, <span class="fl">0.9</span>, <span class="fl">1.1</span>, <span class="fl">1.3</span>, <span class="fl">1.4</span>, <span class="fl">1.6</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>monthly_effect <span class="ot">&lt;-</span> seasonal_factor[<span class="fu">as.numeric</span>(month)]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Base sales with year-over-year growth and seasonal effects</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>base_sales <span class="ot">&lt;-</span> <span class="dv">100000</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.03</span> <span class="sc">*</span> (<span class="fu">as.numeric</span>(year) <span class="sc">-</span> <span class="dv">2023</span>)) <span class="sc">*</span> monthly_effect</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Add random noise</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>sales <span class="ot">&lt;-</span> base_sales <span class="sc">*</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(dates), <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fl">0.04</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Create campaign effect (after September 2024)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># campaign effect is  5%, starts right before seasonal upswing</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>campaign_date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">"2024-09-01"</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>campaign_effect <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(dates <span class="sc">&gt;=</span> campaign_date, <span class="fl">1.05</span>, <span class="dv">1</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply campaign effect to get final sales</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>final_sales <span class="ot">&lt;-</span> sales <span class="sc">*</span> campaign_effect</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data frame</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>sales_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">date =</span> dates,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">month =</span> month,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> year,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">sales =</span> <span class="fu">round</span>(final_sales),</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">campaign =</span> dates <span class="sc">&gt;=</span> campaign_date</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>R code for the visualization</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>blue_col <span class="ot">&lt;-</span> <span class="st">"#3498db"</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>red_col <span class="ot">&lt;-</span> <span class="st">"#e74c3c"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get only 2024 data for the first plot</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>sales_data_2024 <span class="ot">&lt;-</span> <span class="fu">filter</span>(sales_data, year <span class="sc">==</span> <span class="st">"2024"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate misleading metrics someone might report (2024 only)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>mean2024_before_campaign<span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">filter</span>(sales_data_2024, <span class="sc">!</span>campaign)<span class="sc">$</span>sales)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>mean2024_after_campaign <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">filter</span>(sales_data_2024, campaign)<span class="sc">$</span>sales)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>naive_increase_2024 <span class="ot">&lt;-</span> (</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  mean2024_after_campaign <span class="sc">/</span> mean2024_before_campaign <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>corrected_increase <span class="ot">&lt;-</span> sales_data <span class="sc">|&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(month <span class="sc">%in%</span> <span class="fu">filter</span>(sales_data_2024, campaign)<span class="sc">$</span>month) <span class="sc">|&gt;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_sales=</span><span class="fu">mean</span>(sales), <span class="at">.by =</span> year) <span class="sc">|&gt;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"year"</span>, <span class="at">values_from =</span> <span class="st">"avg_sales"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">increase=</span>(<span class="st">`</span><span class="at">2024</span><span class="st">`</span> <span class="sc">/</span> <span class="st">`</span><span class="at">2023</span><span class="st">`</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span><span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="st">"increase"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 1: 2024-only view</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>plot_2024 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sales_data_2024, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> sales)) <span class="sc">+</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> campaign), <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2024-09-01"</span>),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"darkred"</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add annotation for campaign launch</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2024-09-01"</span>) <span class="sc">-</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="fu">max</span>(sales_data_2024<span class="sc">$</span>sales) <span class="sc">*</span> <span class="fl">0.95</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"Campaign Launch"</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkred"</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add horizontal line for average before</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">yintercept =</span> mean2024_before_campaign, <span class="at">linetype =</span> <span class="st">"dotted"</span>, <span class="at">color =</span> blue_col</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2024-03-15"</span>), <span class="at">y =</span> mean2024_before_campaign <span class="sc">*</span> <span class="fl">1.03</span>,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"Avg Before: "</span>, </span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">format</span>(<span class="fu">round</span>(mean2024_before_campaign), </span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>                          <span class="at">big.mark =</span> <span class="st">"."</span>, </span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                          <span class="at">decimal.mark =</span> <span class="st">","</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>                   ),</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> blue_col</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add horizontal line for average after</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">yintercept =</span> mean2024_after_campaign, <span class="at">linetype =</span> <span class="st">"dotted"</span>, <span class="at">color =</span> red_col</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2024-03-15"</span>), <span class="at">y =</span> mean2024_after_campaign <span class="sc">*</span> <span class="fl">1.03</span>,</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"Avg After: "</span>, </span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">format</span>(<span class="fu">round</span>(mean2024_after_campaign), </span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>                          <span class="at">big.mark =</span> <span class="st">"."</span>, </span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>                          <span class="at">decimal.mark =</span> <span class="st">","</span>)),</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> red_col</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add title and labels</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"2024 Sales Before and After Marketing Campaign"</span>,</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>      <span class="st">"It appears the campaign increased sales by "</span>,</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>(naive_increase_2024, <span class="dv">1</span>), <span class="st">"%!"</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Month (2024)"</span>,</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Sales"</span>,</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"After Campaign Launch"</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Styling options</span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"FALSE"</span> <span class="ot">=</span> blue_col, <span class="st">"TRUE"</span> <span class="ot">=</span> red_col)</span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">number_format</span>(<span class="at">scale =</span> <span class="fl">0.001</span>, <span class="at">suffix =</span> <span class="st">"k €"</span>)</span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 2: The full context with both years</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>plot_full <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sales_data, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> sales)) <span class="sc">+</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> campaign), <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>    <span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2024-09-01"</span>),</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"darkred"</span></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">xintercept =</span> <span class="fu">as.Date</span>(<span class="st">"2024-01-01"</span>),</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">"dotted"</span>, <span class="at">color =</span> <span class="st">"gray50"</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2024-09-01"</span>) <span class="sc">-</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="fu">max</span>(sales_data<span class="sc">$</span>sales) <span class="sc">*</span> <span class="fl">0.9</span>,</span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"Campaign Launch"</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkred"</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"rect"</span>,</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>    <span class="at">xmin =</span> <span class="fu">as.Date</span>(<span class="st">"2023-09-01"</span>), <span class="at">xmax =</span> <span class="fu">as.Date</span>(<span class="st">"2023-12-31"</span>),</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> <span class="fu">min</span>(sales_data<span class="sc">$</span>sales) <span class="sc">*</span> <span class="fl">0.95</span>, <span class="at">ymax =</span> <span class="fu">max</span>(sales_data<span class="sc">$</span>sales),</span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">"darkblue"</span></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"rect"</span>,</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>    <span class="at">xmin =</span> <span class="fu">as.Date</span>(<span class="st">"2024-09-01"</span>), <span class="at">xmax =</span> <span class="fu">as.Date</span>(<span class="st">"2024-12-31"</span>),</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> <span class="fu">min</span>(sales_data<span class="sc">$</span>sales) <span class="sc">*</span> <span class="fl">0.95</span>, <span class="at">ymax =</span> <span class="fu">max</span>(sales_data<span class="sc">$</span>sales),</span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">"darkred"</span></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2023-06-01"</span>), <span class="at">y =</span> <span class="fu">max</span>(sales_data<span class="sc">$</span>sales) <span class="sc">*</span> <span class="fl">0.85</span>,</span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"True year-over-year increase: "</span>, </span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">round</span>(corrected_increase, <span class="dv">1</span>)  , <span class="st">"%"</span>),</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">4</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2023-06-01"</span>), <span class="at">y =</span> <span class="fu">max</span>(sales_data<span class="sc">$</span>sales) <span class="sc">*</span> <span class="fl">0.8</span>,</span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"Actual campaign effect: 5%"</span>,</span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">4</span></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Full Context: Sales Data for 2023-2024"</span>,</span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Most of the increase is due to seasonal patterns"</span>,</span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Month"</span>,</span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Sales"</span>,</span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"After Campaign Launch"</span></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Styling options</span></span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"FALSE"</span> <span class="ot">=</span> blue_col, <span class="st">"TRUE"</span> <span class="ot">=</span> red_col)</span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">number_format</span>(<span class="at">scale =</span> <span class="fl">0.001</span>, <span class="at">suffix =</span> <span class="st">"k €"</span>)</span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the plots</span></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>combined_plot <span class="ot">&lt;-</span> <span class="fu">ggarrange</span>(plot_2024, plot_full,</span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>),</span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">2</span>,</span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend =</span> <span class="st">"none"</span></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a><span class="co"># Add an overall title</span></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>combined_plot <span class="ot">&lt;-</span> <span class="fu">annotate_figure</span>(</span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>  combined_plot,</span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>  <span class="at">top =</span> <span class="fu">text_grob</span>(<span class="st">"The Importance of Sound Data Analysis"</span>,</span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>    <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>combined_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-campaign" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-campaign-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-campaign-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-campaign-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The apparent effect of a marketing campaign!
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>These questions illustrate why we need statistics. Our intuition, while valuable, is often inadequate for making sense of complex data patterns. Humans are naturally prone to seeing patterns where none exist (we call this “apophenia”) and tend to overinterpret small samples or unusual events. Statistics provides us with rigorous methods to distinguish between real patterns and random noise, to quantify our uncertainty, and to make informed decisions despite incomplete information.</p>
 <p>Statistics serves several crucial functions in business and research contexts. First, it helps us describe and summarize large amounts of data in meaningful ways. When faced with thousands of customer transactions, we can use statistical measures to understand central tendencies, variability, and patterns that would be impossible to grasp by examining individual data points.</p>
 <p>Second, statistics enables us to make inferences about populations based on samples. This is particularly valuable in business, where it’s often impractical or impossible to survey every customer or test every possible scenario. By studying a representative sample, we can draw conclusions about the broader population with a known degree of confidence.</p>
@@ -304,15 +549,283 @@ ul.task-list li input[type="checkbox"] {
 <h1>What is Probability Theory and Why Do We Need It?</h1>
 <p>Probability theory might sound abstract, but it serves a crucial practical purpose: it provides the reference point we need to make sense of what we observe in data. Without probability theory, we cannot determine whether our observations are surprising, expected, or somewhere in between.</p>
 <blockquote class="blockquote">
-<p>Imagine you’re recruiting for a basketball team and a candidate tells you they are 220 cm (7’2”) tall. Is this unusually tall or fairly normal? You can’t answer this question just by looking at this single number. You need a reference point - specifically, you need to know how height is distributed in the general population. Probability theory tells us that human height follows a roughly normal distribution with an average around 175 cm and a certain spread around that average. With this reference, we can determine that 220 cm is exceptionally rare - occurring in perhaps 1 in 10,000 people or fewer.</p>
+<p>Imagine you’re recruiting for a basketball team and a candidate tells you he was 200 cm tall. Is this unusually tall or fairly normal? You can’t answer this question just by looking at this single number. You need a reference point - specifically, you need to know how height is distributed in the general population. Probability theory tells us that height of men in Germany follows a roughly normal distribution with an average around 178.9 cm and a certain spread around that average. With this reference, we can determine that 200 cm is indeed rare - occurring in perhaps 1 in 520 people or fewer (see <a href="#fig-height" class="quarto-xref">Figure&nbsp;2</a>).</p>
 </blockquote>
-<p><em>[Visualization suggestion: A bell curve showing the normal distribution of human height, with 220 cm marked as an extreme value in the tail]</em></p>
+<div class="cell">
+<details class="code-fold">
+<summary>R code to compute change for being 200cm or higher</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mean_height <span class="ot">&lt;-</span> <span class="fl">178.9</span> <span class="co"># Mean height of German men</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sd_height <span class="ot">&lt;-</span> <span class="fl">7.3</span>  <span class="co"># Standard deviation</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for the distribution</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>height_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">150</span>, <span class="dv">230</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>height_density <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(height_range, <span class="at">mean =</span> mean_height, <span class="at">sd =</span> sd_height)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>height_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> height_range,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">density =</span> height_density</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the probability of being 200 cm or taller</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>prob_200_plus <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">q =</span> <span class="dv">200</span>, <span class="at">mean =</span> mean_height, <span class="at">sd =</span> sd_height, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>approx_odds <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">/</span> prob_200_plus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>R code for the visualization</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(height_df, <span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> density)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">color =</span> <span class="st">"royalblue"</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">fill =</span> <span class="st">"royalblue"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> mean_height, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> mean_height <span class="sc">+</span> <span class="dv">4</span>, <span class="at">y =</span> <span class="fu">max</span>(height_density) <span class="sc">*</span> <span class="fl">0.95</span>, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"Mean = "</span>, mean_height, <span class="st">" cm"</span>), </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">200</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">subset</span>(height_df, height <span class="sc">&gt;=</span> <span class="dv">200</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add probability annotation</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">205</span>, <span class="at">y =</span> <span class="fu">max</span>(height_density) <span class="sc">*</span> <span class="fl">0.6</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"Probability ≈ 1 in "</span>, <span class="fu">format</span>(approx_odds, <span class="at">big.mark=</span><span class="st">","</span>)),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">hjust =</span> <span class="fl">0.0</span>) <span class="sc">+</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add standard deviation markers</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> mean_height <span class="sc">+</span> sd_height, <span class="at">xend =</span> mean_height <span class="sc">+</span> sd_height, </span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> <span class="fu">dnorm</span>(mean_height <span class="sc">+</span> sd_height, <span class="at">mean =</span> mean_height, <span class="at">sd =</span> sd_height)),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>              <span class="at">linetype =</span> <span class="st">"dotted"</span>, <span class="at">color =</span> <span class="st">"gray30"</span>) <span class="sc">+</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> mean_height <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>sd_height, <span class="at">xend =</span> mean_height <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>sd_height, </span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> <span class="fu">dnorm</span>(mean_height <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>sd_height, <span class="at">mean =</span> mean_height, <span class="at">sd =</span> sd_height)),</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">linetype =</span> <span class="st">"dotted"</span>, <span class="at">color =</span> <span class="st">"gray30"</span>) <span class="sc">+</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> mean_height <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>sd_height, <span class="at">xend =</span> mean_height <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>sd_height, </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> <span class="fu">dnorm</span>(mean_height <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>sd_height, <span class="at">mean =</span> mean_height, <span class="at">sd =</span> sd_height)),</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>              <span class="at">linetype =</span> <span class="st">"dotted"</span>, <span class="at">color =</span> <span class="st">"gray30"</span>) <span class="sc">+</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add titles and labels</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Adult Male Height"</span>,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"200 cm is an extreme value (approximately 1 in "</span>, </span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">format</span>(approx_odds, <span class="at">big.mark=</span><span class="st">","</span>), <span class="st">" people)"</span>),</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Height (cm)"</span>,</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Probability Density"</span>,</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Note: Based on average adult male height distribution for Germany."</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set theme and appearance</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"darkred"</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set axis limits to focus on the relevant part of the distribution</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">230</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(height_density) <span class="sc">*</span> <span class="fl">1.05</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-height" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-height-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-height-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-height-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The apparent effect of a marketing campaign!
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>This example illustrates the fundamental role of probability theory: it establishes baselines against which we can evaluate our observations. In business contexts, this principle applies constantly. Is a 15% increase in sales after a marketing campaign impressive? We can only answer this by comparing it to the typical variation in sales we’d expect to see without any intervention.</p>
 <p>Probability theory provides us with mathematical models that describe what we should expect to see if only random variation is at play. These models serve as our null hypothesis - our baseline assumption of “nothing special happening.” When our actual observations differ substantially from what these probability models predict, we have evidence that something interesting might be occurring.</p>
 <blockquote class="blockquote">
-<p>Consider quality control in manufacturing. Suppose your process typically produces 2% defective items. Probability theory can tell you what to expect in a batch of 100 items: most batches will have 1-3 defective items, occasionally you might see 0 or 4-5, and very rarely you might see 6 or more. If you test a batch and find 8 defective items, probability theory helps you recognize this as highly unusual - suggesting something may have gone wrong with your process.</p>
+<p>Consider quality control in manufacturing. Suppose your process typically produces 2% defective items. Probability theory can tell you what to expect in a batch of 100 items: most batches will have 1-3 defective items, occasionally you might see 0 or 4-5, and very rarely you might see 6 or more (see <a href="#fig-defects" class="quarto-xref">Figure&nbsp;3</a>). If you test a batch and find 8 defective items, probability theory helps you recognize this as highly unusual - suggesting something may have gone wrong with your process (see <span class="citation" data-cites="tab-defects">(<a href="#ref-tab-defects" role="doc-biblioref"><strong>tab-defects?</strong></a>)</span>).</p>
 </blockquote>
-<p><em>[Visualization suggestion: A histogram showing the probability distribution of defective items in batches of 100, with the expected range and unusual outcomes clearly marked]</em></p>
+<div class="cell">
+<details class="code-fold">
+<summary>R code to compute expected defects</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define parameters</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>batch_size <span class="ot">&lt;-</span> <span class="dv">100</span>     <span class="co"># Number of items in a batch</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>defect_rate <span class="ot">&lt;-</span> <span class="fl">0.02</span>   <span class="co"># Probability of a defective item (2%)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>observed_defects <span class="ot">&lt;-</span> <span class="dv">8</span> <span class="co"># Number of defects found in a batch</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a table of probabilities for different numbers of defects</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>defect_probs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">defects =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>,  <span class="co"># Range of possible defects to consider</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate exact probability for each number of defects</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">exact_prob =</span> <span class="fu">dbinom</span>(defects, <span class="at">size =</span> batch_size, <span class="at">prob =</span> defect_rate),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate probability of seeing AT LEAST this many defects</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">cumulative_prob =</span> <span class="fu">pbinom</span>(defects <span class="sc">-</span> <span class="dv">1</span>, <span class="at">size =</span> batch_size, <span class="at">prob =</span> defect_rate, </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">lower.tail =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Format probabilities as percentages</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">exact_prob_pct =</span> scales<span class="sc">::</span><span class="fu">percent</span>(exact_prob, <span class="at">accuracy =</span> <span class="fl">0.001</span>),</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">cumulative_prob_pct =</span> scales<span class="sc">::</span><span class="fu">percent</span>(cumulative_prob, <span class="at">accuracy =</span> <span class="fl">0.001</span>),</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the odds (1 in X) for at least this many defects</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">odds =</span> <span class="fu">ifelse</span>(cumulative_prob <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="fu">round</span>(<span class="dv">1</span><span class="sc">/</span>cumulative_prob), <span class="cn">Inf</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Table showing key probabilities (first 11 rows)</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>defect_table <span class="ot">&lt;-</span> defect_probs <span class="sc">%&gt;%</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(defects <span class="sc">&lt;=</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(defects, exact_prob_pct, cumulative_prob_pct, odds) <span class="sc">%&gt;%</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Defects"</span> <span class="ot">=</span> defects,</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Exact Probability"</span> <span class="ot">=</span> exact_prob_pct,</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"P(X ≥ Defects)"</span> <span class="ot">=</span> cumulative_prob_pct,</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Odds (1 in X)"</span> <span class="ot">=</span> odds</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the table</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(defect_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Defects</th>
+<th style="text-align: left;">Exact Probability</th>
+<th style="text-align: left;">P(X ≥ Defects)</th>
+<th style="text-align: right;">Odds (1 in X)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">13.262%</td>
+<td style="text-align: left;">100.000%</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">27.065%</td>
+<td style="text-align: left;">86.738%</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">27.341%</td>
+<td style="text-align: left;">59.673%</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">18.228%</td>
+<td style="text-align: left;">32.331%</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">9.021%</td>
+<td style="text-align: left;">14.104%</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">3.535%</td>
+<td style="text-align: left;">5.083%</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">1.142%</td>
+<td style="text-align: left;">1.548%</td>
+<td style="text-align: right;">65</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">0.313%</td>
+<td style="text-align: left;">0.406%</td>
+<td style="text-align: right;">246</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">0.074%</td>
+<td style="text-align: left;">0.093%</td>
+<td style="text-align: right;">1073</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">0.015%</td>
+<td style="text-align: left;">0.019%</td>
+<td style="text-align: right;">5282</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">0.003%</td>
+<td style="text-align: left;">0.003%</td>
+<td style="text-align: right;">29056</td>
+</tr>
+</tbody>
+</table>
+<p>The likelihoods of seeing different numbers of defect items.</p>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>R code for the visualization</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create visualization of the probability distribution</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(defect_probs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(defects <span class="sc">&lt;=</span> <span class="dv">15</span>), </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> defects, <span class="at">y =</span> cumulative_prob)) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add line for cumulative probability</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add points</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Highlight the observed value (8 defects)</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> defect_probs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(defects <span class="sc">==</span> <span class="dv">8</span>), </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add shading for area of interest (≥ 8 defects)</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> defect_probs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(defects <span class="sc">&gt;=</span> <span class="dv">8</span>), </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add annotation for probability</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">10</span>, <span class="at">y =</span> <span class="fl">0.1</span>,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"P(X ≥ 8) = "</span>, </span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>                          defect_probs<span class="sc">$</span>cumulative_prob_pct[defect_probs<span class="sc">$</span>defects <span class="sc">==</span> <span class="dv">8</span>]),</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"darkred"</span>) <span class="sc">+</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add titles and labels</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Probability of Finding X or More Defects"</span>,</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Finding 8+ defects when defect rate is 2% happens in only 1 in "</span>, </span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>                      defect_probs<span class="sc">$</span>odds[defect_probs<span class="sc">$</span>defects <span class="sc">==</span> <span class="dv">8</span>], <span class="st">" batches"</span>),</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Number of Defective Items (X)"</span>,</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Probability of X or More Defects"</span>,</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Based on binomial distribution B(100, 0.02)"</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Customize the appearance</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set y-axis as percentage</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>()) <span class="sc">+</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set x-axis to show only whole numbers of defects</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-defects" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-defects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-defects-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-defects-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The likelihoods of seeing different numbers of defect items.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>The key insight is that probability theory doesn’t require us to know exactly what will happen - it tells us about the range of possibilities and how likely each one is. This framework transforms our question from “What will happen?” to “How unusual is what we observed?” This shift is fundamental to statistical thinking.</p>
 <p>Probability theory also helps us understand that unusual events do occur naturally through random variation. Just as you might occasionally flip a coin and get five heads in a row purely by chance, business processes will sometimes produce unusual results even when operating normally. Probability theory helps us distinguish between these natural anomalies and genuine signals that require attention.</p>
 </section>
@@ -321,9 +834,160 @@ ul.task-list li input[type="checkbox"] {
 <p>The relationship between probability and statistics represents one of the most elegant partnerships in scientific thinking. They work together to bridge the gap between theoretical expectations and real-world observations, creating a powerful cycle of reasoning that drives both business decision-making and scientific discovery.</p>
 <p>Probability provides the theoretical framework - it tells us what patterns we should expect to see if certain assumptions are true. Statistics then examines real data to see whether these expected patterns actually appear, allowing us to evaluate our assumptions and refine our understanding.</p>
 <blockquote class="blockquote">
-<p>Think of a retail company testing whether a new store layout increases customer spending. Probability theory might suggest that if the layout truly has no effect, we should expect to see the same average spending as before, with purchases varying randomly around that average. If the new layout does have an effect, we should see a systematic shift in the spending pattern. Statistics then analyzes actual customer data to determine whether the observed spending pattern looks more like the “no effect” scenario or the “positive effect” scenario.</p>
+<p>Think of a retail company testing whether a new store layout increases customer spending. Probability theory might suggest that if the layout truly has no effect, we should expect to see the same average spending as before, with purchases varying randomly around that average. If the new layout does have an effect, we should see a systematic shift in the spending pattern. Statistics then analyzes actual customer data to determine whether the observed spending pattern looks more like the “no effect” scenario or the “positive effect” scenario. Figure <a href="#fig-store" class="quarto-xref">Figure&nbsp;4</a> shows the two crucial steps: you first use probability theory to construct a reference case, i.e.&nbsp;what you would expect to see of the new layout had no effect. Then you collect data and compare the collected data against the theoretical prediction and use tools from inferential statistics to make a rational conclusion.</p>
 </blockquote>
-<p><em>[Visualization suggestion: Two overlapping bell curves showing spending distributions - one for the old layout and one showing what we might expect with an improved layout, with actual data points plotted]</em></p>
+<div class="cell">
+<details class="code-fold">
+<summary>R code for the visualization</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define parameters</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>old_mean <span class="ot">&lt;-</span> <span class="dv">65</span>             <span class="co"># Mean spending with old layout (€)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>old_sd <span class="ot">&lt;-</span> <span class="dv">12</span>               <span class="co"># Standard deviation with old layout (€)</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>n_customers <span class="ot">&lt;-</span> <span class="dv">40</span>          <span class="co"># Sample size for new layout test</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate spending range for theoretical distributions</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>spending_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">30</span>, <span class="dv">120</span>, <span class="at">by =</span> <span class="fl">0.5</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate standard error for the sample mean</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> old_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n_customers)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for theoretical distributions</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>theory_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">spending =</span> spending_range,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Distribution of individual customer spending</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">null_density =</span> <span class="fu">dnorm</span>(spending_range, <span class="at">mean =</span> old_mean, <span class="at">sd =</span> old_sd),</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sampling distribution of the mean</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">sampling_density =</span> <span class="fu">dnorm</span>(spending_range, <span class="at">mean =</span> old_mean, <span class="at">sd =</span> se)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Panel A: Probability theory perspective</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>theory_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(theory_df) <span class="sc">+</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the null hypothesis distribution (individual customers)</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> spending, <span class="at">y =</span> null_density), </span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="fu">aes</span>(<span class="at">x =</span> spending, <span class="at">y =</span> null_density), </span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill =</span> <span class="st">"darkblue"</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the sampling distribution of the mean (what we'd expect if H0 is true)</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> spending, <span class="at">y =</span> sampling_density), </span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add vertical line for baseline (old layout) mean</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> old_mean, <span class="at">linetype =</span> <span class="st">"solid"</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add labels and title</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Probability Theory Perspective"</span>,</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"What we would expect to see if the new layout had no effect"</span>,</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Customer Spending (EUR)"</span>,</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Probability Density"</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add annotations explaining the distributions</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">40</span>, <span class="at">y =</span> <span class="fu">max</span>(theory_df<span class="sc">$</span>null_density) <span class="sc">*</span> <span class="fl">1.5</span>,</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"Individual customer</span><span class="sc">\n</span><span class="st">spending distribution</span><span class="sc">\n</span><span class="st">under old layout"</span>,</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">75</span>, <span class="at">y =</span> <span class="fu">max</span>(theory_df<span class="sc">$</span>sampling_density) <span class="sc">*</span> <span class="fl">0.7</span>,</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"Sampling distribution</span><span class="sc">\n</span><span class="st">of the mean</span><span class="sc">\n</span><span class="st">(if null hypothesis is true)"</span>,</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Customize theme</span></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Statistics perspective:</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the actual observed data (simulated for this example)</span></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="co"># We'll assume the new layout has an actual effect of +8€</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>actual_effect <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>new_layout_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">spending =</span> <span class="fu">rnorm</span>(n_customers, <span class="at">mean =</span> old_mean <span class="sc">+</span> actual_effect, <span class="at">sd =</span> old_sd),</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">layout =</span> <span class="st">"New Layout Test"</span></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate observed sample mean from new layout test</span></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>observed_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(new_layout_data<span class="sc">$</span>spending)</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate z-score for the observed mean</span></span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>z_score <span class="ot">&lt;-</span> (observed_mean <span class="sc">-</span> old_mean) <span class="sc">/</span> se</span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate p-value (one-tailed test)</span></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(z_score, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Panel B: Statistical analysis of the actual data</span></span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>data_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add sampling distribution under null hypothesis</span></span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> theory_df, <span class="fu">aes</span>(<span class="at">x =</span> spending, <span class="at">y =</span> sampling_density), </span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> theory_df, <span class="fu">aes</span>(<span class="at">x =</span> spending, <span class="at">y =</span> sampling_density), </span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill =</span> <span class="st">"purple"</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add vertical line for null hypothesis (old layout mean)</span></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> old_mean, <span class="at">linetype =</span> <span class="st">"solid"</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> old_mean <span class="sc">-</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fu">max</span>(theory_df<span class="sc">$</span>sampling_density) <span class="sc">*</span> <span class="fl">0.9</span>, </span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"Old Layout Mean</span><span class="sc">\n</span><span class="st">(null hypothesis)"</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add critical value line</span></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> old_mean <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fl">0.95</span>) <span class="sc">*</span> se, </span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dotted"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the observed mean from our new layout test</span></span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> observed_mean, <span class="at">linetype =</span> <span class="st">"dashed"</span>, </span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"forestgreen"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> observed_mean <span class="sc">+</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fu">max</span>(theory_df<span class="sc">$</span>sampling_density) <span class="sc">*</span> <span class="fl">0.9</span>, </span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"New Layout</span><span class="sc">\n</span><span class="st">Observed Mean: "</span>, <span class="fu">round</span>(observed_mean, <span class="dv">1</span>), <span class="st">"€"</span>), </span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add individual data points at the bottom for visual context</span></span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">data =</span> new_layout_data, <span class="fu">aes</span>(<span class="at">x =</span> spending, <span class="at">y =</span> <span class="dv">0</span>), </span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>              <span class="at">height =</span> <span class="fl">0.0005</span>, <span class="at">color =</span> <span class="st">"forestgreen"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">data =</span> new_layout_data, <span class="fu">aes</span>(<span class="at">x =</span> spending), </span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"forestgreen"</span>, <span class="at">fill =</span> <span class="st">"forestgreen"</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">adjust =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Shade the p-value region</span></span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">filter</span>(theory_df, spending <span class="sc">&gt;=</span> observed_mean), </span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> spending, <span class="at">y =</span> sampling_density), <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add annotation for p-value</span></span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">100</span>, <span class="at">y =</span> <span class="fu">max</span>(theory_df<span class="sc">$</span>sampling_density) <span class="sc">*</span> <span class="fl">0.7</span>,</span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"p-value = "</span>, <span class="fu">round</span>(p_value, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"z-score = "</span>, <span class="fu">round</span>(z_score, <span class="dv">2</span>)),</span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add title and labels</span></span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Statistical Analysis of New Layout Test"</span>,</span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Evaluating evidence against the null hypothesis"</span>),</span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Customer Spending (€)"</span>,</span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Probability Density"</span></span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Customize theme</span></span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the plots</span></span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(</span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>  theory_plot, data_plot,</span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">1</span>, <span class="at">nrow =</span> <span class="dv">2</span>,</span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>),</span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>  <span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1.2</span>)</span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-store" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-store-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-store-1.png" class="img-fluid figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-store-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: How to use probability theory and statistics in conjunction.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>This partnership creates several important capabilities. First, it allows us to move beyond simple description to meaningful inference. We don’t just observe that sales increased by 15% - we can assess whether this increase is likely due to our intervention or could reasonably be explained by normal business fluctuations.</p>
 <p>Second, the probability-statistics partnership helps us calibrate our confidence in conclusions. When we observe an effect in our data, probability theory helps us calculate how likely we would be to see such an effect if nothing real were happening. This gives us a principled way to decide how much weight to place on our findings.</p>
 <blockquote class="blockquote">
@@ -339,7 +1003,6 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p>Consider a product manager deciding how many units to manufacture for the upcoming holiday season. They might estimate demand at 10,000 units based on historical data and market research. However, actual demand could easily range from 7,000 to 13,000 units depending on economic conditions, competitor actions, weather, and countless other factors. Statistics doesn’t eliminate this uncertainty, but it helps the manager understand the range of possibilities and make informed decisions about production levels, inventory management, and risk mitigation.</p>
 </blockquote>
-<p><em>[Visualization suggestion: A probability distribution showing possible demand levels, with decision scenarios for different production quantities overlaid]</em></p>
 <p>Statistics teaches us that uncertainty isn’t a flaw in our analysis - it’s a fundamental characteristic of the world we must incorporate into our decision-making processes. This represents a mature, sophisticated approach to management and research. Instead of pretending we can predict everything precisely, we learn to work productively within uncertainty.</p>
 <p>This perspective affects how we interpret findings and draw conclusions. When research suggests that a new management technique improves productivity, we don’t just want to know the average improvement - we want to understand the range of outcomes we might reasonably expect and the factors that influence this variation.</p>
 <blockquote class="blockquote">

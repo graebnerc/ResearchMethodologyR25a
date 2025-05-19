@@ -3,6 +3,15 @@ title: "1: What is Statistics all about? Conceptual Foundations"
 date: '2025-05-10'
 ---
 
+```{r}
+#| code-summary: "Packages used for R examples"
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(ggpubr)
+library(kableExtra)
+```
+
 
 # Introduction: Why Statistics Might Feel Intimidating (And Why It Shouldn't)
 
@@ -14,9 +23,203 @@ Think of statistics as a language—a way of communicating with data and extract
 
 At its core, statistics is the science of learning from data. More specifically, it's a collection of methods and principles that help us collect, organize, analyze, and interpret information to answer questions and solve problems. But why do we need this formal approach? Why can't we just look at data and draw conclusions intuitively?
 
-> Consider a simple business scenario: You're the marketing manager for a company that recently launched a new advertising campaign. After three months, you notice that sales have increased by 15%. This sounds like good news, but several questions immediately arise: Is this increase actually due to your campaign, or could it be caused by seasonal trends, competitor actions, or random fluctuations? How confident can you be that this trend will continue? Is a 15% increase significant enough to justify the campaign's cost?
+> Consider a simple business scenario: You're the marketing manager for a company that recently launched a new advertising campaign. After three months, you notice that sales have increased by over 56% if compared to the average sales before the campaign. 
+This sounds like good news, but several questions immediately arise: Is this increase actually due to your campaign, or could it be caused by seasonal trends, competitor actions, or random fluctuations? How confident can you be that this trend will continue? Is this increase significant enough to justify the campaign's cost? 
+@fig-campaign gives a first idea of why the answer to these questions is not as easy as it might appear and requires thorough statistical reasoning and computation skills!
 
-*[Visualization suggestion: A line graph showing sales over time with the campaign launch marked, including seasonal patterns from previous years for comparison]*
+```{r}
+#| code-summary: "Creating the dataset used in example"
+# Set seed for reproducibility
+set.seed(123)
+
+# Create monthly dates for a 2-year period
+dates <- seq(as.Date("2023-01-01"), as.Date("2024-12-01"), by = "month")
+month <- format(dates, "%m")
+year <- format(dates, "%Y")
+
+# Create a seasonal pattern (higher in Q4, lower in Q1)
+seasonal_factor <- c(0.8, 0.7, 0.8, 0.9, 1.0, 1.0, 0.9, 0.9, 1.1, 1.3, 1.4, 1.6)
+monthly_effect <- seasonal_factor[as.numeric(month)]
+
+# Base sales with year-over-year growth and seasonal effects
+base_sales <- 100000 * (1 + 0.03 * (as.numeric(year) - 2023)) * monthly_effect
+# Add random noise
+sales <- base_sales * rnorm(length(dates), mean = 1, sd = 0.04)
+
+# Create campaign effect (after September 2024)
+# campaign effect is  5%, starts right before seasonal upswing
+campaign_date <- as.Date("2024-09-01")
+campaign_effect <- ifelse(dates >= campaign_date, 1.05, 1)
+
+# Apply campaign effect to get final sales
+final_sales <- sales * campaign_effect
+
+# Create data frame
+sales_data <- data.frame(
+  date = dates,
+  month = month,
+  year = year,
+  sales = round(final_sales),
+  campaign = dates >= campaign_date
+)
+
+
+```
+
+```{r}
+#| code-summary: "R code for the visualization"
+#| label: fig-campaign
+#| fig-cap: "The apparent effect of a marketing campaign!"
+#| fig.height: 7
+#| fig.width: 9
+blue_col <- "#3498db"
+red_col <- "#e74c3c"
+
+# Get only 2024 data for the first plot
+sales_data_2024 <- filter(sales_data, year == "2024")
+
+# Calculate misleading metrics someone might report (2024 only)
+mean2024_before_campaign<- mean(filter(sales_data_2024, !campaign)$sales)
+mean2024_after_campaign <- mean(filter(sales_data_2024, campaign)$sales)
+naive_increase_2024 <- (
+  mean2024_after_campaign / mean2024_before_campaign - 1) * 100
+corrected_increase <- sales_data |>
+  filter(month %in% filter(sales_data_2024, campaign)$month) |>
+  summarise(avg_sales=mean(sales), .by = year) |>
+  pivot_wider(names_from = "year", values_from = "avg_sales") |>
+  mutate(increase=(`2024` / `2023` - 1) *100) |>
+  pull("increase")
+
+# Plot 1: 2024-only view
+plot_2024 <- ggplot(sales_data_2024, aes(x = date, y = sales)) +
+  geom_line(alpha = 0.6, linewidth = 0.8) +
+  geom_point(aes(color = campaign), alpha = 0.8, size = 2.5) +
+  geom_vline(
+    xintercept = as.Date("2024-09-01"),
+    linetype = "dashed", color = "darkred"
+  ) +
+  # Add annotation for campaign launch
+  annotate("text",
+    x = as.Date("2024-09-01") - 15, y = max(sales_data_2024$sales) * 0.95,
+    label = "Campaign Launch", hjust = 1, color = "darkred"
+  ) +
+  # Add horizontal line for average before
+  geom_hline(
+    yintercept = mean2024_before_campaign, linetype = "dotted", color = blue_col
+    ) +
+  annotate("text",
+    x = as.Date("2024-03-15"), y = mean2024_before_campaign * 1.03,
+    label = paste0("Avg Before: ", 
+                   format(round(mean2024_before_campaign), 
+                          big.mark = ".", 
+                          decimal.mark = ",")
+                   ),
+    color = blue_col
+  ) +
+  # Add horizontal line for average after
+  geom_hline(
+    yintercept = mean2024_after_campaign, linetype = "dotted", color = red_col
+    ) +
+  annotate("text",
+    x = as.Date("2024-03-15"), y = mean2024_after_campaign * 1.03,
+    label = paste0("Avg After: ", 
+                   format(round(mean2024_after_campaign), 
+                          big.mark = ".", 
+                          decimal.mark = ",")),
+    color = red_col
+  ) +
+  # Add title and labels
+  labs(
+    title = "2024 Sales Before and After Marketing Campaign",
+    subtitle = paste0(
+      "It appears the campaign increased sales by ",
+      round(naive_increase_2024, 1), "%!"
+    ),
+    x = "Month (2024)",
+    y = "Sales",
+    color = "After Campaign Launch"
+  ) +
+  # Styling options
+  scale_color_manual(
+    values = c("FALSE" = blue_col, "TRUE" = red_col)
+    ) +
+  scale_y_continuous(
+    labels = scales::number_format(scale = 0.001, suffix = "k €")
+    ) +
+  theme_minimal() +
+  theme(legend.position = "none", axis.title.x = element_blank())
+
+# Plot 2: The full context with both years
+plot_full <- ggplot(sales_data, aes(x = date, y = sales)) +
+  geom_line(alpha = 0.5) +
+  geom_point(aes(color = campaign), alpha = 0.7, size = 2) +
+  geom_vline(
+    xintercept = as.Date("2024-09-01"),
+    linetype = "dashed", color = "darkred"
+  ) +
+  geom_vline(
+    xintercept = as.Date("2024-01-01"),
+    linetype = "dotted", color = "gray50"
+  ) +
+  annotate("text",
+    x = as.Date("2024-09-01") - 15, y = max(sales_data$sales) * 0.9,
+    label = "Campaign Launch", hjust = 1, color = "darkred"
+  ) +
+  annotate("rect",
+    xmin = as.Date("2023-09-01"), xmax = as.Date("2023-12-31"),
+    ymin = min(sales_data$sales) * 0.95, ymax = max(sales_data$sales),
+    alpha = 0.1, fill = "darkblue"
+  ) +
+  annotate("rect",
+    xmin = as.Date("2024-09-01"), xmax = as.Date("2024-12-31"),
+    ymin = min(sales_data$sales) * 0.95, ymax = max(sales_data$sales),
+    alpha = 0.1, fill = "darkred"
+  ) +
+  annotate("text",
+    x = as.Date("2023-06-01"), y = max(sales_data$sales) * 0.85,
+    label = paste0("True year-over-year increase: ", 
+                   round(corrected_increase, 1)  , "%"),
+    color = "black", size = 4
+  ) +
+  annotate("text",
+    x = as.Date("2023-06-01"), y = max(sales_data$sales) * 0.8,
+    label = "Actual campaign effect: 5%",
+    color = "black", size = 4
+  ) +
+  labs(
+    title = "Full Context: Sales Data for 2023-2024",
+    subtitle = "Most of the increase is due to seasonal patterns",
+    x = "Month",
+    y = "Sales",
+    color = "After Campaign Launch"
+  ) +
+  # Styling options
+  scale_color_manual(
+    values = c("FALSE" = blue_col, "TRUE" = red_col)
+    ) +
+  scale_y_continuous(
+    labels = scales::number_format(scale = 0.001, suffix = "k €")
+    ) +
+  theme_minimal() +
+  theme(legend.position = "none", axis.title.x = element_blank())
+
+# Combine the plots
+combined_plot <- ggarrange(plot_2024, plot_full,
+  labels = c("A", "B"),
+  ncol = 1, nrow = 2,
+  legend = "none"
+)
+
+# Add an overall title
+combined_plot <- annotate_figure(
+  combined_plot,
+  top = text_grob("The Importance of Sound Data Analysis",
+    face = "bold", size = 14
+  )
+)
+combined_plot
+```
+
 
 These questions illustrate why we need statistics. Our intuition, while valuable, is often inadequate for making sense of complex data patterns. Humans are naturally prone to seeing patterns where none exist (we call this "apophenia") and tend to overinterpret small samples or unusual events. Statistics provides us with rigorous methods to distinguish between real patterns and random noise, to quantify our uncertainty, and to make informed decisions despite incomplete information.
 
@@ -34,17 +237,186 @@ Finally, statistics enables prediction and forecasting. While we cannot predict 
 
 Probability theory might sound abstract, but it serves a crucial practical purpose: it provides the reference point we need to make sense of what we observe in data. Without probability theory, we cannot determine whether our observations are surprising, expected, or somewhere in between.
 
-> Imagine you're recruiting for a basketball team and a candidate tells you they are 220 cm (7'2") tall. Is this unusually tall or fairly normal? You can't answer this question just by looking at this single number. You need a reference point - specifically, you need to know how height is distributed in the general population. Probability theory tells us that human height follows a roughly normal distribution with an average around 175 cm and a certain spread around that average. With this reference, we can determine that 220 cm is exceptionally rare - occurring in perhaps 1 in 10,000 people or fewer.
+> Imagine you're recruiting for a basketball team and a candidate tells you he was 200 cm tall. Is this unusually tall or fairly normal? You can't answer this question just by looking at this single number. You need a reference point - specifically, you need to know how height is distributed in the general population. Probability theory tells us that height of men in Germany follows a roughly normal distribution with an average around 178.9 cm and a certain spread around that average. With this reference, we can determine that 200 cm is indeed rare - occurring in perhaps 1 in 520 people or fewer (see @fig-height).
 
-*[Visualization suggestion: A bell curve showing the normal distribution of human height, with 220 cm marked as an extreme value in the tail]*
+```{r}
+#| code-summary: "R code to compute change for being 200cm or higher"
+
+mean_height <- 178.9 # Mean height of German men
+sd_height <- 7.3  # Standard deviation
+
+# Create a data frame for the distribution
+height_range <- seq(150, 230, by = 0.1)
+height_density <- dnorm(height_range, mean = mean_height, sd = sd_height)
+
+height_df <- data.frame(
+  height = height_range,
+  density = height_density
+)
+
+# Calculate the probability of being 200 cm or taller
+prob_200_plus <- pnorm(
+  q = 200, mean = mean_height, sd = sd_height, lower.tail = FALSE)
+approx_odds <- round(1 / prob_200_plus)
+```
+
+```{r}
+#| code-summary: "R code for the visualization"
+#| label: fig-height
+#| fig-cap: "The apparent effect of a marketing campaign!"
+
+ggplot(height_df, aes(x = height, y = density)) +
+  geom_line(size = 1.2, color = "royalblue") +
+  geom_area(fill = "royalblue", alpha = 0.3) +
+  
+  geom_vline(xintercept = mean_height, linetype = "dashed", color = "darkblue") +
+  annotate("text", x = mean_height + 4, y = max(height_density) * 0.95, 
+           label = paste0("Mean = ", mean_height, " cm"), 
+           hjust = 0, color = "darkblue") +
+  
+  geom_vline(xintercept = 200, linetype = "dashed", color = "red") +
+  
+  geom_area(data = subset(height_df, height >= 200),
+            fill = "red", alpha = 0.4) +
+  
+  # Add probability annotation
+  annotate("text", x = 205, y = max(height_density) * 0.6,
+           label = paste0("Probability ≈ 1 in ", format(approx_odds, big.mark=",")),
+           color = "red", hjust = 0.0) +
+  
+  # Add standard deviation markers
+  geom_segment(aes(x = mean_height + sd_height, xend = mean_height + sd_height, 
+                  y = 0, yend = dnorm(mean_height + sd_height, mean = mean_height, sd = sd_height)),
+              linetype = "dotted", color = "gray30") +
+  geom_segment(aes(x = mean_height + 2*sd_height, xend = mean_height + 2*sd_height, 
+                  y = 0, yend = dnorm(mean_height + 2*sd_height, mean = mean_height, sd = sd_height)),
+              linetype = "dotted", color = "gray30") +
+  geom_segment(aes(x = mean_height + 3*sd_height, xend = mean_height + 3*sd_height, 
+                  y = 0, yend = dnorm(mean_height + 3*sd_height, mean = mean_height, sd = sd_height)),
+              linetype = "dotted", color = "gray30") +
+  
+  # Add titles and labels
+  labs(
+    title = "Distribution of Adult Male Height",
+    subtitle = paste0("200 cm is an extreme value (approximately 1 in ", 
+                     format(approx_odds, big.mark=","), " people)"),
+    x = "Height (cm)",
+    y = "Probability Density",
+    caption = "Note: Based on average adult male height distribution for Germany."
+  ) +
+  
+  # Set theme and appearance
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 16),
+    plot.subtitle = element_text(color = "darkred", size = 12),
+    axis.title = element_text(size = 12),
+    panel.grid.minor = element_blank()
+  ) +
+  
+  # Set axis limits to focus on the relevant part of the distribution
+  coord_cartesian(xlim = c(150, 230), ylim = c(0, max(height_density) * 1.05))
+```
 
 This example illustrates the fundamental role of probability theory: it establishes baselines against which we can evaluate our observations. In business contexts, this principle applies constantly. Is a 15% increase in sales after a marketing campaign impressive? We can only answer this by comparing it to the typical variation in sales we'd expect to see without any intervention.
 
 Probability theory provides us with mathematical models that describe what we should expect to see if only random variation is at play. These models serve as our null hypothesis - our baseline assumption of "nothing special happening." When our actual observations differ substantially from what these probability models predict, we have evidence that something interesting might be occurring.
 
-> Consider quality control in manufacturing. Suppose your process typically produces 2% defective items. Probability theory can tell you what to expect in a batch of 100 items: most batches will have 1-3 defective items, occasionally you might see 0 or 4-5, and very rarely you might see 6 or more. If you test a batch and find 8 defective items, probability theory helps you recognize this as highly unusual - suggesting something may have gone wrong with your process.
+> Consider quality control in manufacturing. Suppose your process typically produces 2% defective items. Probability theory can tell you what to expect in a batch of 100 items: most batches will have 1-3 defective items, occasionally you might see 0 or 4-5, and very rarely you might see 6 or more (see @fig-defects). If you test a batch and find 8 defective items, probability theory helps you recognize this as highly unusual - suggesting something may have gone wrong with your process (see @tab-defects).
 
-*[Visualization suggestion: A histogram showing the probability distribution of defective items in batches of 100, with the expected range and unusual outcomes clearly marked]*
+```{r}
+#| code-summary: "R code to compute expected defects"
+#| label: tab-defects
+#| fig-cap: "The likelihoods of seeing different numbers of defect items."
+
+# Define parameters
+batch_size <- 100     # Number of items in a batch
+defect_rate <- 0.02   # Probability of a defective item (2%)
+observed_defects <- 8 # Number of defects found in a batch
+
+# Create a table of probabilities for different numbers of defects
+defect_probs <- tibble(
+  defects = 0:15,  # Range of possible defects to consider
+  
+  # Calculate exact probability for each number of defects
+  exact_prob = dbinom(defects, size = batch_size, prob = defect_rate),
+  
+  # Calculate probability of seeing AT LEAST this many defects
+  cumulative_prob = pbinom(defects - 1, size = batch_size, prob = defect_rate, 
+                           lower.tail = FALSE),
+  
+  # Format probabilities as percentages
+  exact_prob_pct = scales::percent(exact_prob, accuracy = 0.001),
+  cumulative_prob_pct = scales::percent(cumulative_prob, accuracy = 0.001),
+  
+  # Calculate the odds (1 in X) for at least this many defects
+  odds = ifelse(cumulative_prob > 0, round(1/cumulative_prob), Inf)
+)
+
+# Table showing key probabilities (first 11 rows)
+defect_table <- defect_probs %>%
+  filter(defects <= 10) %>%
+  select(defects, exact_prob_pct, cumulative_prob_pct, odds) %>%
+  rename(
+    "Defects" = defects,
+    "Exact Probability" = exact_prob_pct,
+    "P(X ≥ Defects)" = cumulative_prob_pct,
+    "Odds (1 in X)" = odds
+  )
+
+# Display the table
+kable(defect_table)
+
+```
+
+```{r}
+#| code-summary: "R code for the visualization"
+#| label: fig-defects
+#| fig-cap: "The likelihoods of seeing different numbers of defect items."
+# Create visualization of the probability distribution
+ggplot(defect_probs %>% filter(defects <= 15), 
+       aes(x = defects, y = cumulative_prob)) +
+  # Add line for cumulative probability
+  geom_line(color = "darkblue", size = 1) +
+  
+  # Add points
+  geom_point(color = "darkblue", size = 3) +
+  
+  # Highlight the observed value (8 defects)
+  geom_point(data = defect_probs %>% filter(defects == 8), 
+             color = "red", size = 4) +
+  
+  # Add shading for area of interest (≥ 8 defects)
+  geom_area(data = defect_probs %>% filter(defects >= 8), 
+            fill = "red", alpha = 0.3) +
+  
+  # Add annotation for probability
+  annotate("text", x = 10, y = 0.1,
+           label = paste0("P(X ≥ 8) = ", 
+                          defect_probs$cumulative_prob_pct[defect_probs$defects == 8]),
+           color = "darkred") +
+  
+  # Add titles and labels
+  labs(
+    title = "Probability of Finding X or More Defects",
+    subtitle = paste0("Finding 8+ defects when defect rate is 2% happens in only 1 in ", 
+                      defect_probs$odds[defect_probs$defects == 8], " batches"),
+    x = "Number of Defective Items (X)",
+    y = "Probability of X or More Defects",
+    caption = "Based on binomial distribution B(100, 0.02)"
+  ) +
+  
+  # Customize the appearance
+  theme_minimal() +
+  
+  # Set y-axis as percentage
+  scale_y_continuous(labels = scales::percent_format()) +
+  
+  # Set x-axis to show only whole numbers of defects
+  scale_x_continuous(breaks = 0:15)
+```
+
+
 
 The key insight is that probability theory doesn't require us to know exactly what will happen - it tells us about the range of possibilities and how likely each one is. This framework transforms our question from "What will happen?" to "How unusual is what we observed?" This shift is fundamental to statistical thinking.
 
@@ -56,9 +428,152 @@ The relationship between probability and statistics represents one of the most e
 
 Probability provides the theoretical framework - it tells us what patterns we should expect to see if certain assumptions are true. Statistics then examines real data to see whether these expected patterns actually appear, allowing us to evaluate our assumptions and refine our understanding.
 
-> Think of a retail company testing whether a new store layout increases customer spending. Probability theory might suggest that if the layout truly has no effect, we should expect to see the same average spending as before, with purchases varying randomly around that average. If the new layout does have an effect, we should see a systematic shift in the spending pattern. Statistics then analyzes actual customer data to determine whether the observed spending pattern looks more like the "no effect" scenario or the "positive effect" scenario.
+> Think of a retail company testing whether a new store layout increases customer spending. Probability theory might suggest that if the layout truly has no effect, we should expect to see the same average spending as before, with purchases varying randomly around that average. If the new layout does have an effect, we should see a systematic shift in the spending pattern. Statistics then analyzes actual customer data to determine whether the observed spending pattern looks more like the "no effect" scenario or the "positive effect" scenario. Figure @fig-store shows the two crucial steps: you first use probability theory to construct a reference case, i.e. what you would expect to see of the new layout had no effect. Then you collect data and compare the collected data against the theoretical prediction and use tools from inferential statistics to make a rational conclusion.
 
-*[Visualization suggestion: Two overlapping bell curves showing spending distributions - one for the old layout and one showing what we might expect with an improved layout, with actual data points plotted]*
+```{r}
+#| code-summary: "R code for the visualization"
+#| label: fig-store
+#| fig-cap: "How to use probability theory and statistics in conjunction."
+#| fig.height: 7
+#| fig.width: 10
+# Set seed for reproducibility
+set.seed(123)
+
+# Define parameters
+old_mean <- 65             # Mean spending with old layout (€)
+old_sd <- 12               # Standard deviation with old layout (€)
+n_customers <- 40          # Sample size for new layout test
+
+# Generate spending range for theoretical distributions
+spending_range <- seq(30, 120, by = 0.5)
+
+# Calculate standard error for the sample mean
+se <- old_sd / sqrt(n_customers)
+
+# Create a data frame for theoretical distributions
+theory_df <- tibble(
+  spending = spending_range,
+  # Distribution of individual customer spending
+  null_density = dnorm(spending_range, mean = old_mean, sd = old_sd),
+  # Sampling distribution of the mean
+  sampling_density = dnorm(spending_range, mean = old_mean, sd = se)
+)
+
+# Create Panel A: Probability theory perspective
+theory_plot <- ggplot(theory_df) +
+  # Add the null hypothesis distribution (individual customers)
+  geom_line(aes(x = spending, y = null_density), 
+            color = "darkblue", size = 1.2) +
+  geom_area(aes(x = spending, y = null_density), 
+            fill = "darkblue", alpha = 0.2) +
+  
+  # Add the sampling distribution of the mean (what we'd expect if H0 is true)
+  geom_line(aes(x = spending, y = sampling_density), 
+            color = "purple", size = 1.2, linetype = "dashed") +
+  
+  # Add vertical line for baseline (old layout) mean
+  geom_vline(xintercept = old_mean, linetype = "solid", color = "darkblue") +
+
+  # Add labels and title
+  labs(
+    title = "Probability Theory Perspective",
+    subtitle = "What we would expect to see if the new layout had no effect",
+    x = "Customer Spending (EUR)",
+    y = "Probability Density"
+  ) +
+  
+  # Add annotations explaining the distributions
+  annotate("text", x = 40, y = max(theory_df$null_density) * 1.5,
+           label = "Individual customer\nspending distribution\nunder old layout",
+           color = "darkblue", hjust = 0) +
+  annotate("text", x = 75, y = max(theory_df$sampling_density) * 0.7,
+           label = "Sampling distribution\nof the mean\n(if null hypothesis is true)",
+           color = "purple", hjust = 0) +
+  
+  # Customize theme
+  theme_minimal()
+
+# Statistics perspective:
+
+# Create the actual observed data (simulated for this example)
+# We'll assume the new layout has an actual effect of +8€
+actual_effect <- 8
+new_layout_data <- tibble(
+  spending = rnorm(n_customers, mean = old_mean + actual_effect, sd = old_sd),
+  layout = "New Layout Test"
+)
+
+# Calculate observed sample mean from new layout test
+observed_mean <- mean(new_layout_data$spending)
+
+# Calculate z-score for the observed mean
+z_score <- (observed_mean - old_mean) / se
+
+# Calculate p-value (one-tailed test)
+p_value <- pnorm(z_score, lower.tail = FALSE)
+
+# Create Panel B: Statistical analysis of the actual data
+data_plot <- ggplot() +
+  # Add sampling distribution under null hypothesis
+  geom_line(data = theory_df, aes(x = spending, y = sampling_density), 
+            color = "purple", size = 1) +
+  geom_area(data = theory_df, aes(x = spending, y = sampling_density), 
+            fill = "purple", alpha = 0.1) +
+  
+  # Add vertical line for null hypothesis (old layout mean)
+  geom_vline(xintercept = old_mean, linetype = "solid", color = "darkblue") +
+  annotate("text", x = old_mean - 1, y = max(theory_df$sampling_density) * 0.9, 
+           label = "Old Layout Mean\n(null hypothesis)", hjust = 1, color = "darkblue") +
+  
+  # Add critical value line
+  geom_vline(xintercept = old_mean + qnorm(0.95) * se, 
+             linetype = "dotted", color = "red") +
+  
+  # Add the observed mean from our new layout test
+  geom_vline(xintercept = observed_mean, linetype = "dashed", 
+             color = "forestgreen", size = 1) +
+  annotate("text", x = observed_mean + 1, y = max(theory_df$sampling_density) * 0.9, 
+           label = paste0("New Layout\nObserved Mean: ", round(observed_mean, 1), "€"), 
+           hjust = 0, color = "forestgreen") +
+  
+  # Add individual data points at the bottom for visual context
+  geom_jitter(data = new_layout_data, aes(x = spending, y = 0), 
+              height = 0.0005, color = "forestgreen", alpha = 0.7) +
+  
+  geom_density(data = new_layout_data, aes(x = spending), 
+             color = "forestgreen", fill = "forestgreen", alpha = 0.2, adjust = 1.5) +
+  
+  # Shade the p-value region
+  geom_area(data = filter(theory_df, spending >= observed_mean), 
+            aes(x = spending, y = sampling_density), fill = "red", alpha = 0.3) +
+  
+  # Add annotation for p-value
+  annotate("text", x = 100, y = max(theory_df$sampling_density) * 0.7,
+           label = paste0("p-value = ", round(p_value, 4), "\n",
+                          "z-score = ", round(z_score, 2)),
+           color = "red", hjust = 0.5) +
+  
+  # Add title and labels
+  labs(
+    title = "Statistical Analysis of New Layout Test",
+    subtitle = paste0("Evaluating evidence against the null hypothesis"),
+    x = "Customer Spending (€)",
+    y = "Probability Density"
+  ) +
+  
+  # Customize theme
+  theme_minimal()
+
+# Combine the plots
+ggarrange(
+  theory_plot, data_plot,
+  ncol = 1, nrow = 2,
+  labels = c("A", "B"),
+  heights = c(1, 1.2)
+)
+```
+
+
 
 This partnership creates several important capabilities. First, it allows us to move beyond simple description to meaningful inference. We don't just observe that sales increased by 15% - we can assess whether this increase is likely due to our intervention or could reasonably be explained by normal business fluctuations.
 
@@ -77,8 +592,6 @@ Understanding uncertainty represents perhaps the most crucial mindset shift for 
 In business contexts, uncertainty permeates every decision. Market conditions shift unpredictably, consumer preferences evolve, competitors make unexpected moves, and economic conditions fluctuate. Even within organizations, employee performance varies, operational processes contain natural variation, and strategic outcomes depend on countless unpredictable factors.
 
 > Consider a product manager deciding how many units to manufacture for the upcoming holiday season. They might estimate demand at 10,000 units based on historical data and market research. However, actual demand could easily range from 7,000 to 13,000 units depending on economic conditions, competitor actions, weather, and countless other factors. Statistics doesn't eliminate this uncertainty, but it helps the manager understand the range of possibilities and make informed decisions about production levels, inventory management, and risk mitigation.
-
-*[Visualization suggestion: A probability distribution showing possible demand levels, with decision scenarios for different production quantities overlaid]*
 
 Statistics teaches us that uncertainty isn't a flaw in our analysis - it's a fundamental characteristic of the world we must incorporate into our decision-making processes. This represents a mature, sophisticated approach to management and research. Instead of pretending we can predict everything precisely, we learn to work productively within uncertainty.
 
