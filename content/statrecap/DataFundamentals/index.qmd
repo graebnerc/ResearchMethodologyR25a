@@ -132,15 +132,18 @@ Understanding these structures is crucial because different statistical operatio
 
 In statistics, we typically use letters to represent variables. The choice of letter case and formatting follows specific conventions:
 
-**Capital Letters (X, Y)** represent:
+**Uppercase Letters** (X, Y) represent:
+
 - Variables in general (before we collect specific data)
 - Random variables in probability contexts
 
-**Lowercase Letters (x, y)** represent:
+**Lowercase Letters** (x, y) represent:
+
 - Specific observed values of a variable
 - Individual data points in our dataset
 
-**Bold Letters (**x**, **X**)** represent:
+**Bold Letters** (**x**, **X**)** represent:
+
 - Vectors (lists of numbers)
 - Matrices (rectangular arrays of numbers)
 
@@ -202,5 +205,5 @@ Understanding data fundamentals allows you to approach any dataset with confiden
 These fundamentals serve as the foundation for everything else in statistics. Just as a strong foundation supports a building, understanding these concepts will support your entire statistical learning journey. Take time to practice identifying variable types and scales in real datasets—this skill will serve you well throughout your research career.
 
 # Next steps
-- [Back to the recap overview](content/statrecap.qmd)
-- [Next topic: Descriptive Statistics](content/statrecap/DescriptiveStatistics.qmd)
+- [Back to the recap overview](../../content/statrecap.qmd)
+- [Next topic: Descriptive Statistics](../../content/statrecap/DescriptiveStatistics.qmd)

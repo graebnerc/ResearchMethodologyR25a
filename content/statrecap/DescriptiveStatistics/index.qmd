@@ -3,6 +3,17 @@ title: "3: Descriptive Statistics"
 date: '2025-05-12'
 ---
 
+```{r}
+#| code-summary: "Packages used in R examples"
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+library(ggpubr)
+library(knitr)
+```
+
+
 # Descriptive Statistics - An Overview
 
 Descriptive statistics help us understand and summarize the key characteristics of our dataset. Think of descriptive statistics as a set of tools that allow us to paint a clear picture of what our data looks like without getting lost in the individual data points. Just as a painter might capture the essence of a landscape rather than documenting every single blade of grass, descriptive statistics capture the essential features of our data.
@@ -17,7 +28,7 @@ We will now go through these categories one by one.
 
 # Measures of Centrality
 
-Measures of central tendency tell us where the "center" of our data lies. Imagine you're trying to describe the typical height of students in your class - you're looking for a single number that best represents the whole group.
+Measures of central tendency tell us where the "center" of our data lies. Imagine you're trying to describe the typical height of students in your class - you're looking for a single number that best represents the whole group. The left panel in @fig-stats visualizes the following examples.
 
 **The Mean** is what most people think of as the average. You add up all values and divide by the number of observations. The mean is like the balancing point of your data - if you imagine your data points as weights on a seesaw, the mean is where you'd place the fulcrum to balance it perfectly.
 
@@ -81,9 +92,140 @@ dept_summary <- employee_data %>%
  )
 ```
 
+```{r}
+#| label: fig-stats
+#| fig-cap: "An illustration of typical measures of centrality and spread."
+
+# Create a slightly right-skewed dataset (more realistic for business data like salaries)
+set.seed(123)
+# Create a mixture of two normal distributions for a slightly skewed result
+data1 <- rnorm(800, mean = 50, sd = 10)
+data2 <- rnorm(200, mean = 75, sd = 15)
+values <- c(data1, data2)
+
+# Create a data frame
+df <- data.frame(values = values)
+
+# Calculate key statistics
+data_mean <- mean(values)
+data_median <- median(values)
+data_sd <- sd(values)
+
+# Find the mode (bin with highest frequency)
+hist_data <- hist(values, plot = FALSE, breaks = 30)
+mode_bin <- hist_data$mids[which.max(hist_data$counts)]
+
+# Create ranges for standard deviation visualization
+lower_sd <- data_mean - data_sd
+upper_sd <- data_mean + data_sd
+
+# Create common plot elements to ensure consistency
+common_theme <- theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    plot.subtitle = element_text(size = 11),
+    axis.title = element_text(size = 10)
+  )
+
+# PLOT 1: Central Tendency (Mean, Median, Mode)
+note_distance <- 15
+central_tendency_plot <- ggplot(df, aes(x = values)) +
+  # Create histogram
+  geom_histogram(binwidth = 2, fill = "lightblue", color = "white", alpha = 0.7) +
+  
+  # Add vertical lines for mean, median and mode
+  geom_vline(xintercept = data_mean, color = "red", linewidth = 1.0, linetype = "solid") +
+  geom_vline(xintercept = data_median, color = "darkgreen", linewidth = 1.0, linetype = "dashed") +
+  geom_vline(xintercept = mode_bin, color = "purple", linewidth = 1.0, linetype = "dotdash") +
+  
+  # Add annotations
+  annotate("text", x = data_mean + note_distance, y = 80, label = "Mean", 
+           color = "red", fontface = "bold", hjust = 0) +
+  annotate("text", x = data_median - note_distance, y = 65, label = "Median", 
+           color = "darkgreen", fontface = "bold", hjust = 1) +
+  annotate("text", x = mode_bin + note_distance, y = 50, label = "Mode", 
+           color = "purple", fontface = "bold", hjust = 0) +
+  
+  # Add arrows to point at key features
+  annotate("segment", x = data_mean + note_distance, xend = data_mean, y = 80, yend = 80, 
+           arrow = arrow(length = unit(0.3, "cm")), color = "red") +
+  annotate("segment", x = data_median - note_distance, xend = data_median, y = 65, yend = 65, 
+           arrow = arrow(length = unit(0.3, "cm")), color = "darkgreen") +
+  annotate("segment", x = mode_bin + note_distance, xend = mode_bin, y = 50, yend = 50, 
+           arrow = arrow(length = unit(0.3, "cm")), color = "purple") +
+  
+  # Labels
+  labs(
+    title = "Measures of Central Tendency",
+    subtitle = "Employee Salaries (thousands €)",
+    x = "Salary (thousands €)",
+    y = "Frequency (Number of Employees)",
+    caption = "Mean: Average (sum of all values ÷ count)\nMedian: Middle value (50th percentile)\nMode: Most common value (highest peak)"
+  ) +
+  common_theme +
+  theme(plot.caption = element_text(hjust = 0, size = 9))
+
+# PLOT 2: Standard Deviation
+dispersion_plot <- ggplot(df, aes(x = values)) +
+  # Create histogram
+  geom_histogram(binwidth = 2, fill = "lightblue", color = "white", alpha = 0.7) +
+  
+  # Add vertical line for mean
+  geom_vline(xintercept = data_mean, color = "red", linewidth = 1.0, linetype = "solid") +
+  
+  # Add shaded area for standard deviation
+  annotate("rect", xmin = lower_sd, xmax = upper_sd, 
+           ymin = 0, ymax = Inf, alpha = 0.2, fill = "orange") +
+  
+  # Add annotations for standard deviation
+  annotate("text", x = data_mean, y = 80, label = paste("Mean =", round(data_mean, 1)), 
+           color = "red", fontface = "bold") +
+  annotate("text", x = data_mean, y = 65, 
+           label = paste("Standard Deviation =", round(data_sd, 1)), 
+           color = "darkorange", fontface = "bold") +
+  
+  # Add brackets to show standard deviation range
+  annotate("segment", x = lower_sd, xend = upper_sd, y = 45, yend = 45, 
+           linewidth = 1.0, color = "darkorange") +
+  annotate("segment", x = lower_sd, xend = lower_sd, y = 42, yend = 48, 
+           linewidth = 1.0, color = "darkorange") +
+  annotate("segment", x = upper_sd, xend = upper_sd, y = 42, yend = 48, 
+           linewidth = 1.0, color = "darkorange") +
+  
+  annotate("text", x = data_mean, y = 35, 
+           label = "68% of all observations\nfall within ±1 SD of the mean", 
+           color = "darkorange", fontface = "bold") +
+  
+  # Labels
+  labs(
+    title = "Measure of Spread",
+    subtitle = "Employee Salaries (thousands €)",
+    x = "Salary (thousands €)",
+    y = "Frequency (Number of Employees)",
+    caption = "Standard Deviation shows the typical distance\nfrom the average. Smaller SD = less variability."
+  ) +
+  common_theme +
+  theme(plot.caption = element_text(hjust = 0, size = 9))
+
+# Combine plots with ggarrange
+combined_plot <- ggarrange(
+  central_tendency_plot, dispersion_plot,
+  ncol = 2, 
+  labels = c("A", "B")
+)
+
+# Add an overall title
+final_plot <- annotate_figure(combined_plot,
+                             top = text_grob("Key Descriptive Statistics", 
+                                           face = "bold", size = 16))
+
+# Display the final plot
+print(final_plot)
+```
+
 
 # Measures of Dispersion
-While measures of central tendency tell us where our data is centered, measures of dispersion tell us how spread out our data is. Two datasets can have the same mean but very different patterns of spread.
+While measures of central tendency tell us where our data is centered, measures of dispersion tell us how spread out our data is (see the right panel in @fig-stats). Two datasets can have the same mean but very different patterns of spread.
 
 **Range** is the simplest measure of dispersion - it's just the difference between the maximum and minimum values. While easy to calculate, the range only considers the two extreme values and ignores everything in between.
 
@@ -105,8 +247,6 @@ The **Coefficient of Variation (CV)** solves this problem by standardizing the v
 
 Generally speaking, a CV below 10% suggests relatively low variability (high consistency), while a CV above 30% indicates high variability (less predictability). However, these thresholds can vary significantly depending on your industry and the specific metric being measured.
 
-
-[Consider including a figure showing two normal distributions with the same mean but different standard deviations to illustrate this concept visually]
 
 ```{r}
 #| code-summary: R code example for range, variance, and mean
@@ -211,7 +351,6 @@ The **Pearson correlation** measures linear relationships and works best with no
 
 In practice, use Pearson for financial metrics that follow normal patterns and linear relationships. Choose Spearman for survey data, when you have outliers, or when you suspect non-linear relationships in your business processes. Spearman's rank-based approach makes it more robust to extreme values than Pearson's assumption of normal distribution.
 
-[Consider including a scatter plot showing different correlation strengths to help students visualize these relationships]
 
 ```{r}
 # Computing correlation and covariance in R
@@ -248,7 +387,6 @@ When interpreting correlation matrices in business contexts, look for:
 - Strong negative correlations (close to -1) that might indicate trade-offs
 - Weak correlations (close to 0) suggesting independent factors
 
-[Consider including a visual representation of a correlation matrix with color coding to show the strength of relationships]
 
 ```{r}
 #| code-summary: "Create artificial data 'business_metrics'"
@@ -360,22 +498,108 @@ correlation_heatmap <- correlation_visualization %>%
 
 ```
 
+## Regression
 
-# A Note on Visualizing Data
+While often associated with predictive modeling, regression also serves as a powerful descriptive tool that goes beyond correlation. Think of regression as drawing the "best-fit line" through scattered data points, providing a mathematical equation that summarizes the relationship between (two or more) variables. 
+The most common form, linear regression, is typically written using standardized notation: 
 
-ADD THIS FIGURE EXAMPLE
+$$y=\beta_0 + \beta_1 \boldsymbol{x}_1$$
 
-The power of descriptive statistics is greatly enhanced when combined with appropriate visualizations. Charts and graphs can reveal patterns that numbers alone might hide, making them essential tools for understanding your business data.
-A famous example is "Anscombe’s quartet", a compilation of four data sets that have nearly identical  descriptive statistics but are in fact very different, something that is easy to show visually:
+where $\beta_0$ represents the y-intercept and $\beta_1$ represents the slope coefficient. For multiple regression with several predictors, the formula extends to 
+
+$$y=\beta_0 + \beta_1  \boldsymbol{x}_1 + \beta_2  \boldsymbol{x}_2 ... + \beta_k \boldsymbol{x}_k $$
+
+with each $\beta_1$ coefficient describing how $\boldsymbol{y}$ changes when the corresponding predictor variable changes by one unit, holding all other variables constant. Unlike correlation, which only indicates strength and direction, regression coefficients provide interpretable measures of how variables actually relate to each other in your data. 
+
+For instance, when $y$ is total sales in 1000 EUR, $\boldsymbol{x}_2$ the total distance of your shop to the city centre in km, and $\hat{\beta}_2=-0.5$ this means that, according to your model, if your shop was moving away from the city centre by 1 km, this is associated, on average, by reducing sales by 500 EUR.
+
+When examining relationships between variables, a regression line offers both a visual and mathematical summary that complements other measures of association.
+
+> **Example:** 
+Consider a marketing manager analyzing the relationship between monthly advertising spend and sales revenue. The manager collects data from the past 12 months to understand how these variables are related.
+@fig-regexpl shows a regression that is based on the equation 
+$$sales = \beta_0 + \beta_1 \cdot advertising$$
+The coefficient $\beta_1$ (approximately 2.5) provides a clear descriptive measure: 
+in the data, for each additional thousand euros spent on advertising, monthly sales revenue increase on average by about 2500 EUR. 
+The intercept ($\beta_0$) of around 50 represents the theoretical sales revenue when advertising spend is zero, though this value often has less practical interpretation.
+> 
+> The visualization highlights both the overall trend and how individual data points deviate from it. The dotted lines — representing *residuals* — show the "misses" between what our regression line predicts (the 'fitted values') and the actual sales values. Some months performed better than the regression predicted (points above the line), while others performed worse (points below the line). These patterns themselves are descriptive insights that might prompt further investigation: What happened in months with large positive residuals that might explain their better-than-expected performance?
+> 
+> As a descriptive tool, this regression cannot claim that advertising directly causes sales increases or predict future performance. It simply summarizes the historical relationship between these variables in a quantifiable way that goes beyond what correlation alone could tell us. Everything that goes beyond that is in the area of inferential statistics.
+
+
+as you can see in .
+
+```{r}
+#| code-summary: "Create data and conduct regression"
+# Create a simple business dataset
+
+set.seed(123) 
+
+ # Monthly ad expenditures in thousands of euros:
+advertising_spend <- seq(15, 37, by = 2) 
+# Sales in thousands with noise:
+sales_revenue <- 50 + 2.5 * advertising_spend + rnorm(12, 0, 5)  
+
+# Combine into a data frame
+marketing_data <- data.frame(
+  month = month.abb[1:12],
+  advertising_spend = advertising_spend,
+  sales_revenue = sales_revenue
+)
+
+# Run a simple linear regression
+model <- lm(sales_revenue ~ advertising_spend, data = marketing_data)
+
+# Extract coefficients for our discussion
+beta0 <- coef(model)[1]  # Intercept
+beta1 <- coef(model)[2]  # Slope
+
+# Create data with regression information for plotting
+marketing_data$fitted <- fitted(model)  # Predicted values from regression
+marketing_data$residuals <- residuals(model)  # Differences between actual and predicted
+```
+
 
 ```{r}
 #| code-summary: "R code for the visualization"
-# Load required libraries
-library(ggplot2)
-library(dplyr)
-library(tidyr)
-library(stringr)
-library(ggpubr)  # For ggarrange function
+#| label: fig-regexpl
+#| fig-cap: "The regression associated with the marketing example."
+
+ggplot(marketing_data, aes(x = advertising_spend, y = sales_revenue)) +
+  geom_point(size = 3, color = "steelblue") +
+  geom_smooth(method = "lm", se = FALSE, color = "darkred") +
+  geom_segment(aes(xend = advertising_spend, yend = fitted), 
+               linetype = "dotted", color = "gray30") +
+  labs(
+    title = "Advertising Expenditure and Sales Revenue",
+    subtitle = paste0("y = ", round(beta0, 1), " + ", round(beta1, 2), "x"),
+    x = "Monthly Advertising Spend (thousands €)",
+    y = "Monthly Sales Revenue (thousands €)",
+    caption = "Dotted lines represent residuals - the difference between\nactual sales and what the regression line predicts"
+  ) +
+  annotate("text", x = 30, y = 110, 
+           label = "Residuals show how much\nactual sales differ from\nwhat our line predicts", 
+           size = 3, hjust = 0) +
+  annotate("curve", x = 29, y = 110, xend = 27, yend = 120,
+           arrow = arrow(length = unit(0.2, "cm")), curvature = -0.3) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(face = "italic")
+  )
+```
+
+
+# A Note on Visualizing Data
+
+The power of descriptive statistics is greatly enhanced when combined with appropriate visualizations. Charts and graphs can reveal patterns that numbers alone might hide, making them essential tools for understanding your business data.
+A famous example is "Anscombe's quartet", as shown in @fig-anscombe. The four data sets have nearly identical descriptive statistics (see @tbl-anscombe), but are in fact very different.
+
+```{r}
+#| code-summary: "R code for the visualization"
+#| label: fig-anscombe
+#| fig-cap: "The four data sets making up 'Anscombe's quartet'."
 
 # Step 1: Transform the Anscombe data into a more workable format
 # The original data has separate columns for each dataset, we need to reshape it
@@ -460,7 +684,9 @@ And here are the summary statistics:
 
 ```{r}
 #| code-summary: "R code "
-library(knitr)
+#| label: tbl-anscombe
+#| tab-cap: "The descriptive statistics underlying 'Anscombe's quartet'."
+
 summary_stats <- anscombe_long %>%
   group_by(dataset) %>%
   summarise(

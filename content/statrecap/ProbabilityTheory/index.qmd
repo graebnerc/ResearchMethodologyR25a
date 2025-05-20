@@ -94,6 +94,7 @@ Notice how events allow us to focus on specific business outcomes rather than al
 ## Probability: Measuring Likelihood
 
 **Probability** quantifies how likely an event is to occur. It provides a numerical scale from 0 to 1 (or 0% to 100%) where:
+
 - Probability = 0 means the event is impossible
 - Probability = 1 means the event is certain
 - Probability = 0.5 means the event is equally likely to occur or not occur
@@ -181,7 +182,7 @@ statistical methods you'll use throughout your research and management career.
 
 # Random Variables: Capturing Numerical Outcomes of Uncertain Processes
 
-A **random variable** is a function whose value is a numerical outcome of a random process, and often this value is related to a particular phenomenon we want to study. Rather than dealing with abstract uncertainty, random variables give us concrete numbers we can analyze mathematically.
+A **random variable** is a function whose value is a numerical outcome of a random experiment, and often this value is related to a particular phenomenon we want to study. Rather than dealing with abstract uncertainty, random variables give us concrete numbers we can analyze mathematically.
 
 Think of a random variable as a systematic way to assign numbers to the outcomes of uncertain situations. This numbering system allows us to move from qualitative descriptions like "customers seem satisfied" to quantitative analysis using specific values.
 
@@ -192,6 +193,7 @@ You might find it confusing that we call a random *variable* a *function* - afte
 A random variable is indeed a function, but with a specific purpose: it maps the possible outcomes of a random experiment to numerical values. Think of it as a systematic rule that converts whatever might happen into numbers we can analyze mathematically.
 
 Consider a concrete example. When flipping a coin twice, four outcomes are possible: HH, HT, TH, or TT. Now imagine we define a random variable $X$ that counts the number of heads. This random variable works as a function by applying the same rule to each possible outcome:
+
 - $X(HH)$ = 2  (two heads)
 - $X(HT)$ = 1  (one head)  
 - $X(TH)$ = 1  (one head)
@@ -1114,7 +1116,8 @@ we write $\mathbb{P}(X=0)=0.5$
 we write $\mathbb{P}(X=300000)=0.2$
 > 
 > This way we compute the expected value as follows:
-> $$\mathbb{E}(X)=0.3\cdot -100000 + 0.5\cdot 0 + 0.2\cdot 300000=30000 
+> 
+> $$\mathbb{E}(X)=0.3\cdot -100000 + 0.5\cdot 0 + 0.2\cdot 300000=30000$$ 
 > 
 > This means if you launched many similar products under similar conditions, 
 you would average about 30,000 EUR profit per launch. It does not mean any 
@@ -1135,12 +1138,6 @@ Expected values have mathematical properties that make them particularly useful 
 **Linearity**: If you multiply all outcomes by a constant or add a constant to all outcomes, the expected value changes in the same predictable way. This helps with currency conversions, scaling, and adjusting for inflation.
 
 **Additivity for independent variables**: When random variables are independent, the expected value of their sum equals the sum of their expected values. This property is invaluable when combining multiple uncertain factors in financial projections.
-
-These properties allow managers to break complex uncertain situations into manageable components and combine them systematically.
-
-## Properties of Expected Value
-
-Expected values have mathematical properties that make them particularly useful for business analysis:
 
 **Linearity**: If you multiply all outcomes by a constant or add a constant to all outcomes, the expected value changes in the same predictable way. This helps with currency conversions, scaling, and adjusting for inflation.
 
