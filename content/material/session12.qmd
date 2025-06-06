@@ -1,0 +1,54 @@
+---
+title: "🗓️ Session 12: Linear regression in R"
+date: "2025-06-06"
+date-modified: last-modified
+---
+
+This session focuses on the practical implementation of linear regression models.
+This way it complements the more theoretical lecture. More precisely, we focus
+on the following topics:
+
+- Implement simple and multiple linear regression in R
+- Calculate and interpret $R^2$ manually and using `R` functions
+- Understand and demonstrate omitted variable bias
+- Perform data transformations to linearize relationships
+- Create effective visualizations using `geom_smooth()`
+- Conduct basic model diagnostics
+
+
+## 📚 Mandatory Reading
+
+- The tutorial [Linear Regression in R](/content/tutorials/linear-regression/index.qmd) 
+  - [Data sets used](/content/tutorials/linear-regression/RegressionDataSets.zip)
+
+## Further Reading
+
+- [Chapter 5](https://moderndive.com/v2/regression.html) and [Chapter 6](https://moderndive.com/v2/multiple-regression.html) in @moderndive
+
+## ✍️ Coursework
+
+- Do the exercises `LinearRegression1` and `LinearRegression2` from the `DataScienceExercises` package
+
+::: {.callout-tip collapse="true"}
+## Quick code for starting the exercises I
+```{r}
+#| eval: false
+learnr::run_tutorial(
+  name = "LinearRegression1", 
+  package = "DataScienceExercises", 
+  shiny_args=list("launch.browser"=TRUE))
+```
+:::
+
+::: {.callout-tip collapse="true"}
+## Quick code for starting the exercises II
+```{r}
+#| eval: false
+learnr::run_tutorial(
+  name = "LinearRegression2", 
+  package = "DataScienceExercises", 
+  shiny_args=list("launch.browser"=TRUE))
+```
+:::
+
+

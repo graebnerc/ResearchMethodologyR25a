@@ -1,22 +1,5 @@
 [
   {
-    "listing": "/content/statrecap.html",
-    "items": [
-      "/content/statrecap/ConceptualFoundations/index.html",
-      "/content/statrecap/DataFundamentals/index.html",
-      "/content/statrecap/DescriptiveStatistics/index.html",
-      "/content/statrecap/ProbabilityTheory/index.html"
-    ]
-  },
-  {
-    "listing": "/content/exercises.html",
-    "items": [
-      "/content/exercises/obj-types-exercises/index.html",
-      "/content/exercises/quarto-exercises/index.html",
-      "/content/exercises/multiple-regression/index.html"
-    ]
-  },
-  {
     "listing": "/content/tutorials.html",
     "items": [
       "/content/tutorials/installation/index.html",
@@ -29,7 +12,25 @@
       "/content/tutorials/obj-types-iii-adv/index.html",
       "/content/tutorials/visualization/index.html",
       "/content/tutorials/importing-exporting-data/index.html",
-      "/content/tutorials/data-wrangling/index.html"
+      "/content/tutorials/data-wrangling/index.html",
+      "/content/tutorials/linear-regression/index.html"
+    ]
+  },
+  {
+    "listing": "/content/exercises.html",
+    "items": [
+      "/content/exercises/obj-types-exercises/index.html",
+      "/content/exercises/quarto-exercises/index.html",
+      "/content/exercises/multiple-regression/index.html"
+    ]
+  },
+  {
+    "listing": "/content/statrecap.html",
+    "items": [
+      "/content/statrecap/ConceptualFoundations/index.html",
+      "/content/statrecap/DataFundamentals/index.html",
+      "/content/statrecap/DescriptiveStatistics/index.html",
+      "/content/statrecap/ProbabilityTheory/index.html"
     ]
   }
 ]

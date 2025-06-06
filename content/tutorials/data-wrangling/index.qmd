@@ -2,7 +2,6 @@
 title: Data preparation # Also check out line 43
 author: Claudius Gräbner-Radkowitsch
 date: '2025-05-23'
-documentclass: scrartcl
 execute: 
   freeze: auto
 format: 
@@ -11,7 +10,7 @@ format:
     highlight: tango
     toc: true
     toc_depth: 2
-    number_sections: true
+    number_sections: true # Skip pdf
   pdf:
     papersize: a4
     toc: true
@@ -42,7 +41,7 @@ format:
         \usepackage[headsepline, footsepline]{scrlayer-scrpage}
         \pagestyle{scrheadings}
         \clearpairofpagestyles
-        \ihead{Tutorial: Data preparation}
+        \ihead{Tutorial: First steps in R}
         %\chead{Kopfzeile Mitte}
         \ohead{\pagemark} %
         \ifoot{}

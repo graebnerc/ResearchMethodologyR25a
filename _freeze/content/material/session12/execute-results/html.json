@@ -1,0 +1,17 @@
+{
+  "hash": "aed6f81d1136fdc608d79b13d741efdb",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"🗓️ Session 12: Linear regression in R\"\ndate: \"2025-06-06\"\ndate-modified: last-modified\n---\n\nThis session focuses on the practical implementation of linear regression models.\nThis way it complements the more theoretical lecture. More precisely, we focus\non the following topics:\n\n- Implement simple and multiple linear regression in R\n- Calculate and interpret $R^2$ manually and using `R` functions\n- Understand and demonstrate omitted variable bias\n- Perform data transformations to linearize relationships\n- Create effective visualizations using `geom_smooth()`\n- Conduct basic model diagnostics\n\n\n## 📚 Mandatory Reading\n\n- The tutorial [Linear Regression in R](/content/tutorials/linear-regression/index.qmd) \n  - [Data sets used](/content/tutorials/linear-regression/RegressionDataSets.zip)\n\n## Further Reading\n\n- [Chapter 5](https://moderndive.com/v2/regression.html) and [Chapter 6](https://moderndive.com/v2/multiple-regression.html) in @moderndive\n\n## ✍️ Coursework\n\n- Do the exercises `LinearRegression1` and `LinearRegression2` from the `DataScienceExercises` package\n\n::: {.callout-tip collapse=\"true\"}\n## Quick code for starting the exercises I\n\n::: {.cell}\n\n```{.r .cell-code}\nlearnr::run_tutorial(\n  name = \"LinearRegression1\", \n  package = \"DataScienceExercises\", \n  shiny_args=list(\"launch.browser\"=TRUE))\n```\n:::\n\n:::\n\n::: {.callout-tip collapse=\"true\"}\n## Quick code for starting the exercises II\n\n::: {.cell}\n\n```{.r .cell-code}\nlearnr::run_tutorial(\n  name = \"LinearRegression2\", \n  package = \"DataScienceExercises\", \n  shiny_args=list(\"launch.browser\"=TRUE))\n```\n:::\n\n:::\n\n\n",
+    "supporting": [
+      "session12_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
