@@ -1,0 +1,248 @@
+---
+title: "Exercise on experiments - possible solution"
+execute: 
+  warning: false
+  message: false
+format:
+  html
+---
+
+# Libraries and data used
+
+```{r}
+here::i_am("content/exercises/experiments/session13-Exercise-Solution.qmd")
+library(here)
+library(dplyr)
+library(ggplot2)
+library(car)
+library(effectsize)
+library(readr)
+```
+
+```{r}
+creativity_study <- read_csv(here("content/exercises/experiments/employee_data.csv"))
+```
+
+
+# Step 1: Data Exploration
+
+1. Get basic descriptive statistics for the dataset
+
+```{r}
+head(creativity_study)
+glimpse(creativity_study)
+summary(creativity_study)
+```
+
+2. Calculate mean and SD of creativity_score by work_environment
+
+```{r}
+creativity_study %>%
+  group_by(work_environment) %>%
+  summarise(
+    n = n(),
+    mean = round(mean(creativity_score), 2),
+    sd = round(sd(creativity_score), 2),
+    min = min(creativity_score),
+    max = max(creativity_score),
+    .groups = 'drop'
+  )
+```
+
+3. Create a visualization comparing creativity scores across environments
+
+```{r}
+ggplot(
+  data = creativity_study, 
+  mapping = aes(
+    x = work_environment, 
+    y = creativity_score, 
+    fill = work_environment)
+  ) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3, fill = "white") +
+  labs(title = "Creativity Scores by Work Environment",
+       x = "Work Environment",
+       y = "Creativity Score (0-100)",
+       subtitle = "White diamonds show group means") +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+# Step 2: Assumption Checking
+
+1. Check normality of creativity scores within each group
+
+We can test for normality visually or by using specific tests.
+A common formal test is the Shapiro test, which can be conducted using the 
+function `shapiro.test()`.
+
+To conduct the test for each group we can use the function `by()`:
+
+```{r}
+
+by(
+  # The data on which the test will be applied:
+  data = creativity_study$creativity_score, 
+  # The groups that should be separated:
+  INDICES = creativity_study$work_environment, 
+  # The function to be applied on these subsets:
+  FUN = shapiro.test)
+```
+
+If the p-value if this test is larger than our threshold (usually 0.05), we cannot reject the hypothesis that data are normally distributed.
+
+2. Test equality of variances across groups
+
+If variances differ across groups, we need to use different analysis tools.
+One common test to check if variances differ is Levene's test, which tests
+the Null hypothesis of equal variances. We can use the function `leveneTest()`
+from the package `car`:
+
+```{r}
+leveneTest(creativity_score ~ work_environment, data = creativity_study)
+```
+
+We have specified an 'equation' with our DV on the LHS and the variable defining
+the groups on the RHS. Since p-values are large, we cannot reject the Null of 
+equal variances.
+
+
+3. Create histograms or Q-Q plots to visually inspect assumptions
+
+```{r}
+ggplot(data = creativity_study, mapping = aes(x = creativity_score)) +
+  geom_histogram(bins = 15) +
+  facet_wrap(~work_environment) +
+  theme_minimal()
+```
+
+```{r}
+ggplot(creativity_study, aes(sample = creativity_score)) +
+  geom_qq() +
+  geom_qq_line() +
+  facet_wrap(~ work_environment) +
+  labs(title = "Q-Q Plots by Work Environment") +
+  theme_minimal()
+```
+
+
+
+# Step 3: Statistical Analysis
+
+We first conduct a ANOVA:
+
+```{r}
+anova_model <- aov(
+  formula = creativity_score ~ work_environment, 
+  data = creativity_study)
+summary(anova_model)
+```
+
+Alternatively, we can use `lm()`:
+
+```{r}
+lm_model <- lm(creativity_score ~ work_environment, data = creativity_study)
+anova(lm_model)
+```
+
+Alternatively, we look at the original regression output, presenting results
+from a different perspective:
+
+```{r}
+summary(lm_model)
+```
+
+From the results we can see that there are significant differences across groups.
+But to know which groups really differ, we need to do a post-hoc comparison:
+
+```{r}
+TukeyHSD(anova_model)
+```
+
+From the p-values we can see that:
+
+- There is a significant difference between open office and flexible workspace environment, with the latter being more conductive for creativity
+- There is a significant difference between private and open offices, with the latter being more conductive to creativity
+- There is no statistically significant difference between private offices and flexible workspaces, although the latter have a higher creativity score averate
+
+We can then check the **standardized effect sizes**:
+
+
+```{r}
+effectsize::eta_squared(anova_model)
+```
+
+The value for $\eta^2$ means that the work environment expalains 23% of the variance in the creativity score - a major factor. This interpretation is further supported if we remember Cohen's classification of effect sizes:
+
+- Small effect: $\eta^2 \approx 0.01$ 
+- Medium effect: $\eta^2 \approx 0.06$
+- Large effect: $\eta^2 \approx 0.14$
+
+This suggests that not only is our result statistically significant (as also demonstrated by the results above), but it is also *practically meaningful* as we witness a large effect according to Cohen's classification.
+
+And the confidence interval suggests that even in very, very conservative terms
+we would still witness a medium sized effect!
+
+# Step 4: Interpretation and Visualization
+
+```{r}
+ggplot(creativity_study, aes(x = reorder(work_environment, creativity_score), 
+                            y = creativity_score, fill = work_environment)) +
+  geom_violin(alpha = 0.6) +
+  geom_boxplot(width = 0.2, alpha = 0.8) +
+  stat_summary(fun = mean, geom = "point", size = 3, color = "white") +
+  labs(title = "Employee Creativity by Work Environment",
+       subtitle = "Flexible workspaces show highest creativity scores",
+       x = "Work Environment", 
+       y = "Creativity Score (0-100)",
+       caption = "White dots show group means; n=25 per group") +
+  scale_fill_viridis_d(option = "plasma") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(size = 14, face = "bold"))
+```
+
+We obvserve a statistically significant effect of work environment on creativity scores. 
+The post-hoc test has suggested that flexible workspaces produced significantly 
+higher creativity than both open offices and private offices. 
+
+# Step 5: Bonus - ANCOVA
+
+We simply add the variable `years_experience` to the equation:
+
+```{r}
+ancova_model <- lm(
+  formula = creativity_score ~ work_environment + years_experience, 
+  data = creativity_study)
+summary(ancova_model)
+```
+
+We can then compare the models like this:
+
+```{r}
+anova(lm_model, ancova_model)
+```
+
+This conducts a so called F-test to answer the following question: 
+*"Does adding years_experience as a covariate significantly improve our ability to predict creativity scores?"*
+
+Here are the key elements of the comparison:
+
+- Res.Df. changes from 72 to 71 as the extended model estimates one parameter more and the degrees of freedom are therefore reduced by one.
+- RSS is reduced from 7870.0 to 7691.9, meaning that the new model explains more (the unexplained variance gets reduced)
+- The F-test in the last column tests the hypothesis that adding the additional variable does *not* improve our model. Since $p=0.2038$, we cannot reject this hypothesis using conventional levels of statistical significance. 
+- Thus, the results from the original model remain valid and it is not necessary to use the more complex model.
+
+```{r}
+car::Anova(ancova_model, type = "III")
+```
+
+
+
+
+

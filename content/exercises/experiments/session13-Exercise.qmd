@@ -1,0 +1,61 @@
+---
+title: "Exercise on experiments"
+---
+
+# Introduction
+
+This exercise asks you to conduct a complete experimental analysis from start to finish. The scenario is as follows:
+
+> A company wants to test whether different work environments affect employee creativity. They randomly assigned 75 employees to three conditions:
+> 
+- **Open office** (25 employees)
+- **Private office** (25 employees)  
+- **Flexible workspace** (25 employees)
+> 
+> After 4 weeks, they measured creativity scores on a standardized test (scale: 0-100).
+> You can download the data [here](/content/exercises/experiments/employee_data.csv)
+
+You now need to go through the following steps:
+
+1. Data exploration
+2. Assumptions checking
+3. Statistical Analysis
+4. Interpretation and visualization
+5. Bonus: conduct an ANCOVA
+
+Complete each step below. 
+A possible solution is available here.
+
+# Step 1: Data Exploration
+
+1. Get basic descriptive statistics for the dataset
+2. Calculate mean and SD of creativity_score by work_environment
+3. Create a visualization comparing creativity scores across environments
+
+
+# Step 2: Assumption Checking
+
+1. Check normality of creativity scores within each group
+2. Test equality of variances across groups
+3. Create histograms or Q-Q plots to visually inspect assumptions
+
+
+
+# Step 3: Statistical Analysis
+
+1. Conduct one-way ANOVA using both aov() and lm()
+2. Verify that both approaches give identical F-statistics and p-values
+3. If significant, perform post-hoc comparison
+4. Calculate effect size (eta-squared)
+
+# Step 4: Interpretation and Visualization
+
+1. Create a professional publication-ready plot
+2. Write a 2-3 sentence interpretation of your results
+3. Delineate a practical recommendation to the company
+
+# Step 5: ANCOVA
+
+1. Add years_experience as a covariate
+2. Does this change your conclusions?
+
