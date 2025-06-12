@@ -24,7 +24,7 @@ You now need to go through the following steps:
 5. Bonus: conduct an ANCOVA
 
 Complete each step below. 
-A possible solution is available here.
+A possible solution is available [here](/content/exercises/experiments/session13-Exercise-Solution.qmd).
 
 # Step 1: Data Exploration
 

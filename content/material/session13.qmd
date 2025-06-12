@@ -1,0 +1,25 @@
+---
+title: "🗓️ Session 13: Experiments"
+date: "2025-06-13"
+date-modified: last-modified
+---
+
+This session focuses on how to conduct the most common tasks associated with
+designing and implementing experiments in R. This includes:
+
+- Power analysis
+
+## 📚 Mandatory Reading
+
+- The tutorial Experiments in R
+  - [Data sets used](/content/tutorials/experiments/ExperimentsDataSets.zip)
+
+## Further Reading
+
+- TBD
+
+## ✍️ Coursework
+
+- TBD
+
+
