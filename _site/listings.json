@@ -13,7 +13,8 @@
       "/content/tutorials/visualization/index.html",
       "/content/tutorials/importing-exporting-data/index.html",
       "/content/tutorials/data-wrangling/index.html",
-      "/content/tutorials/linear-regression/index.html"
+      "/content/tutorials/linear-regression/index.html",
+      "/content/tutorials/experiments/index.html"
     ]
   },
   {
@@ -21,7 +22,9 @@
     "items": [
       "/content/exercises/obj-types-exercises/index.html",
       "/content/exercises/quarto-exercises/index.html",
-      "/content/exercises/multiple-regression/index.html"
+      "/content/exercises/multiple-regression/index.html",
+      "/content/exercises/experiments/session13-Exercise-Solution.html",
+      "/content/exercises/experiments/session13-Exercise.html"
     ]
   },
   {
