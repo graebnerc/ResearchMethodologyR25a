@@ -11,7 +11,7 @@ designing and implementing experiments in R. This includes:
 
 ## 📚 Mandatory Reading
 
-- The tutorial Experiments in R
+- The tutorial [Experiments in R](/content/tutorials/experiments/index.qmd)
   - [Data sets used](/content/tutorials/experiments/ExperimentsDataSets.zip)
 
 ## Further Reading

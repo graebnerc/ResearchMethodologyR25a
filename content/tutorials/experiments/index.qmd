@@ -5,6 +5,8 @@ date: '2025-06-13'
 documentclass: scrartcl
 execute: 
   freeze: auto
+  message: false
+  warning: false
 format: 
   html:
     theme: readable
@@ -12,8 +14,8 @@ format:
     toc: true
     toc_depth: 2
     number_sections: true
-    message: false
-    warnig: false
+    code-fold: true
+    code-summary: "Show R code"
   pdf:
     papersize: a4
     toc: true
@@ -56,7 +58,7 @@ format:
 # Introduction
 
 In this lab we will learn how to analyze data obtained from experiments. We will
-complement the lecture by also introducing some additiona, practically relevant
+complement the lecture by also introducing some additional, practically relevant
 concepts.
 
 More precisely, we focus on the following aspects:
@@ -64,12 +66,12 @@ More precisely, we focus on the following aspects:
 - Import and explore datasets as typically produced by experiments
 - Conduct t-tests for simple experimental comparisons
 - Perform ANOVA for multi-group comparisons
+- Understand how ANOVA is a special case of linear regression
 - Analyze factorial experimental designs
 - Calculate and interpret effect sizes
-- Create professional visualizations of experimental results
-- Understand how ANOVA is a special case of linear regression
+- Create visualizations of experimental results
 
-Throuout the tutorial we will use the following packages:
+Throughout the tutorial we will use the following packages:
 
 ```{r}
 library(dplyr)        # Data manipulation
@@ -90,16 +92,37 @@ We will use the following data sets, which are available for download from the
 lab webpage.
 
 ```{r}
-leadership_study_between <- read_csv("leadership_study_between.csv")
-leadership_study_within <- read_csv("leadership_study_within.csv")
-communication_study <- read_csv("communication_study.csv")
-factorial_study <- read_csv("factorial_study.csv")
+leadership_study_between <- read_csv(
+  file = "leadership_study_between.csv", show_col_types = FALSE)
+leadership_study_within <- read_csv(
+  file = "leadership_study_within.csv", show_col_types = FALSE)
+communication_study <- read_csv(
+  file = "communication_study.csv", show_col_types = FALSE)
+factorial_study <- read_csv(
+  file = "factorial_study.csv", show_col_types = FALSE)
 ```
 
-# Data Exploration
+For each main analysis tool - t-test, one-way ANOVA, two-way ANOVA - there are
+a number of steps to be taken:
+
+1. Get an exploratory overview over the data
+2. Check the assumptions of the analysis tool
+3. Implement the analysis tool
+4. Calculate standardized effect sizes
+5. Conduct post-hoc tests, if necessary
+
+Since the commands are basically the same for all tools, we discuss these steps
+more extensively in the beginning when dealing with t-tests, and only provide
+example code later on.
+
+# The data used
 
 As usual, it is a good idea to start with looking at the data sets, such that you know what the data looks like:^[I use the function `kable()` for nicer output in the html file. 
 When you replicate the code in R-Studio its best to skip the part `|> kable()`.]
+
+## The between leadership study
+
+Results of an experiment where the treatment group has received leadership training, and the control group did not. Both groups participated in an exercise where their performance was assessed.
 
 ```{r}
 head(leadership_study_between) |> 
@@ -110,8 +133,29 @@ head(leadership_study_between) |>
 summary(leadership_study_between) |> 
   kable()
 ```
+
+## The within leadership study
+
+The effectiveness of a leadership training was assessed by testing the performance of a group before and after the training.
+
 ```{r}
-glimpse(communication_study) |> 
+head(leadership_study_within) |> 
+  kable()
+```
+
+```{r}
+summary(leadership_study_within) |> 
+  kable()
+```
+
+## The communication study
+
+An experiment where employees communicated only by one of three possible ways 
+(face_to_face, via video calls or via email) and then their work satisfaction was
+assessed.
+
+```{r}
+head(communication_study) |> 
   kable()
 ```
 
@@ -120,8 +164,13 @@ summary(communication_study) |>
   kable()
 ```
 
+## The factorial study
+
+Novice and expert employees received either critical or positive feedback.
+Afterwards, their performance improvement was assessed.
+
 ```{r}
-glimpse(factorial_study) |> 
+head(factorial_study) |> 
   kable()
 ```
 
@@ -133,8 +182,7 @@ summary(factorial_study) |>
 
 **💡 Short recap**: How have these data sets been created? How do they connect to the experimental designs discussed in the lecture?
 
-::: {.callout-tip title="Possible answers", collapse="true"} 
-
+::: {.callout-tip title="Possible answers" collapse="true"} 
 - **Dataset 1**: Classic randomized controlled trial (RCT) with treatment and control groups
 - **Dataset 2**: One-way experimental design with three conditions (between-subjects)
 - **Dataset 3**: 2×2 factorial design allowing us to test main effects and interactions
@@ -230,7 +278,8 @@ ggplot(
 In the following we want to compare the means across independent groups.
 To this end, we may use a t-test. 
 
-But such statistical tests make specific assumptions about the data. If these assumptions are violated, the results may be unreliable or incorrect. Therefore, it is important to check the adequacy of the data first.
+But such statistical tests make specific assumptions about the data. If these assumptions were violated, the results would be unreliable or incorrect. 
+Therefore, it is important to check the adequacy of these assumptions for the data at hand first.
 
 And no worries if the assumptions for one test are violated - usually there are alternatives available.
 
@@ -240,13 +289,13 @@ In the present case, we want to use a simple t-test. This test makes two assumpt
 2. The variances of both groups are the same. 
 
 To test the first assumption, we can use the **Shapiro-Wilk Test for Normality**.
-Here we test the following hypotheses:
+Here we test the following hypothesis:
 
-- $H_0$: The data is normally distributed
-- $H_1$: The data is not normally distributed  
+- $H_0$ : The data is normally distributed
+- $H_1$ : The data is not normally distributed  
 
 Thus, we we get $p > 0.05$, we cannot reject $H_0$. But for smaller $p$-values,
-we should reject $H_0$ and need to look for alternative tests.
+we should reject $H_0$ and need to look for alternatives to the standard t-test.
 
 ```{r}
 leadership_study_between |> 
@@ -262,13 +311,13 @@ leadership_study_between |>
   shapiro.test()
 ```
 
-Good! We cannot reject the hypothesis of normally distributed data!
+Good! We cannot reject the hypothesis of normally distributed data as the $p$-value is much larger than $0.05$.
 
 The next step is to test, whether both groups have the same variance. 
 Levene's test can be used to do exactly this. It tests:
 
-- **$H_0$**: The variances are equal across groups
-- **H_1**: The variances are not equal across groups
+- $H_0$: The variances are equal across groups
+- $H_1$: The variances are not equal across groups
 
 If $p > 0.05$, we do not reject $H_0$ and we can use a simple t-test.
 If we have to reject $H_0$, however, it would be better to use the more robust Welch test.
@@ -277,9 +326,11 @@ If we have to reject $H_0$, however, it would be better to use the more robust W
 car::leveneTest(team_performance ~ group, data = leadership_study_between)
 ```
 
+Again, the $p$-value is much larger than $0.05$, so we can safely continue with the standard t-test.
+
 ## Independent t-test
 
-**Why we use t-tests**: To compare means between two groups when we have continuous data and want to test if there's a statistically significant difference.
+The standard independent t-test is the common tool to compare means between two groups when we have continuous data and want to test if there's a statistically significant difference.
 
 ```{r}
 t_test_result <- t.test(
@@ -290,17 +341,25 @@ t_test_result <- t.test(
 t_test_result
 ```
 
+The very small $p$-value indicates that the difference of 
+`r round(t_test_result$estimate[1] - t_test_result$estimate[2], 2)`
+is highly significant!
+
 ## Effect Size Calculation
 
-**What are effect sizes?** The previous result tells us that the difference in 
+The previous result tells us that the difference in 
 means between the groups appeaers to be about 
 `r round(t_test_result$estimate[1] - t_test_result$estimate[2], 2)`. But is this a lot?
-Effect sizes tell us about the practical significance of our findings - how big is the difference we found? Unlike $p$-values, effect sizes are not influenced by sample size and help us understand if our statistically significant result is also practically meaningful.
-**Cohen's d** is often used: This standardized effect size tells us how many standard deviations apart the two group means are.
+Effect sizes tell us about the practical significance of our findings by relating the absolute numbers to the scale of the measurement. 
 
-- **Small effect**: d ≈ 0.2 (groups overlap about 85%)
-- **Medium effect**: d ≈ 0.5 (groups overlap about 67%)  
-- **Large effect**: d ≈ 0.8 (groups overlap about 53%)
+Unlike $p$-values, effect sizes are not influenced by sample size and help us understand if our statistically significant result is also practically meaningful.
+
+The standard measure is **Cohen's d**: This standardized effect size tells us how many standard deviations apart the two group means are.
+Its interpretation follows a convention:
+
+- **Small effect**: $d\approx 0.2$  (groups overlap about 85%)
+- **Medium effect**: $d\approx 0.5$ (groups overlap about 67%)  
+- **Large effect**: $d\approx 0.8$ (groups overlap about 53%)
 
 The implementation in R is trivial:
 
@@ -309,8 +368,8 @@ cohens_d <- effectsize::cohens_d(team_performance ~ group, data = leadership_stu
 print(cohens_d)
 ```
 
-The key value here is Cohen's of `r round(cohens_d$Cohens_d, 2)`! 
-(For the interpretation see the exercise below).
+The key value here is Cohen's d of `r round(cohens_d$Cohens_d, 2)`! 
+This suggests a large and practically meaningful effect!
 
 ## Paired t-test Example
 
@@ -318,21 +377,40 @@ Next, we might want to look at our research question from a slightly different a
 Rather than the between-subject design from above, we now take a *within-subject* view:
 to this end, we want to check whether the training had an effect on those people who were in the training (treatment) group by comparing their performance before and after the training.
 
-To this end, we focus on the training group, and then
+To this end, we use the data set `leadership_study_within`, and then
 use the function `t.test()` with the argument `paired = TRUE`.
 This makes sure we are using the version of the test for the within-subjects context:
 
 ```{r}
-training_group <- leadership_study_within %>% filter(group == "training")
-paired_result <- t.test(training_group$post_performance, 
-                       training_group$pre_performance,
-                       paired = TRUE)
+paired_result <- t.test(
+  leadership_study_within$post_performance, 
+  leadership_study_within$pre_performance,
+  paired = TRUE)
 print(paired_result)
 ```
 
-**🎯 Exercise (5 minutes)**: Interpret the results. What can we conclude about the effectiveness of leadership training?
+As above, we should also compute standardized effect sizes. 
+There are two options: using the t-test object directly, or using the raw data.
+If you do the latter, make sure to set `paired=TRUE` to use the correct version
+for the within context:
 
-::: {.callout-tip title="Possible answers", collapse="true"} 
+```{r}
+cohens_d_within_a <- effectsize::cohens_d(paired_result)
+print(cohens_d_within_a)
+```
+
+```{r}
+cohens_d_within_b <- effectsize::cohens_d( 
+  leadership_study_within$post_performance, 
+  leadership_study_within$pre_performance, 
+  paired = TRUE)
+print(cohens_d_within_b)
+```
+
+
+**🎯 Exercise (5 minutes)**: Interpret the results of the test above. What can we conclude about the effectiveness of leadership training?
+
+::: {.callout-tip title="Possible answers" collapse="true"} 
 - **Statistical significance**: If $p < 0.05$, training significantly improved performance; since $p\approx 0$, the training has a highly significant effect
 - **Effect size interpretation**: Cohen's d is large, so we have a large effect. This suggests the effect of the training is also practically meaningful.
 - **Confidence interval**: If the CI doesn't include 0, we're confident there's a real difference; even if we are very conservative, we would still expect a 10 point improvement of the training.
@@ -419,7 +497,7 @@ In fact, we are testing the same assumptions as in the t-test case:
 - **Normality of Residuals**: For ANOVA, we check if the residuals (not the raw data) are normally distributed.
 
 
-**Homogeneity of Variances**: ANOVA assumes that the variance of the dependent variable is equal across all groups.
+- **Homogeneity of Variances**: ANOVA assumes that the variance of the dependent variable is equal across all groups.
 
 
 Let us start with testing the normality of the residuals. We again use the Shapiro test, which tests the following hypothesis:
@@ -455,6 +533,8 @@ Again, the Null cannot be rejected and we can continue with the ANOVA as planned
 Before we enter the actual analysis we can also create the common diagnostics plots:
 
 ```{r}
+#| warning: false
+#| message: false
 model_data <- augment(aov_model) %>%
   mutate(
     sqrt_abs_resid = sqrt(abs(.std.resid)),
@@ -531,7 +611,7 @@ anova(lm_model)
 - The overall $p$-value is extremely small, so the Null hypothesis of no difference between the groups should definitely be rejected
 - In other words: Communication method significantly affects satisfaction scores
 - This means that at least one communication method produces significantly different satisfaction scores than the others
-- But the result does not tell us which specific methods differ from each other (need post-hoc tests)
+- But the result does not tell us which specific methods differ from each other (need post-hoc tests, see below)
 - The result also does not contain information about the direction of differences (which method is best/worst) or the effect size
 
 ## Detour: categorical variables in Regression
@@ -599,7 +679,6 @@ Remember that:
 - **Small effect**: η² ≈ 0.01 (1% of variance)
 - **Medium effect**: η² ≈ 0.06 (6% of variance)
 - **Large effect**: η² ≈ 0.14 (14% of variance)
-- **Example**: η² = 0.23 means communication method explains 23% of satisfaction variance
 
 In our case:
 
@@ -607,6 +686,10 @@ In our case:
 eta_squared <- effectsize::eta_squared(anova_result)
 print(eta_squared)
 ```
+
+$\eta=$ `r round(eta_squared$Eta2, 2)`  means communication method explains 
+`r round(eta_squared$Eta2, 2)*100`
+% of the variance of satisfaction scores.
 
 ## Post-Hoc Comparisons
 
@@ -640,8 +723,47 @@ But there are no significant differences between video calls and face-to-face ($
 
 Thus, both face-to-face and video call communication methods produce significantly higher satisfaction scores than email, but face-to-face and video call don't differ significantly from each other.
 
+## Detour: Standardized differences across groups
 
-# Part 4: Factorial Designs (20 minutes)
+Now we might want to standardize the differences between groups.
+Otherwise it is hard to judge whether they are also practically meaningful.
+Unfortunately, I am not aware of a function in any of the common packages that
+does this.
+
+But we can do it manually. We first need the mean squared error from the ANOVA summary object:
+
+```{r}
+summary(anova_result)
+```
+
+This is the `1.753`! The square root is the pooled standard deviation:
+
+```{r}
+pooled_sd <- sqrt(1.753)
+```
+
+This is how we normalize the differences from our Tukey table above:
+
+```{r}
+tukey_differences <- c(
+  face_to_face_vs_email = tukey_result$communication_method[1],
+  video_call_vs_email = tukey_result$communication_method[2],
+  video_call_vs_face_to_face = tukey_result$communication_method[3]
+)
+pairwise_cohens_d_values <- tukey_differences / pooled_sd
+
+tibble(
+  "Comparison"=names(pairwise_cohens_d_values), 
+  "Standardized difference" = pairwise_cohens_d_values
+  ) |> 
+  kable()
+```
+
+So the two statistically significant differences are large effects 
+(so also practically significant), whereas the insignificant difference
+would only have counted as small to medium effect.
+
+# Part 4: Factorial Designs
 
 For this last part we consider the following research question:
 
@@ -733,20 +855,13 @@ Their interpretation is as follows:
 :::
 
 
+From this output we see that all three effects (both main effects and the interaction) are non-significant, suggesting that:
 
+- Neither feedback type nor experience level significantly affects performance improvement
+- The combination of these factors doesn't create any synergistic effects
+- The observed differences in your sample means are likely due to random variation rather than true population differences
 
-## Effect Sizes for Factorial Design
-
-Effect sizes are computed in the same way:
-
-```{r}
-eta_squared_factorial <- effectsize::eta_squared(factorial_model)
-print(eta_squared_factorial)
-```
-
-
-## Advanced Visualization of factorial designs
-
+In fact, this is also what a visual inspection would suggest:
 
 ```{r}
 ggplot(
@@ -785,33 +900,6 @@ ggplot(
   ) 
 ```
 
-
-**🎯 Intermediate exercise**: 
-1. Interpret the main effects and interaction
-2. What practical recommendations would you make based on these results?
-3. How does this connect to the i-frame vs s-frame discussion from the lecture?
-
-::: {.callout-tip title="Possible answers", collapse=} 2
-**1. Interpretation:**
-- **Main effect of feedback**: If significant, one type of feedback is generally better
-- **Main effect of experience**: If significant, novices and experts respond differently overall
-- **Interaction effect**: If significant, optimal feedback depends on experience level
-- **Visual cues**: Parallel lines = no interaction; crossing lines = interaction present
-
-**2. Practical recommendations:**
-- **If interaction significant**: Customize feedback approach based on experience level
-- **For novices**: Might need more positive, encouraging feedback
-- **For experts**: Might benefit from more critical, detailed feedback
-- **Training programs**: Should differentiate based on employee experience
-
-**3. i-frame vs s-frame connection:**
-- **i-frame approach**: Train managers to give different feedback to different employees
-- **s-frame approach**: Change organizational culture and systems to support appropriate feedback
-- **Individual focus**: Coaching managers on feedback skills
-- **Structural focus**: Performance management systems that account for experience levels
-:::
-
----
 
 # Part 5: Power Analysis and Sample Size Planning
 
@@ -900,16 +988,19 @@ kable(power_results)
 
 
 
-##ANOVA 
+## ANOVA 
 
 Assume we are planning a communication study with 3 groups and we want to 
 detect a medium effect (f = 0.25) with 80% power. 
 Note that what was Cohen's d for the t-test case, has now become Cohens f for the ANOVA case:
 
 ```{r}
-sample_size_anova <- pwr.anova.test(k = 3, f = 0.25, sig.level = 0.05, power = 0.8)
+sample_size_anova <- pwr.anova.test(
+  k = 3, f = 0.25, sig.level = 0.05, power = 0.8)
 print(sample_size_anova)
 ```
+
+Aside from that it works the same way as above!
 
 # Summary and Key Takeaways
 
@@ -923,9 +1014,9 @@ print(sample_size_anova)
 7. **Post-hoc tests** control for multiple comparisons when making pairwise comparisons
 8. **Factorial designs** allow detection of interactions between factors
 
-### Key Decision Points in Analysis
+## Key decisions to be made
 - **Assumptions violated**: Choose appropriate alternatives (Welch's tests, transformations, non-parametric)
 - **Multiple groups**: ANOVA preferred over multiple t-tests
-- **Factorial designs**: Allow testing of interactions between factors
+- **Factorial designs**: Allow testing of interactions between factors but requires two-way ANOVA
 - **Effect size interpretation**: Always consider practical alongside statistical significance
 - **Post-hoc testing**: Required when ANOVA is significant to identify which groups differ

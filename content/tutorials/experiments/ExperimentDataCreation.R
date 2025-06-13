@@ -24,7 +24,8 @@ leadership_study_within <- leadership_study_between |>
       team_performance, NA
       ) 
     ) |> 
-  filter(group=="training")
+  filter(group=="training") |> 
+  select(participant_id, pre_performance, post_performance)
 
 
 write_csv(leadership_study_between, file = here("content/tutorials/experiments/leadership_study_between.csv"))
