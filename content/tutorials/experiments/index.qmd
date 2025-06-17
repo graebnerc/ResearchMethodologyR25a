@@ -810,22 +810,31 @@ ggplot(
 
 This already gives us a good visual impression of the results, but we also want to analyze the results quantitatively.
 
-### Two-Way ANOVA
+## Two-Way ANOVA - Checking assumptions
 
 The factorial design allows us to consider interaction effects among factors. 
 But to detect such interaction, we must use a two-way ANOVA, not the traditional one!
 
-To do this, we still use the same function `aov()` (or `lm()`), but add the additional factor to the formula:
+In a first step we need to again check the assumptions of the two-way ANOVA, which
+are in fact the same as in the previous case:
+
+1. Normality of *residuals* (not raw data)
+2. Homogeneity of variances (across *all* groups)
+
+Regarding the first assumption, we again do the Shapiro-Wilk test on the residuals.
+To get the residuals we need to fit the model first.
+For this purpose, we  use the same function `aov()` (or `lm()`) as previously, 
+but add the additional factor to the formula:
 
 ```{r}
 factorial_model <- aov(
   formula = performance_improvement ~ feedback_type * experience_level, 
   data = factorial_study)
-summary(factorial_model)
-
 ```
 
-And while the classical ANOVA was the same as simple linear regression with categorial variables, 
+::: {.callout-tip title="Two-way ANOVA and linear regression"}
+
+While the classical ANOVA was the same as simple linear regression with categorial variables, 
 two-way ANOVA is the same as *multiple* regression with interaction effects:
 
 ```{r}
@@ -833,6 +842,85 @@ lm_factorial <- lm(performance_improvement ~ feedback_type * experience_level,
                    data = factorial_study)
 anova(lm_factorial)
 ```
+
+is the same as:
+
+```{r}
+summary(factorial_model)
+```
+
+:::
+
+We then extract the residuals using the function `residuals()` and pass them to the `shapiro.test()`:
+```{r}
+shapiro.test(x = residuals(factorial_model))
+```
+
+Since we test the same assumptions as above, $p>0.05$ means that we cannot reject the
+$H_0$ of normally distributed residuals.
+
+Let us then turn to the second assumption: Homogeneity of variances across *all* groups.
+The syntax remains basically the same as above:
+
+```{r}
+car::leveneTest(
+  performance_improvement ~ feedback_type * experience_level, 
+  data = factorial_study)
+```
+
+Oh no! This time $p<0.05$, so we need to reject $H_0$ of equal variances, meaning that some cells (in the sense of factor-combinations) have more variation than others.
+
+
+From this it becomes clear that the variability for the groups receiving critical feedback is much higher!
+
+
+::: {.callout-tip title="Understanding the Variance Pattern"}
+
+We could have a look at which cells are affected like this:
+
+```{r}
+factorial_study %>%
+  group_by(feedback_type, experience_level) %>%
+  summarise(
+    n = n(),
+    variance = var(performance_improvement),
+    sd = sd(performance_improvement),
+    .groups = 'drop'
+  ) %>%
+  kable(digits = 3)
+```
+
+This suggests that some people respond very well to criticism, others very poorly and that there are important differences in how people handle criticism:
+
+- Critical feedback cells: High variance (14-17) suggests people respond very differently to criticism
+- Positive feedback cells: Low variance (5-7) suggests people respond more consistently to praise
+
+This example shows how testing assumptions is not only relevant for its own sake, but also hints an interesting results themselfes. 
+
+The higher variance in the critical feedback cells suggests that critical feedback is "riskier" - it might help some people a lot but hurt others, but that positive feedback is more predictable in its effects.
+:::
+
+In effect this means that the results of the standard two-way ANOVA would be less reliable.
+But that mean our analysis must end? Fortunately not! 
+There are versions of the two-way ANOVA that are robust to unequal variances!
+
+To implement such robust version we use the function `Anova()` from the `car` package, which takes the resul of the `aov()` function above.
+But it is important to specify `type = "III"` as this tells `R` to use the version that takes into account unequal variances:
+
+```{r}
+factorial_model_robust <- car::Anova(factorial_model, type = "III")
+```
+
+
+
+## Two-Way ANOVA: Interpretation
+
+Let us now inspect the results of the two-way ANOVA:
+
+```{r}
+factorial_model_robust
+```
+
 
 
 ::: {.callout-tip collapse="true"}
@@ -850,8 +938,6 @@ Their interpretation is as follows:
 - **feedback_typepositive** = main effect of positive vs critical for experts only
 - **experience_levelnovice** = main effect of novice vs expert for critical feedback only
 - **interaction** = additional effect of being novice AND receiving positive feedback
-
-
 :::
 
 
