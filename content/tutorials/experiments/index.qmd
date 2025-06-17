@@ -915,7 +915,12 @@ factorial_model_robust <- car::Anova(factorial_model, type = "III")
 
 ## Two-Way ANOVA: Interpretation
 
-Let us now inspect the results of the two-way ANOVA:
+Let us now inspect the results of the two-way ANOVA.
+We will pay particular attention to the following aspects:
+
+1. **Main effect of feedback_type**: Overall difference between positive vs critical
+2. **Main effect of experience_level**: Overall difference between novice vs expert
+3. **Interaction**: Does the effect of feedback depend on experience level?
 
 ```{r}
 factorial_model_robust
