@@ -4,17 +4,9 @@ author: Claudius Gräbner-Radkowitsch
 date: '2025-03-14'
 documentclass: scrartcl
 format: 
-  html:
-    theme: readable
-    highlight: tango
+  html: # Settings set in _metadata.yml
     toc: true
-    toc_depth: 2
-    number_sections: true
   pdf:
-    papersize: a4
-    toc: true
-    toc-depth: 2
-    number-sections: true
     include-in-header: 
       text: |
         \usepackage{lmodern} 

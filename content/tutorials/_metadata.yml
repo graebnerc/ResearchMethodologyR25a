@@ -1,8 +1,8 @@
 # This metadata file refers to the tutorial posts
 # options specified here will apply to all posts in this folder
 
-# enable banner style title blocks 
-title-block-banner: true
+# true to enable banner style title blocks (but need to work on this)
+title-block-banner: false
 
 # freeze prevents posts from re-rendering unless explicitly told to do so 
 #  (for more, see https://quarto.org/docs/projects/code-execution.html#freeze)

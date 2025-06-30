@@ -3,8 +3,8 @@
 # prevents posts from re-rendering unless explicitly told to do so (for more, see https://quarto.org/docs/projects/code-execution.html#freeze)
 freeze: true
 
-# enable banner style title blocks (see https://quarto.org/docs/authoring/title-blocks.html)
-title-block-banner: true
+# true to enable banner style title blocks (but need to work on this)
+title-block-banner: false
 
 author:
   - name: Claudius Gräbner-Radkowitsch
