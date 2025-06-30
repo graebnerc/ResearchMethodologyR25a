@@ -164,7 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">25 04 2024</p>
+        <p class="date">28 03 2025</p>
       </div>
     </div>
     
@@ -337,30 +337,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Preface: Working directory and paths</h1>
 <p>The <a href="https://en.wikipedia.org/wiki/Working_directory">working directory</a> is a folder on the computer which R uses as an default anchor for all file paths used to accesses input, such as data sets, or to store output. The default working directory the user directory, but it can be changed. We can display the current working directory using the <code>getwd()</code> function. In my case the working directory looks like this:</p>
 <pre><code>/Users/graebnerc/Teaching/DataScience22/</code></pre>
-<p>Now assume we produced a plot in our current session and want to save it using the function <code>ggplot2::ggsave()</code>. As we already learned, this function takes, among others, an argument <code>filename</code> that specifies the name of the file that is meant to contain the plot. Now if I were to tell R to save the plot under the name <code>test.pdf</code> like this:</p>
+<p>Now assume we produced a plot in our current session and want to save it using the function <code>ggplot2::ggsave()</code>. You learn (or have learned) in the session on <a href="content/material/session06.qmd">visualization</a> that this function takes, among others, an argument <code>filename</code> that specifies the name of the file that is meant to contain the plot. Now if I were to tell R to save the plot under the name <code>test.pdf</code> like this:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"test.pdf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>R would save it in the following location:</p>
 <pre><code>/Users/graebnerc/Teaching/DataScience22/test.pdf</code></pre>
 <p>As you can see R uses the current working directory as an ‘anchor’, and all paths provided are <em>relative</em> to this anchor. This means that, assuming that in our working directory exists a folder called <code>output</code>, we could save our file <code>test.pdf</code> in this folder by making the following function call:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"output/test.pdf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Viewed upon from a global perspective the file is saved here:</p>
 <pre><code>/Users/graebnerc/Teaching/DataScience22/output/test.pdf</code></pre>
 <p>Since the path provided is <em>relative</em> to the working directory, we call paths such as those we would have passed to <code>ggsave()</code> above as <strong>relative paths</strong>.</p>
 <p>Alternatively, we could also provide R directly with the <em>absolute path</em>. In this case, we would need to type the complete path, starting from the <a href="https://de.wikipedia.org/wiki/Stammverzeichnis">root directory</a> of the computer. Rather then assuming the absolute path implicitly as above, we would need to do the following call:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"/Users/graebnerc/Teaching/DataScience22/output/test.pdf"</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>When we use absolute paths, we can save a file at any position on the computer we want. For instance, we do the following</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"/Users/graebnerc/GreatPlots/test.pdf"</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>to save the file here:</p>
 <pre><code>/Users/graebnerc/GreatPlots/test.pdf</code></pre>
@@ -437,28 +449,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>As described above, you should always use <em>relative</em> paths in everyday work. In two situations, however, the use of relative paths can be problematic (1) when collaborating with others, and (2) when using R Markdown.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <p>Suppose, for instance, that Birte and Claudius are working together on an R script. The following line appears in the code:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"output/nice_plot.pdf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>This code saves a plot in a pdf file in the subdirectory <code>output/</code>. For the file to be saved in the right directory, both Birte and Claudius must use the same working directory, otherwise the relative path would point to different locations on their computers (see the first section above).</p>
 <p>Alternatively, Claudius could use an absolute path:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"/Users/claudius/projects/R-Projekt-Birte/output/nice_plot.pdf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>While this makes sure that the file will be saved in the right place on <em>his</em> computer, irrespective of his working directory, the likelihood that this code also works when executed on Birte’s computer is basically zero per cent: almost certainly the script is saved on a different location on her computer. She would then need to adjust the absolute path to her needs, e.g.&nbsp;to:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"/Users/Birte/projects/R-Projekt-Claudius/output/nice_plot.pdf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>This code, of course, would not work on Claudius’ computer. A dilemma. One remedy would be to adjust the script before using it. But this would be annoying and antiquated. It would also be very bad coding style: you should write your code always in a way that it works on different computers. In the end, collaboration should be fun, not pain.</p>
 <p>Fortunately, the problem can be solved easily using the function <code>here::here()</code>. Here <em>both</em> of them simpy write:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"output/nice_plot.pdf"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>The function <code>here::here()</code> automatically constructs an absolute path tailored to the needs of their computers. When Claudius would call</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"output/nice_plot.pdf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>the output would be:</p>
 <pre><code>"/Users/claudius/projects/R-Projekt-Birte/output/nice_plot.pdf"</code></pre>
@@ -468,12 +495,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For <code>here::here()</code> to work, however, you need to clarify the position of your script relative to the root directory of your project at the very beginning of your script. By ‘root directory of your project’ I mean the name of the directory containing your <code>.Rproj</code> file.</p>
 <p>To clarify the relative position of the script, you should add the following function call <em>in the first line of your script</em>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"Relative path to script."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>In the case you are working on the script <code>set_up_data.R</code>, which is located correctly in the <code>R</code>-directory as follows:</p>
 <p>Then the first line of <code>set_up_data.R</code> should be:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"R/set_up_data.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>This ensures that subsequent calls of <code>here::here()</code> construct the correct absolute paths.</p>
 <blockquote class="blockquote">

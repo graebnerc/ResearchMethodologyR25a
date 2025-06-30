@@ -1,14 +1,34 @@
+# This metadata file refers to the tutorial posts
 # options specified here will apply to all posts in this folder
 
-# prevents posts from re-rendering unless explicitly told to do so (for more, see https://quarto.org/docs/projects/code-execution.html#freeze)
-freeze: true
-
-# enable banner style title blocks (see https://quarto.org/docs/authoring/title-blocks.html)
+# enable banner style title blocks 
 title-block-banner: true
 
-author:
-  - name: Claudius Gräbner-Radkowitsch
-    url: https://claudius-graebner.com/
-    orcid: 0000-0003-4065-4722
-    affiliation: EUF and JKU
-    affiliation-url: https://www.uni-flensburg.de/en/pluralist-economics
+# freeze prevents posts from re-rendering unless explicitly told to do so 
+#  (for more, see https://quarto.org/docs/projects/code-execution.html#freeze)
+# true: never re-render during project render
+# auto: re-render only when source changes
+execute: 
+  freeze: auto
+  message: false
+  warning: false
+  error: true
+
+format: 
+  html:
+    theme:
+      light: 
+        - journal
+        - ../../../css/custom.scss # Change the default colour
+    highlight: tango
+    toc: true
+    toc_depth: 2
+    toc-location: right
+    number_sections: true
+    code-fold: true
+    code-summary: "Show R code"
+  pdf:
+    papersize: a4
+    toc: true
+    toc-depth: 2
+    number-sections: true

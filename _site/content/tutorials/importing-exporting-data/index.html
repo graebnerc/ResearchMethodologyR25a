@@ -193,7 +193,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">25 04 2024</p>
+        <p class="date">16 05 2025</p>
       </div>
     </div>
     
@@ -351,9 +351,12 @@ window.Quarto = {
 
 <p><strong>Packages used in this tutorial:</strong></p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
@@ -377,9 +380,12 @@ window.Quarto = {
 </div>
 <p>In the following we assume we work in the file <code>importing.R</code>, the first lines of which should contain</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>here<span class="sc">::</span><span class="fu">i_am</span>(<span class="st">"R/importing.R"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>If the data file is not too large it is a good idea to inspect the raw file using the R-Studio file preview (for larger files it is usually better to open the file using a text editor, such as Emacs or TextEdit):</p>
 <div class="cell" data-layout-align="center">
@@ -398,10 +404,13 @@ AT,2013,53.44
 AT,2014,53.38</code></pre>
 <p>This is a very standard <code>csv</code>-file: we see that there are three columns, all of them separated with a comma. Moreover, the third row contains decimal numbers where the decimal sign is a dot. This is the standard case, and it aligns well with all the default values for the optional arguments of <code>data.table::fread()</code>. Thus, we only need to specify the single mandatory argument of this function. It is called <code>file</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and should be the relative path to the file. In our case:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.csv"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(<span class="at">file =</span> file_path)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_data)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>exp_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -431,16 +440,22 @@ AT;2013;53,44
 AT;2014;53,38</code></pre>
 <p>Sometimes, <code>data.table::fread()</code> detects such cases automatically and adjusts the values for the optional arguments implicitly. But it is always better to explicit and to specify decimal signs and column separators explicitly! This also increases the reading speed of <code>data.table::fread()</code>. To set them explicitly, we use the arguments <code>sep</code> and <code>dec</code> as follows:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> file_path,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sep =</span> <span class="st">";"</span>, </span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dec =</span> <span class="st">","</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>After completing the function call we should always inspect the imported object to make sure everything went well. We might have a look at the first lines:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_data)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(exp_data, <span class="at">n =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   iso2c  year exports
@@ -451,7 +466,10 @@ AT;2014;53,38</code></pre>
 </div>
 <p>Or use <code>dplyr::glimpse()</code> or <code>str()</code>:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(exp_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [3 × 3] (S3: tbl_df/tbl/data.frame)
  $ iso2c  : chr [1:3] "AT" "AT" "AT"
@@ -478,10 +496,13 @@ AT;2014;53,38</code></pre>
 0105,-0.17</code></pre>
 <p>Assuming the file is called <code>exp_data_hs.csv</code> and also is stored in <code>data/tidy/</code>, we might try to import it using the default argument values:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data_hs.csv"</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>exp_prod_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(<span class="at">file =</span> file_path)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>exp_prod_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_prod_data)</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>exp_prod_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -497,11 +518,14 @@ AT;2014;53,38</code></pre>
 </div>
 <p>As you can see, <code>data.table::fread()</code> interpreted the column <code>commoditycode</code> as <code>double</code>. But since numbers do not have leading zeros, these are removed <em>silently</em>, meaning that <code>R</code> does not issue a warning message. This is dangerous and might come with serious misinterpretations later on. To avoid this, you must choose the column types yourself via the <code>colClasses</code> argument, by simply specifying a vector with the data types:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data_hs.csv"</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>exp_prod_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> daten_pfad, <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="st">"character"</span>, <span class="st">"double"</span>)</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_prod_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -524,11 +548,14 @@ AT;2014;53,38</code></pre>
 <p>Thus, it is advisable to read in the first 3-5 rows, inspect them, and then read in the whole data set with the right specification for <code>colClasses</code>.</p>
 <p>You can load only the first <span class="math inline">\(n\)</span> rows by using the argument <code>nrows</code>:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.csv"</span>), </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrows =</span> <span class="dv">1</span>)</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>exp_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -549,10 +576,13 @@ AT,2014,53.38
 </code></pre>
 <p>In this case, you definitely want to ignore the first three rows when importing the data set. Otherwise you will get hodgepodge:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data_header.csv"</span>)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -564,11 +594,14 @@ AT,2014,53.38
 </div>
 <p>To ignore the first three rows just set <code>skip</code> to <code>3</code>:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data_header.csv"</span>), </span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip =</span> <span class="dv">3</span>)</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>exp_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -586,6 +619,8 @@ AT,2014,53.38
 <h2 class="anchored" data-anchor-id="specify-columns-that-should-not-be-read-using-select-and-drop">Specify columns that should (not) be read using <code>select</code> and <code>drop</code></h2>
 <p>Sometimes you only want to read in a certain selection of columns. This can also save a lot of time when working with large data sets. In the following example we only want to import the columns <code>year</code> and <code>exports</code>:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.csv"</span>)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrows =</span> <span class="dv">1</span>, </span>
@@ -593,6 +628,7 @@ AT,2014,53.38
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_data)</span>
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>exp_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -605,6 +641,8 @@ AT,2014,53.38
 </div>
 <p>If you want to manually specify column types, you can do so without using <code>colClasses</code> by passing a named vector to <code>select</code>:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.csv"</span>)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrows =</span> <span class="dv">1</span>, </span>
@@ -612,6 +650,7 @@ AT,2014,53.38
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_data)</span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>exp_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -624,6 +663,8 @@ AT,2014,53.38
 </div>
 <p>Alternatively, we can also specify columns to be ignored via <code>drop</code>:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.csv"</span>)</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrows =</span> <span class="dv">1</span>, </span>
@@ -631,6 +672,7 @@ AT,2014,53.38
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>exp_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">as_tibble</span>(exp_data)</span>
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>exp_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -649,14 +691,23 @@ AT,2014,53.38
 <p>First, <code>R</code> has two ‘in-house’ formats that while being extremely well suited for storing larger data, can only be opened via <code>R</code>. These files have the ending <code>.rds</code>/<code>.Rds</code>, <code>.RData</code>, or <code>.Rda</code> (where <code>.Rda</code> is just an abbreviation for <code>.RData</code>).</p>
 <p>Generally, <code>.Rds</code> store individual R-objects, such as single atomic vectors, <code>list</code>s, or <code>data.frame</code>s. Such files can be read with the function <code>readRDS()</code>, which takes a single argument - the name of the <code>.Rds</code>-file - and returns the object stored in the file:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>data_set <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.Rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>By contrast, <code>.RData</code>-files can contain more than one objects. Moreover, the corresponding import function <code>load()</code> does not return an object to which you can assign a name. Instead, the objects retain the name with which they were originally saved and are available immediately after calling <code>load()</code>: In the following example, import two objects called <code>test_dat</code> and <code>test_vec</code>:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/test_daten.RData"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>test_dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  a b
 1 1 3
@@ -664,7 +715,10 @@ AT,2014,53.38
 </div>
 </div>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>test_vec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Test vector"</code></pre>
 </div>
@@ -672,8 +726,11 @@ AT,2014,53.38
 <p>The use of <code>.RData</code> is particularly useful whenever you want to store several objects and if some of these objects are not data sets, for which other formats would be readily available.</p>
 <p>A format often used in economics is the native format of the commercial software <a href="https://de.wikipedia.org/wiki/Stata">STATA</a>. These file end with <code>.dta</code>. To read files in this format you may use the function <code>read_dta()</code> from the package <a href="https://github.com/tidyverse/haven">haven</a>, which accepts the filename via the argument <code>file</code>:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>dta_file <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/exp_data.dta"</span>)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>dta_data <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="at">file =</span> dta_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>The package <a href="https://github.com/tidyverse/haven">haven</a> actually provides a number of other functions that allow you to read (and write) in a number of data formats used by commercial software packages such as SAS or SPSS.</p>
 </section>
@@ -684,31 +741,43 @@ AT,2014,53.38
 <p>The fastest and, in my opinion, by far the best function for writing <code>csv</code>.files is the function <code>fwrite()</code> from the package <code>data.table</code> - think of it as the sister to <code>data.table::fread()</code>.</p>
 <p>To illustrate how to use it, suppose we have a data set <code>test_data</code> that we want to store in the directory subfolder <code>data/tidy</code> as <code>test_data.csv</code>. This is easily done with <code>data.table::fwrite()</code>:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/test_data.csv"</span>)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>data.table<span class="sc">::</span><span class="fu">fwrite</span>(<span class="at">x =</span> test_data, <span class="at">file =</span> file_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>In addition to the object to be written as the first argument (<code>x</code>), you also need to specify the argument <code>file</code>, which determines the name and path of the file to be written. <code>data.table::fwrite()</code> accepts some more optional arguments, but in most cases you will not need them. If you are interested, just have a look at the help function!</p>
 <p>The R-specific formats <code>.Rdata</code> and <code>.Rds</code> have speed and compression advantages over the <code>csv</code> format, and remain fully platform-compatible. Their biggest drawback, however, is that they can only be used by other R-users. Thus, before using them you should make sure that all potential users of your data also use <code>R</code>. In this case you can save a single object in an <code>.Rds</code>-file by using the function <code>saveRDS()</code> with the arguments <code>object</code> and <code>file</code>:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> test_data,  </span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/test_data.Rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>In addition, you may use the optional argument <code>compress</code> to select the compression type: <code>gz</code> is the fastest, <code>bz</code> the strongest, and <code>xz</code> represents the middle ground.</p>
 <p>If you want to save several objects at once you can do this using the format <code>.RData</code>. The corresponding function is <code>save()</code>. Although you can simply pass all the objects you want to save as the first arguments to the function, it is more transparent to do this via the <code>list</code> argument. The following code stores the two objects <code>test_data</code> and <code>data</code> in the file <code>"data/tidy/datacollection.Rdata"</code>:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">list=</span><span class="fu">c</span>(<span class="st">"test_data"</span>, <span class="st">"daten"</span>), </span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">file=</span>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/datensammlung.RData"</span>)</span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Like <code>saveRDS()</code>, <code>save()</code> allows you to select the compression algorithm via the <code>compress</code> argument. Moreover, you may control the compression level via the optional argument <code>compression_level</code>. Possible values range from <code>1</code> (fast, but little compression) to <code>9</code> (slow, but strong compression).</p>
 <p>The final format considered is the <a href="https://de.wikipedia.org/wiki/Stata">STATA</a>-specific format <code>.dta</code>. To store data in this format you may use the function <code>write_dta()</code> from the package <a href="https://github.com/tidyverse/haven">haven</a>:</p>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>haven<span class="sc">::</span><span class="fu">write_dta</span>(</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> test_data, </span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">path =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data/tidy/test_data.dta"</span>)</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>For <code>SAS</code> and <code>SPSS</code> formats similar functions are also provided by the <a href="https://github.com/tidyverse/haven">haven</a> package.</p>
 <blockquote class="blockquote">

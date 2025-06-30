@@ -330,10 +330,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="packages-and-data-used" class="level1">
 <h1>Packages and data used</h1>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>The data sets used in these notes are available from the <a href="data-examples.zip">course homepage</a>:</p>
 <ul>
@@ -399,7 +402,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>To make data wider we use the function <code>tidyr::pivor_wider()</code>.</p>
 <p>Assume that we start with our long data set introduced above and that this data set is bound to the name <code>data_raw_long</code>.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(data_raw_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 8
 Columns: 4
@@ -417,11 +423,14 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 </ul>
 <p>In the present case, the call would look like the following:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data_raw_wide <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data_raw_long, </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_from =</span> <span class="st">"variable"</span>, </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_from =</span> <span class="st">"value"</span>)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>data_raw_wide</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   country  year unemp    gdp
@@ -446,12 +455,15 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 <p>When specifying the argument <code>cols</code> you have several possibilities. The simplest variant is to pass a character vector with the column names. But note that you can save a lot of writing by using so called <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html">selection helpers</a>, a very useful tool we will learn about later.</p>
 <p>In our case this amounts to:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data_raw_long <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data_raw_wide, </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"unemp"</span>, <span class="st">"gdp"</span>), </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">"indicator"</span>, </span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_to =</span> <span class="st">"values"</span>)</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>data_raw_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 4
   country  year indicator   values
@@ -475,9 +487,12 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 <p>In other words, <code>x %&gt;% f(y)</code> (or <code>x %&gt;% f(., y)</code>) is equivalent to <code>f(x, y)</code>.</p>
 <p>But lets look at an example! Assume we start with the following data set:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pipe_data_raw <span class="ot">&lt;-</span> data_raw <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, year, gdp, unemp)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>pipe_data_raw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year      gdp unemp
     &lt;char&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;
@@ -501,6 +516,8 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 </div>
 <p>We can do this by first making the data longer, and then wider. We could do this explicitly:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pipe_data_1 <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pipe_data_raw, </span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"gdp"</span>, <span class="st">"unemp"</span>)))</span>
@@ -509,9 +526,12 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pipe_data_1,</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_from =</span> <span class="st">"year"</span>, </span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_from =</span> <span class="st">"value"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>But we can also write this code more concisely using the pipe:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pipe_data_final <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pipe_data_raw, </span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"gdp"</span>, <span class="st">"unemp"</span>))) <span class="sc">%&gt;%</span></span>
@@ -519,15 +539,19 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> .,</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_from =</span> <span class="st">"year"</span>, </span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_from =</span> <span class="st">"value"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Or, since the pipe carries the intermediate result implicitly as the first argument to the function on the next line we can space the <code>data = .</code>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pipe_data_final <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pipe_data_raw, </span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"gdp"</span>, <span class="st">"unemp"</span>))) <span class="sc">%&gt;%</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_from =</span> <span class="st">"year"</span>, </span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_from =</span> <span class="st">"value"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>The <code>%&gt;%</code>-pipe allows you to write very readable code, so make sure you use it often. But for code development it might be nevertheless helpful to write the intermediate steps explicitly.</p>
 </section>
@@ -539,7 +563,10 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 <p>The function <code>dplyr::mutate()</code> is used both for manipulating existing columns as well as creating new columns. In the first case the name of the column that the result of <code>dplyr::mutate()</code> is written into already exists, in the second case we just use a new name.</p>
 <p>Consider the following data set with the unemployment rate as an example:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data_unemp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
    year Germany Greece
@@ -550,11 +577,14 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 </div>
 <p>Assume we want to express the percentage values via decimal numbers and, to this end, divide the values in the columns <code>Germany</code> and <code>Greece</code> by 100. We can use <code>dplyr::mutate()</code> to achieve this:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>data_unemp <span class="sc">%&gt;%</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Germany =</span> Germany<span class="sc">/</span><span class="dv">100</span>,</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Greece =</span> Greece<span class="sc">/</span><span class="dv">100</span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
    year Germany Greece
@@ -565,10 +595,13 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 </div>
 <p>But we could use basically the same code to create a new column. Assume, for instance, we want a new column containing the difference between the unemployment rates:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data_unemp <span class="sc">%&gt;%</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Difference =</span> Greece <span class="sc">-</span> Germany</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
    year Germany Greece Difference
@@ -585,7 +618,10 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 <p>As always, the first argument to <code>dplyr::filter()</code> is <code>data</code>, i.e.&nbsp;the data set on which you want to operate. Then follow an arbitrary number of logical conditions on the different columns of the data set on question.</p>
 <p>Assume we want to take the previously defined data set <code>data_raw_long</code></p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>data_raw_long</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 4
   country  year indicator   values
@@ -602,8 +638,11 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 </div>
 <p>and only want to keep data on GDP:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>data_raw_long <span class="sc">%&gt;%</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator<span class="sc">==</span><span class="st">"gdp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   country  year indicator values
@@ -616,10 +655,13 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 </div>
 <p>You may also combine more than one condition in one call to <code>dplyr::filter()</code>. If you also want to filter by values and only keep those rows where the value is below 50.000:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>data_raw_long <span class="sc">%&gt;%</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    indicator<span class="sc">==</span><span class="st">"gdp"</span>,</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    values <span class="sc">&lt;</span> <span class="dv">50000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   country  year indicator values
@@ -634,7 +676,10 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 <p>When you only want to keep certain <em>columns</em> we speak of selecting (rather than filtering) columns. This is done - surprise - via the function ´dplyr::select()`.</p>
 <p>There are different ways for selecting columns. In any case, the first argument is, again, <code>data</code>, i.e.&nbsp;the data set considered. In the present case, we will refer to <code>data_raw</code>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>data_raw</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year unemp      gdp
     &lt;char&gt; &lt;int&gt; &lt;num&gt;    &lt;num&gt;
@@ -646,8 +691,11 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 </div>
 <p>Then we can now select columns using one of the following two options. First, you may refer to columns via their <em>name</em>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(country, year, unemp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year unemp
     &lt;char&gt; &lt;int&gt; &lt;num&gt;
@@ -659,8 +707,11 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 </div>
 <p>But this is often error-prone. Thus, it is usually better to refer to the columns via <a href="https://dplyr.tidyverse.org/reference/dplyr_tidy_select.html">selection helpers</a>, which is also the most flexible version. While we will learn about more selection helpers later, here we will mainly use <code>dplyr::all_of()</code>, which accepts a character vector of column names:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>, <span class="st">"gdp"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year      gdp
     &lt;char&gt; &lt;int&gt;    &lt;num&gt;
@@ -674,8 +725,11 @@ $ value    &lt;dbl&gt; 3.75, 53071.46, 3.38, 53431.39, 21.49, 28604.86, 19.29, 2
 <p><strong>Caution:</strong> Do not forget the <code>c()</code>! Otherwise:</p>
 </blockquote>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">all_of</span>(<span class="st">"country"</span>, <span class="st">"year"</span>, <span class="st">"gdp"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `dplyr::select()`:
 ℹ In argument: `dplyr::all_of("country", "year", "gdp")`.
@@ -687,9 +741,12 @@ Caused by error in `dplyr::all_of()`:
 <p>It is also possible to define the column vector first:</p>
 </blockquote>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cols2keep <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>, <span class="st">"gdp"</span>)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">all_of</span>(cols2keep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year      gdp
     &lt;char&gt; &lt;int&gt;    &lt;num&gt;
@@ -703,8 +760,11 @@ Caused by error in `dplyr::all_of()`:
 <p>Selection helpers allow you to specify the columns to be selected more generally. For instance, <code>dplyr::ends_with()</code> allows you to select all colums that end with a certain pattern:</p>
 </blockquote>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">ends_with</span>(<span class="st">"p"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   unemp      gdp
    &lt;num&gt;    &lt;num&gt;
@@ -716,8 +776,11 @@ Caused by error in `dplyr::all_of()`:
 </div>
 <p>In any case, you can also specify the columns you want to <em>drop</em>. To this end, just add a <code>-</code> in front of the selection command:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>unemp, <span class="sc">-</span>gdp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year
     &lt;char&gt; &lt;int&gt;
@@ -734,7 +797,10 @@ Caused by error in `dplyr::all_of()`:
 <p>As a guiding example we use the following two data sets:</p>
 <p>First, data on income inequality from the <a href="https://fsolt.org/swiid/">SWIID data base</a>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>gini_join</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year  gini
     &lt;char&gt; &lt;int&gt; &lt;num&gt;
@@ -744,7 +810,10 @@ Caused by error in `dplyr::all_of()`:
 </div>
 <p>Second, data on GDP per capita from the <a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD">World Bank</a>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>gdp_join</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year      gdp
     &lt;char&gt; &lt;int&gt;    &lt;num&gt;
@@ -768,7 +837,10 @@ Caused by error in `dplyr::all_of()`:
 </ul>
 <p>Its easier to understand their behavior if you contrast them directly with each other. First, <code>dplyr::left_join()</code> joins the data sets on those columns mentioned in <code>by</code>, but only keeps those rows for which <code>x</code> contains an observation:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">left_join</span>(<span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year      gdp  gini
     &lt;char&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;
@@ -780,7 +852,10 @@ Caused by error in `dplyr::all_of()`:
 </div>
 <p>This might introduce <code>NA</code>s into the columns of <code>y</code>, but not of <code>x</code>. It is the other way around for <code>dplyr::right_join()</code>: it only keeps those rows for which <code>y</code> contains an observation:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">right_join</span>(<span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year      gdp  gini
     &lt;char&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;
@@ -790,7 +865,10 @@ Caused by error in `dplyr::all_of()`:
 </div>
 <p><code>dplyr::inner_join()</code> is the most restrictive option, keeping only those rows for which both <code>x</code> and <code>y</code> contain an observation (i.e.&nbsp;it never introduces <code>NA</code>s):</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">inner_join</span>(<span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year      gdp  gini
     &lt;char&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;
@@ -799,7 +877,10 @@ Caused by error in `dplyr::all_of()`:
 </div>
 <p>Finally, <code>dplyr::full_join()</code> contains all rows that occur at least in <code>x</code> <em>or</em> <code>y</code>, i.e.&nbsp;it might introduce <code>NA</code>s in both the columns of <code>x</code> and <code>y</code>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">full_join</span>(<span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year      gdp  gini
     &lt;char&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;
@@ -812,8 +893,11 @@ Caused by error in `dplyr::all_of()`:
 </div>
 <p>Two final remarks: first, the types of the columns on which you merge the data sets must be equal, otherwise R throws an error:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>gini_join <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(gini_join, <span class="at">year=</span><span class="fu">as.character</span>(year))</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">left_join</span>(<span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `dplyr::left_join()`:
 ! Can't join `x$year` with `y$year` due to incompatible types.
@@ -823,9 +907,12 @@ Caused by error in `dplyr::all_of()`:
 </div>
 <p>Just enforce the correct data type before merging:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>gini_join <span class="sc">%&gt;%</span> </span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">as.integer</span>(year)) <span class="sc">%&gt;%</span></span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(<span class="at">x =</span> gdp_join, <span class="at">y =</span> ., <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year      gdp  gini
     &lt;char&gt; &lt;int&gt;    &lt;num&gt; &lt;num&gt;
@@ -837,10 +924,13 @@ Caused by error in `dplyr::all_of()`:
 </div>
 <p>Second, you can also merge on columns with different names by passing named vectors to <code>by</code>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>gini_join <span class="ot">&lt;-</span> gini_join <span class="sc">%&gt;%</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year=</span><span class="fu">as.double</span>(year)) <span class="sc">%&gt;%</span></span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>year)</span>
 <span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>gini_join</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  gini  Year
     &lt;char&gt; &lt;num&gt; &lt;num&gt;
@@ -850,9 +940,12 @@ Caused by error in `dplyr::all_of()`:
 </div>
 <p>Then this does not work any more:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, </span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `dplyr::left_join()`:
 ! Join columns in `y` must be present in the data.
@@ -861,9 +954,12 @@ Caused by error in `dplyr::all_of()`:
 </div>
 <p>But the named vector fixes it:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">left_join</span>(</span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> gdp_join, <span class="at">y =</span> gini_join, </span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"year"</span><span class="ot">=</span><span class="st">"Year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   country  year      gdp  gini
     &lt;char&gt; &lt;num&gt;    &lt;num&gt; &lt;num&gt;
@@ -879,9 +975,12 @@ Caused by error in `dplyr::all_of()`:
 <p>The final challenge we consider involves the application of two functions (at least in most cases): <code>dplyr::group_by()</code> and <code>dplyr::summarize()</code>.</p>
 <p><code>dplyr::group_by()</code> is usually used within pipes and groups a data set according to an arbitrary number of variables, each of which must refer to one (and only one) column. It produces a grouped data set:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>data_raw_grouped <span class="ot">&lt;-</span> data_raw <span class="sc">%&gt;%</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(country)</span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>data_raw_grouped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
 # Groups:   country [2]
@@ -896,8 +995,11 @@ Caused by error in `dplyr::all_of()`:
 <p>As you can see, the data set is now grouped by the variable <code>country</code>. We can specify the grouping variables the same way we selected columns in the context of <code>dplyr::select()</code> (see above).</p>
 <p>Grouped data sets are usually not interesting in itself. You can ungroup them via <code>dplyr::ungroup()</code>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>data_raw_grouped <span class="sc">%&gt;%</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   country  year unemp    gdp
@@ -910,20 +1012,26 @@ Caused by error in `dplyr::all_of()`:
 </div>
 <p>They are most useful if used in conjunction with <code>dplyr::summarise()</code>, which summarizes variables. While it can be used without <code>dplyr::group_by()</code>, it is most useful if it is applied to grouped data sets: then it computes summary statistics for each group.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>data_raw <span class="sc">%&gt;%</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_gdp=</span><span class="fu">mean</span>(gdp)</span>
 <span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   avg_gdp
 1 41062.22</code></pre>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>data_raw_grouped <span class="sc">%&gt;%</span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_gdp=</span><span class="fu">mean</span>(gdp)</span>
 <span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   country avg_gdp
@@ -934,11 +1042,14 @@ Caused by error in `dplyr::all_of()`:
 </div>
 <p>You can also summarized more than one column:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>data_raw_grouped <span class="sc">%&gt;%</span></span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_gdp=</span><span class="fu">mean</span>(gdp),</span>
 <span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_unemp=</span><span class="fu">median</span>(unemp)</span>
 <span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   country avg_gdp median_unemp
@@ -955,7 +1066,10 @@ Caused by error in `dplyr::all_of()`:
 <p>Thanks to the pipes it is easy to chain the many different wrangling steps into one function call. But in practice it is very important that you (1) inspect your raw data very clearly, (2) write down the desired end product, and then (3) think about the single steps required to reach the desired outcome. Each step should address one (and only one) wrangling challenge.</p>
 <p>To illustrate this, assume we start start with this raw data:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_final_expl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Classes 'data.table' and 'data.frame':  88 obs. of  5 variables:
  $ country: chr  "Austria" "Austria" "Austria" "Austria" ...
@@ -969,6 +1083,8 @@ Caused by error in `dplyr::all_of()`:
 <p>What we want to do is to compute the difference in the country averages of the variables for the time periods 2005-2007 and 2010-2013. This would look like this:<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 <p>To achieve this, we need to chain a number of wrangling challenges introduced above:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>data_final_expl <span class="sc">%&gt;%</span></span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
 <span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">period =</span> <span class="fu">ifelse</span>(</span>
@@ -1000,6 +1116,7 @@ Caused by error in `dplyr::all_of()`:
 <span id="cb76-29"><a href="#cb76-29" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
 <span id="cb76-30"><a href="#cb76-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> <span class="st">"indicator"</span>, </span>
 <span id="cb76-31"><a href="#cb76-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="st">"Difference"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   country avg_unemp avg_gdp

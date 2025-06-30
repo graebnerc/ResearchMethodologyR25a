@@ -163,7 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">24 02 2025</p>
+        <p class="date">14 03 2025</p>
       </div>
     </div>
     
@@ -309,6 +309,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this short post I quickly explain how you can use the exercises that I have prepared for you. For those of you interested in the underlying mechanics: all exercises were prepared using the package <a href="https://rstudio.github.io/learnr/">learnr</a> together with the <a href="https://github.com/rstudio/gradethis">gradethis</a> package, and are distributed in the package <code>DataScienceExercises</code>.</p>
 <p>To use the exercises you must have installed the packages <code>learnr</code>, <code>gradethis</code> and <code>DataScienceExercises</code>. If you followed the instructions in the tutorial on <a href="../../../tutorial/installing-packages/">installing R packages</a> this should be the case. If for some reasons you need to install them, you can do this via:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pack_names <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rstudio/learnr"</span>,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"rstudio/gradethis"</span>,</span>
@@ -316,31 +318,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">repo =</span> pack_names, <span class="at">upgrade =</span> <span class="st">"always"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Note that this requires a previous installation of the package <code>remotes</code>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Since I update the exercises according to your feedback, and add new exercises over the semester, I strongly recommend you to update the package <code>DataScienceExercises</code> each time before you start practicing. To do so you need an internet connection. If you just want to <em>do</em> the exercises without updating the package, an internet connection is <em>not</em> required: the exercises themselves also work offline.</p>
 <p>To update the package, simply type the following into the console and press <code>Enter</code>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">repo =</span> <span class="st">"graebnerc/DataScienceExercises"</span>, <span class="at">upgrade =</span> <span class="st">"always"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>This should update your package version to the most recent release.</p>
 <p>If you want to start an exercise you first need to figure out the name of the exercise sheet. This is provided in the <a href="../../../material/">Material section</a> of the course webpage. Then you call execute the following code via the console in R Studio, replacing ‘EX_NAME’ with the name of the exercise sheet:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>learnr<span class="sc">::</span><span class="fu">run_tutorial</span>(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"EX_NAME"</span>, </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">package =</span> <span class="st">"DataScienceExercises"</span>, </span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">shiny_args=</span><span class="fu">list</span>(<span class="st">"launch.browser"</span><span class="ot">=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>The first exercise sheet, for instance, is called <code>Basics</code>. Thus, to call it execute the following:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>learnr<span class="sc">::</span><span class="fu">run_tutorial</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"Basics"</span>, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">package =</span> <span class="st">"DataScienceExercises"</span>, </span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">shiny_args=</span><span class="fu">list</span>(<span class="st">"launch.browser"</span><span class="ot">=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Lastly, if you encounter a bug or a mistake, or have an idea for a good exercise, please let me know via the <a href="https://github.com/graebnerc/DataScienceExercises/issues">issue tracker</a> of the <code>DataScienceExercises</code> package or via Moodle. Thank you!</p>
 

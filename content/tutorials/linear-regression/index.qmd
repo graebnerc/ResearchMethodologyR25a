@@ -5,18 +5,12 @@ date: '2025-06-06'
 documentclass: scrartcl
 execute: 
   freeze: auto
+  message: false
+  warning: false
 format: 
-  html:
-    theme: readable
-    highlight: tango
-    toc: true
-    toc_depth: 2
-    number_sections: true
+  html: # All options are in metadata
+    code-fold: true 
   pdf:
-    papersize: a4
-    toc: true
-    toc-depth: 2
-    number-sections: true
     include-in-header: 
       text: |
         \usepackage{lmodern} 

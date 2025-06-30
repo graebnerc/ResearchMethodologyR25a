@@ -360,7 +360,10 @@ window.Quarto = {
 <h1>Functions</h1>
 <p>Functions are algorithms that apply a certain routine on an <em>input</em>, thereby producing (almost always) an <em>output</em>. The function <code>log()</code>, for instance, takes as input a number and returns as output another number, namely the logarithm of the input:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6931472</code></pre>
 </div>
@@ -369,18 +372,27 @@ window.Quarto = {
 <p>There are, in principle, four different ways to call a function in <code>R</code>. Only two of them, however, are practically relevant for our purposes.</p>
 <p>The by far most important variant is the so called <em>prefix form</em>. Here you first write down the name of the function. Then you open brackets, write down all the <em>arguments</em> of the function, which you separate by commas, and then you close the brackets. In the following example, the name of the function is <code>assign</code>, and its arguments are <code>"test"</code> and <code>2</code>:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">assign</span>(<span class="st">"test"</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>The second relevant way to call a function is the so called <em>infix form</em>. Here, the name of the function is written <em>between</em> the arguments of the function. This form is less common than the <em>prefix form</em>, but frequently used for mathematical operations, such as <code>+</code>, <code>-</code> or <code>/</code>.</p>
 <p>Strictly speaking, it is only a shortcut, since every function call using the infix form can also be written as a function call in the prefix form:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">+</span><span class="st">`</span>(<span class="dv">2</span>,<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
@@ -390,7 +402,10 @@ window.Quarto = {
 <p>The arguments of a function usually provide the <em>input</em> of the function, and might also specify how the underlying routine should be executed exactly.</p>
 <p>The function <code>sum</code>, for instance, takes as arguments an arbitrary number of numbers (its ‘input’) and returns the sum of these numbers:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10</code></pre>
 </div>
@@ -398,13 +413,19 @@ window.Quarto = {
 <p>Moreover, <code>sum()</code> also accepts an <em>optional argument</em>, which is called <code>na.rm</code>. This optional argument can take the value <code>TRUE</code> or <code>FALSE</code>. The letters <code>na</code> stand for “not available”, and refer to missing values. If we do not set the optional argument explicitly, it takes its default value. In this case, the defaults value is <code>FALSE</code>. You can get this information by calling the help-function: <code>help(sum)</code>.</p>
 <p>Optional arguments are no input in the classical sense, but they allow you to control the routine that the function applies. In the present case this means that if <code>na.rm</code> takes the value <code>TRUE</code>, all missing values in the input to <code>sum()</code> will be ignored:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="cn">NA</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA</code></pre>
 </div>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="cn">NA</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10</code></pre>
 </div>
@@ -414,17 +435,23 @@ window.Quarto = {
 <p><strong>Define your own functions</strong></p>
 <p>Defining functions on our own is incredibly useful. We can do this by using the keyword <code>function</code>. To illustrate how to define our own functions, we will now define a function that we will call <code>pythagoras</code> and that takes as arguments the length of the two catheti of a right triangle. It then calculates the length of the hypotenuse using the <a href="https://en.wikipedia.org/wiki/Pythagorean_theorem">Pythagorean theorem</a>.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pythagoras <span class="ot">&lt;-</span> <span class="cf">function</span>(cathetus_1, cathetus_2){</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  hypo_squared <span class="ot">&lt;-</span> cathetus_1<span class="sc">**</span><span class="dv">2</span> <span class="sc">+</span> cathetus_2<span class="sc">**</span><span class="dv">2</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  hypotenuse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(hypo_squared) <span class="co"># sqrt() takes square root</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(hypotenuse)</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>We always define a new function by using the function <code>function()</code>. We start our definition by associating the new function with a name (here: ‘pythagoras’) so that we can use it later.</p>
 <p>The arguments to <code>function()</code> are then arguments that our new function should accept. In the present case there are two such arguments: <code>cathetus_1</code> and <code>cathetus_2</code>. After that comes the so called ‘function body’. It contains all the routines that the function should execute when called. The function body is always enclosed by curly brackets. In the example above we first compute the sum of the squares of the two catheti, and save this intermediate result as <code>hypo_squared</code>. This is the part of the Pythagorean theorem that you might know as <span class="math inline">\(c^2 = a^2 + b^2\)</span>. Since we are interested in the ‘normal’ length of the hypotenuse, we then use the function <code>sqrt()</code> to get the square root of <code>hypo_squared</code>. This is also the value that we wish our function would return to us. To make this explicit, we use the keyword <code>return</code> to specify the return value of the function.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>If we now call our function with the correct arguments, the routine above will be executed:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pythagoras</span>(<span class="dv">2</span>, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.472136</code></pre>
 </div>
@@ -433,7 +460,10 @@ window.Quarto = {
 <p><strong>Note</strong>: we could also call the arguments of our new function explicitly, which can be useful for transparency reasons when you call more complex functions:</p>
 </blockquote>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pythagoras</span>(<span class="at">cathetus_1=</span><span class="dv">2</span>, <span class="at">cathetus_2=</span><span class="dv">4</span>) <span class="co"># Also works the other way around</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.472136</code></pre>
 </div>
@@ -442,7 +472,10 @@ window.Quarto = {
 <p><strong>Note</strong>: you can see the source code of a function (frequently) by typing the name of the function withough the brackets:</p>
 </blockquote>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pythagoras</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>function(cathetus_1, cathetus_2){
   hypo_squared &lt;- cathetus_1**2 + cathetus_2**2
@@ -454,6 +487,8 @@ window.Quarto = {
 </div>
 <p>Note that all object names used within the function body are lost after the function has been called. The deeper reason is that functions have their own <a href="https://adv-r.hadley.nz/environments.html">environment</a>. Because of this behavior, <code>R</code> produces an error in the following example, in which <code>hypo_squared</code> exists <em>only</em> within the function body.</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pythagoras <span class="ot">&lt;-</span> <span class="cf">function</span>(cathetus_1, cathetus_2){</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  hypo_squared <span class="ot">&lt;-</span> cathetus_1<span class="sc">**</span><span class="dv">2</span> <span class="sc">+</span> cathetus_2<span class="sc">**</span><span class="dv">2</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  hypotenuse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(hypo_squared) <span class="co"># sqrt() takes square root</span></span>
@@ -461,15 +496,19 @@ window.Quarto = {
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">pythagoras</span>(<span class="dv">2</span>, <span class="dv">4</span>)</span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>hypo_squared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-error">
 <pre><code>Error in eval(expr, envir, enclos): object 'hypo_squared' not found</code></pre>
 </div>
 </div>
 <p>Note that this behavior is intentional: otherwise, there would quickly be a lot of associations that are hard to keep track of. It is, however, of utmost importance to always remember this behavior, otherwise, very confusing errors might emerge, as in the following example in which you might have expected <code>hypo_squared</code> to take the value of the length of the hypotenuse squared within your right triangle:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>hypo_squared <span class="ot">&lt;-</span> <span class="dv">120</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">pythagoras</span>(<span class="dv">2</span>, <span class="dv">4</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>hypo_squared</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 120</code></pre>
 </div>
@@ -477,6 +516,8 @@ window.Quarto = {
 <p>It is always a good idea to <strong>document</strong> your own functions. This is not only (but especially) the case if you want to share it with others: also, if you want to use your function after a while has past, you will be extremely grateful to your previous You for explaining to you how the function works and what arguments it takes. Or, in other words, nothing is more frustrating than getting back to your code after a few weeks and being forced to invest many hours to encypher what you have written previously.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <p>While you can document functions using simple comments at the end of each line I strongly recommend to get used to follow <a href="https://r-pkgs.org/man.html#man-functions">these conventions</a> right from the start. Documenting our little function from above would look like this:</p>
 <div class="cell">
+<details class="code-fold">
+<summary>Show R code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Computes the length of the hypothenuse in a right triangle</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' This function takes the length of the two catheti of a right triangle as</span></span>
@@ -490,6 +531,7 @@ window.Quarto = {
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  hypotenuse <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(hypo_squared) <span class="co"># sqrt() takes square root</span></span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(hypotenuse)</span>
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>The documentation of a function must come immediately before the function definition and each line of the documentation starts with <code>#'</code>. In the first line you provide a title, which must not be longer than 80 characters.</p>
 <p>Then, after inserting a blank line you describe what the function does in a bit more detail. Then, you describe each argument by using the decorator <code>@param</code> at the beginning of the lines. Finally, you describe the output of the function after starting the line with the decorator <code>@return</code>.</p>
